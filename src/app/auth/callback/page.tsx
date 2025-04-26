@@ -1,6 +1,6 @@
 "use client";
 
-import { useHashParams } from "@/app/hooks";
+import { useHashParams } from "@/hooks";
 import { TOKEN } from "@/constants";
 import { Storage } from "@/storage";
 import { useRouter } from "next/navigation";
