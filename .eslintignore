@@ -3,3 +3,4 @@ node_modules/
 public/
 dist/
 .eslintrc.js
+tailwind.config.js
