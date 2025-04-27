@@ -1,11 +1,9 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 const useUploadImage = () => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-
-  const uploadImage = useCallback(() => {
+  const uploadImage = useCallback((onSelect: (_: string) => void) => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
@@ -14,14 +12,14 @@ const useUploadImage = () => {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (file) {
         const url = URL.createObjectURL(file);
-        setImageUrl(url);
+        onSelect(url);
       }
     };
 
     input.click();
   }, []);
 
-  return { imageUrl, uploadImage };
+  return uploadImage;
 };
 
 export default useUploadImage;
