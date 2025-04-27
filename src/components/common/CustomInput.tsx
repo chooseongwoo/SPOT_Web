@@ -19,7 +19,7 @@ const CustomInput = ({ label, placeholder, type = "text" }: InputProps) => {
         type={type}
         placeholder={placeholder}
         className={clsx(
-          "h-14 rounded-lg border px-4 py-2 text-b2 text-black",
+          "h-14 rounded-lg border px-4 py-2 text-b2 text-black outline-none placeholder:text-gray-3",
           isFocused ? "border-green-500" : "border-gray-300"
         )}
         onFocus={() => setIsFocused(true)}

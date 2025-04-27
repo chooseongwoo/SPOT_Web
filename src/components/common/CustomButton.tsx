@@ -20,11 +20,7 @@ const CustomButton = ({ title, onClick, disabled = false }: ButtonProps) => {
           : "bg-green-500 hover:bg-green-600"
       )}
     >
-      <span
-        className={clsx("text-btn1", disabled ? "text-gray-500" : "text-white")}
-      >
-        {title}
-      </span>
+      <span className={clsx("text-btn1 text-white")}>{title}</span>
     </button>
   );
 };
