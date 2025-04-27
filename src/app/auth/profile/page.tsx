@@ -9,6 +9,7 @@ import useUploadImage from "@/hooks/useUploadImage";
 const RegisterScreen = () => {
   const DefaultProfile = "/images/DefaultProfileImage.png";
   const [selectedImage, setSelectedImage] = useState<string>(DefaultProfile);
+  const [username, setUsername] = useState<string>("");
   const uploadImage = useUploadImage();
 
   return (
@@ -33,7 +34,12 @@ const RegisterScreen = () => {
         </div>
 
         <div className="mt-6 w-full">
-          <CustomInput label="닉네임" placeholder="닉네임을 입력해주세요" />
+          <CustomInput
+            label="닉네임"
+            placeholder="닉네임을 입력해주세요"
+            value={username}
+            setValue={setUsername}
+          />
         </div>
 
         <div className="absolute bottom-10 w-full px-6">
@@ -42,7 +48,7 @@ const RegisterScreen = () => {
             onClick={() => {
               return 0;
             }}
-            disabled={true}
+            disabled={!username || !selectedImage}
           />
         </div>
       </div>

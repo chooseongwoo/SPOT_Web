@@ -7,9 +7,17 @@ interface InputProps {
   label: string;
   placeholder: string;
   type?: React.HTMLInputTypeAttribute;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const CustomInput = ({ label, placeholder, type = "text" }: InputProps) => {
+const CustomInput = ({
+  label,
+  placeholder,
+  type = "text",
+  value,
+  setValue,
+}: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -22,6 +30,8 @@ const CustomInput = ({ label, placeholder, type = "text" }: InputProps) => {
           "h-14 rounded-lg border px-4 py-2 text-b2 text-black outline-none placeholder:text-gray-3",
           isFocused ? "border-green-500" : "border-gray-300"
         )}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       />
