@@ -1,5 +1,5 @@
 "use client";
-import KakaoLogo from "@/components/login/KakaoLogo";
+import KakaoLogo from "@/components/icons/KakaoLogo";
 import { signInWithKakao } from "@/services/user/api";
 import Image from "next/image";
 
