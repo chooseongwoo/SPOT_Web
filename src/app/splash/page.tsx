@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function SplashPage() {
+export default function Page() {
   return (
     <main className="flex h-screen w-screen items-center justify-center">
       <Image

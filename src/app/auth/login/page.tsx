@@ -3,7 +3,7 @@ import { KakaoLogo } from "@/components/icons";
 import { signInWithKakao } from "@/services/user/api";
 import Image from "next/image";
 
-export default function LoginPage() {
+export default function Page() {
   return (
     <main className="flex h-screen w-screen flex-col items-center justify-center">
       <Image

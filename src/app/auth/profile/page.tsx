@@ -8,7 +8,7 @@ import useUploadImage from "@/hooks/useUploadImage";
 import { useUpdateUserMutation } from "@/services/user/mutation";
 import { useRouter } from "next/navigation";
 
-const RegisterScreen = () => {
+export default function Page() {
   const router = useRouter();
   const DefaultProfile = "/images/DefaultProfileImage.png";
   const [selectedImage, setSelectedImage] = useState<string>(DefaultProfile);
@@ -66,6 +66,4 @@ const RegisterScreen = () => {
       </div>
     </div>
   );
-};
-
-export default RegisterScreen;
+}

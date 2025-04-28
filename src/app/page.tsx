@@ -1,3 +1,9 @@
-export default function Home() {
-  return <p className="text-large">Main</p>;
+import Home from "@/app/Home";
+
+export default function Page() {
+  return (
+    <div className="h-screen w-screen">
+      <Home />
+    </div>
+  );
 }

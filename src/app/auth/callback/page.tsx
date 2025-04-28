@@ -6,7 +6,7 @@ import { Storage } from "@/storage";
 import { useEffect } from "react";
 import { useLoginMutation } from "@/services/user/mutation";
 
-export default function AuthCallbackPage() {
+export default function Page() {
   const params = useHashParams();
   const { mutate: loginMutate } = useLoginMutation();
 
