@@ -16,9 +16,9 @@ export const initUser = async (): Promise<{ profileComplete: boolean }> => {
     data: { session },
   } = await supabase.auth.getSession();
   const userId = session?.user.id;
-  const kakaoProfileImage =
+  const profileImageUrl =
     session?.user.user_metadata?.picture ||
-    `${window.location.origin}/images/DefaultProfileImage.png`;
+    process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_URL;
 
   if (!userId) {
     throw new Error("세션 없음");
@@ -39,7 +39,7 @@ export const initUser = async (): Promise<{ profileComplete: boolean }> => {
       {
         id: userId,
         nickname: `user-${userId.slice(0, 8)}`,
-        profile_image_url: kakaoProfileImage,
+        profile_image_url: profileImageUrl,
         profile_complete: false,
       },
     ]);
