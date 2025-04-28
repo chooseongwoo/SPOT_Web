@@ -11,23 +11,18 @@ export const signInWithKakao = async () => {
   return data;
 };
 
-export const initUser = async (): Promise<{
-  profileComplete: boolean;
-}> => {
+export const initUser = async (): Promise<{ profileComplete: boolean }> => {
   const {
     data: { session },
-    error: sessionError,
   } = await supabase.auth.getSession();
-
+  const userId = session?.user.id;
   const kakaoProfileImage =
-    session?.user.user_metadata?.picture ??
+    session?.user.user_metadata?.picture ||
     `${window.location.origin}/images/DefaultProfileImage.png`;
 
-  if (sessionError || !session?.user?.id) {
-    throw new Error("세션이 존재하지 않거나 가져오기에 실패했습니다.");
+  if (!userId) {
+    throw new Error("세션 없음");
   }
-
-  const userId = session.user.id;
 
   const { data: existingUser, error: selectError } = await supabase
     .from("users")
@@ -40,12 +35,14 @@ export const initUser = async (): Promise<{
   }
 
   if (!existingUser) {
-    const { error: insertError } = await supabase.from("users").insert({
-      id: userId,
-      nickname: `user-${userId.slice(0, 8)}`,
-      profile_image_url: kakaoProfileImage,
-      profile_complete: false,
-    });
+    const { error: insertError } = await supabase.from("users").insert([
+      {
+        id: userId,
+        nickname: `user-${userId.slice(0, 8)}`,
+        profile_image_url: kakaoProfileImage,
+        profile_complete: false,
+      },
+    ]);
 
     if (insertError) {
       throw new Error(`유저 생성 실패: ${insertError.message}`);
@@ -55,4 +52,26 @@ export const initUser = async (): Promise<{
   }
 
   return { profileComplete: existingUser.profile_complete };
+};
+
+export const updateUser = async ({
+  nickname,
+  profile_image_url,
+}: {
+  nickname: string;
+  profile_image_url: string;
+}) => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user.id;
+
+  return supabase
+    .from("users")
+    .update({
+      nickname,
+      profile_image_url,
+      profile_complete: true,
+    })
+    .eq("id", userId);
 };

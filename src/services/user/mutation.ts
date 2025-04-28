@@ -1,4 +1,4 @@
-import { initUser } from "@/services/user/api";
+import { initUser, updateUser } from "@/services/user/api";
 import { useMutation } from "@tanstack/react-query";
 
 export const useLoginMutation = () => {
@@ -14,5 +14,11 @@ export const useLoginMutation = () => {
     onError: () => {
       alert("로그인에 실패했습니다.");
     },
+  });
+};
+
+export const useUpdateUserMutation = () => {
+  return useMutation({
+    mutationFn: updateUser,
   });
 };

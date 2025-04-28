@@ -5,12 +5,16 @@ import Image from "next/image";
 import { CustomInput, CustomButton, Header } from "@/components/common";
 import { CameraIcon } from "@/components/icons";
 import useUploadImage from "@/hooks/useUploadImage";
+import { useUpdateUserMutation } from "@/services/user/mutation";
+import { useRouter } from "next/navigation";
 
 const RegisterScreen = () => {
+  const router = useRouter();
   const DefaultProfile = "/images/DefaultProfileImage.png";
   const [selectedImage, setSelectedImage] = useState<string>(DefaultProfile);
-  const [username, setUsername] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
   const uploadImage = useUploadImage();
+  const { mutate: updateUserMutate } = useUpdateUserMutation();
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -37,8 +41,8 @@ const RegisterScreen = () => {
           <CustomInput
             label="닉네임"
             placeholder="닉네임을 입력해주세요"
-            value={username}
-            setValue={setUsername}
+            value={nickname}
+            setValue={setNickname}
           />
         </div>
 
@@ -46,9 +50,17 @@ const RegisterScreen = () => {
           <CustomButton
             title="완료"
             onClick={() => {
-              return 0;
+              updateUserMutate(
+                { nickname, profile_image_url: selectedImage },
+                {
+                  onSuccess: () => {
+                    alert("프로필이 설정되었습니다.");
+                    router.push("/");
+                  },
+                }
+              );
             }}
-            disabled={!username || !selectedImage}
+            disabled={!nickname || !selectedImage}
           />
         </div>
       </div>
