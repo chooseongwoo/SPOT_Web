@@ -3,12 +3,12 @@
 import { useHashParams } from "@/hooks";
 import { TOKEN } from "@/constants";
 import { Storage } from "@/storage";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useLoginMutation } from "@/services/user/mutation";
 
 export default function AuthCallbackPage() {
-  const router = useRouter();
   const params = useHashParams();
+  const { mutate: loginMutate } = useLoginMutation();
 
   useEffect(() => {
     if (!params) return;
@@ -19,11 +19,11 @@ export default function AuthCallbackPage() {
       Storage.setItem(TOKEN.ACCESS, accessToken);
       Storage.setItem(TOKEN.REFRESH, refreshToken);
 
-      router.replace("/");
+      loginMutate();
     } else {
       alert("로그인에 실패했습니다.");
     }
-  }, [router, params]);
+  }, [params, loginMutate]);
 
   return (
     <main className="flex h-screen w-screen items-center justify-center">
