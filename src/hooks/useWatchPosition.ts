@@ -5,7 +5,7 @@ interface UseWatchPositionProps {
   setHeading: (_: number) => void;
 }
 
-export function useWatchPosition({
+export default function useWatchPosition({
   setPosition,
   setHeading,
 }: UseWatchPositionProps) {

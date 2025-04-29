@@ -6,12 +6,13 @@ import {
   Marker,
   useLoadScript,
 } from "@react-google-maps/api";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAddressQuery } from "@/services/map/location.query";
 import { extractShortAddress } from "@/utils";
 import AlarmIcon from "@/components/icons/AlarmIcon";
 import { circleOptions, mapOptions } from "@/constants";
 import { useWatchPosition } from "@/hooks";
+import { GPSIcon } from "@/components/icons";
 
 const containerStyle = {
   width: "100%",
@@ -19,16 +20,28 @@ const containerStyle = {
 };
 
 export default function GoogleMapView() {
+  const mapRef = useRef<google.maps.Map | null>(null);
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
   });
 
-  const [position, setPosition] = useState({ lat: 0, lng: 0 });
+  const [position, setPosition] = useState<{ lat: number; lng: number }>({
+    lat: 0,
+    lng: 0,
+  });
+
   const [heading, setHeading] = useState<number>(0);
 
   const { data: currentLocation } = useAddressQuery(position.lat, position.lng);
-
   useWatchPosition({ setPosition, setHeading });
+
+  const handleGetUserrLocation = () => {
+    if (mapRef.current) {
+      mapRef.current.setCenter(position);
+      mapRef.current.setZoom(19);
+    }
+  };
 
   if (!isLoaded) {
     return (
@@ -48,12 +61,21 @@ export default function GoogleMapView() {
           <AlarmIcon />
         </div>
       </div>
+      <div
+        onClick={handleGetUserrLocation}
+        className="p-[10px] rounded-[100%] bg-white shadow-custom-gray absolute left-6 bottom-[167px] z-50"
+      >
+        <GPSIcon />
+      </div>
 
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={position}
         zoom={19}
         options={mapOptions}
+        onLoad={(map) => {
+          mapRef.current = map;
+        }}
       >
         <Marker
           position={position}
