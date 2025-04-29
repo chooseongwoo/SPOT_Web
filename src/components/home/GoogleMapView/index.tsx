@@ -1,21 +1,54 @@
 "use client";
 
+import { useAddressQuery } from "@/services/map/location.query";
+import { extractShortAddress } from "@/utils";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
-
-const containerStyle = {
-  width: "100%",
-  height: "500px",
-};
-
-const center = {
-  lat: 37.5665,
-  lng: 126.978,
-};
+import { useEffect, useState } from "react";
 
 export default function GoogleMapView() {
+  const [location, setLocation] = useState<{ lat: number; lng: number }>({
+    lat: 0,
+    lng: 0,
+  });
+
+  const { data: currentLocation } = useAddressQuery(
+    location?.lat,
+    location.lng
+  );
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        () => {},
+        {
+          enableHighAccuracy: true,
+          timeout: 60000,
+          maximumAge: 0,
+        }
+      );
+    }
+  }, []);
+
   return (
-    <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
-      <Map style={containerStyle} defaultCenter={center} defaultZoom={12} />
-    </APIProvider>
+    <>
+      <p className="absolute z-50 text-t3 text-black">
+        {extractShortAddress(currentLocation)}
+      </p>
+
+      <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
+        <Map
+          className="h-screen w-screen"
+          defaultCenter={location}
+          defaultZoom={19}
+          disableDefaultUI
+        />
+      </APIProvider>
+    </>
   );
 }
