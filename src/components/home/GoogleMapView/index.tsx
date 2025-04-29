@@ -6,11 +6,12 @@ import {
   Marker,
   useLoadScript,
 } from "@react-google-maps/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAddressQuery } from "@/services/map/location.query";
 import { extractShortAddress } from "@/utils";
 import AlarmIcon from "@/components/icons/AlarmIcon";
 import { circleOptions, mapOptions } from "@/constants";
+import { useWatchPosition } from "@/hooks";
 
 const containerStyle = {
   width: "100%",
@@ -27,24 +28,7 @@ export default function GoogleMapView() {
 
   const { data: currentLocation } = useAddressQuery(position.lat, position.lng);
 
-  useEffect(() => {
-    if (!("geolocation" in navigator)) return;
-
-    const watcher = navigator.geolocation.watchPosition(
-      (pos) => {
-        setPosition({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-        setHeading(pos.coords.heading ?? 0);
-      },
-      console.error,
-      {
-        enableHighAccuracy: true,
-        maximumAge: 0,
-        timeout: 60000,
-      }
-    );
-
-    return () => navigator.geolocation.clearWatch(watcher);
-  }, []);
+  useWatchPosition({ setPosition, setHeading });
 
   if (!isLoaded) {
     return (
