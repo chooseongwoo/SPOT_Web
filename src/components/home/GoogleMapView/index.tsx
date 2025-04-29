@@ -1,10 +1,16 @@
 "use client";
 
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import {
+  Circle,
+  GoogleMap,
+  Marker,
+  useLoadScript,
+} from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { useAddressQuery } from "@/services/map/location.query";
 import { extractShortAddress } from "@/utils";
 import AlarmIcon from "@/components/icons/AlarmIcon";
+import { circleOptions, mapOptions } from "@/constants";
 
 const containerStyle = {
   width: "100%",
@@ -63,7 +69,7 @@ export default function GoogleMapView() {
         mapContainerStyle={containerStyle}
         center={position}
         zoom={19}
-        options={{ disableDefaultUI: true }}
+        options={mapOptions}
       >
         <Marker
           position={position}
@@ -74,6 +80,7 @@ export default function GoogleMapView() {
             anchor: new window.google.maps.Point(20, 20),
           }}
         />
+        <Circle center={position} options={circleOptions} />
       </GoogleMap>
     </>
   );
