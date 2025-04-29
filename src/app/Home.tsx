@@ -8,7 +8,7 @@ const GoogleMapView = dynamic(() => import("@/components/home/GoogleMapView"), {
 
 export default function Home() {
   return (
-    <div className="size-full">
+    <div className="size-full flex-1">
       <GoogleMapView />
     </div>
   );
