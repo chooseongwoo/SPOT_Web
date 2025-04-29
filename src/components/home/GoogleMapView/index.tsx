@@ -1,40 +1,52 @@
 "use client";
 
-import AlarmIcon from "@/components/icons/AlarmIcon";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { useEffect, useState } from "react";
 import { useAddressQuery } from "@/services/map/location.query";
 import { extractShortAddress } from "@/utils";
-import { APIProvider, Map } from "@vis.gl/react-google-maps";
-import { useEffect, useState } from "react";
+import AlarmIcon from "@/components/icons/AlarmIcon";
+
+const containerStyle = {
+  width: "100%",
+  height: "100%",
+};
 
 export default function GoogleMapView() {
-  const [location, setLocation] = useState<{ lat: number; lng: number }>({
-    lat: 0,
-    lng: 0,
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
   });
 
-  const { data: currentLocation } = useAddressQuery(
-    location?.lat,
-    location.lng
-  );
+  const [position, setPosition] = useState({ lat: 0, lng: 0 });
+  const [heading, setHeading] = useState<number>(0);
+
+  const { data: currentLocation } = useAddressQuery(position.lat, position.lng);
 
   useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        () => {},
-        {
-          enableHighAccuracy: true,
-          timeout: 60000,
-          maximumAge: 0,
-        }
-      );
-    }
+    if (!("geolocation" in navigator)) return;
+
+    const watcher = navigator.geolocation.watchPosition(
+      (pos) => {
+        setPosition({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setHeading(pos.coords.heading ?? 0);
+      },
+      console.error,
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 60000,
+      }
+    );
+
+    return () => navigator.geolocation.clearWatch(watcher);
   }, []);
+
+  if (!isLoaded) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <p className="text-b2 text-black">지도 불러오는 중...</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -47,14 +59,22 @@ export default function GoogleMapView() {
         </div>
       </div>
 
-      <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
-        <Map
-          className="h-screen w-screen"
-          defaultCenter={location}
-          defaultZoom={19}
-          disableDefaultUI
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={position}
+        zoom={19}
+        options={{ disableDefaultUI: true }}
+      >
+        <Marker
+          position={position}
+          icon={{
+            url: "/images/UserLocationMarker.svg",
+            rotation: heading,
+            scaledSize: new window.google.maps.Size(40, 40),
+            anchor: new window.google.maps.Point(20, 20),
+          }}
         />
-      </APIProvider>
+      </GoogleMap>
     </>
   );
 }
