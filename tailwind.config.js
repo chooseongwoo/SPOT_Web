@@ -42,6 +42,9 @@ module.exports = {
         yellow: "#FEE500",
       },
     },
+    boxShadow: {
+      "custom-gray": "0px 1px 4px 0px rgba(85, 85, 85, 0.20)"
+    }
   },
 
   plugins: [],

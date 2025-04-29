@@ -1,5 +1,6 @@
 "use client";
 
+import AlarmIcon from "@/components/icons/AlarmIcon";
 import { useAddressQuery } from "@/services/map/location.query";
 import { extractShortAddress } from "@/utils";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
@@ -37,9 +38,14 @@ export default function GoogleMapView() {
 
   return (
     <>
-      <p className="absolute z-50 text-t3 text-black">
-        {extractShortAddress(currentLocation)}
-      </p>
+      <div className="absolute left-1/2 top-[55px] z-50 flex w-[85%] -translate-x-1/2 items-center justify-between">
+        <p className="text-t3 text-black">
+          {extractShortAddress(currentLocation)}
+        </p>
+        <div className="rounded-xl bg-white p-[10px] shadow-custom-gray">
+          <AlarmIcon />
+        </div>
+      </div>
 
       <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
         <Map
