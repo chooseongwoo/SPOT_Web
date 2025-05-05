@@ -1,3 +1,5 @@
+import { Position } from "@/types/position.type";
+
 export interface GoogleGeocodeResponse {
   results: GoogleGeocodeResult[];
   status: string;
@@ -14,8 +16,8 @@ export interface GoogleGeocodeResult {
     };
     location_type: string;
     viewport: {
-      northeast: { lat: number; lng: number };
-      southwest: { lat: number; lng: number };
+      northeast: Position;
+      southwest: Position;
     };
   };
   place_id: string;

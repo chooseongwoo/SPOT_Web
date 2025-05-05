@@ -3,6 +3,7 @@
 import { GPSIcon } from "@/components/icons";
 import AlarmIcon from "@/components/icons/AlarmIcon";
 import { useAddressQuery } from "@/services/map/location.query";
+import { Position } from "@/types";
 import { extractShortAddress } from "@/utils";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
@@ -13,7 +14,7 @@ const GoogleMapView = dynamic(() => import("@/components/home/GoogleMapView"), {
 
 export default function Home() {
   const mapRef = useRef<google.maps.Map | null>(null);
-  const [position, setPosition] = useState<{ lat: number; lng: number }>({
+  const [position, setPosition] = useState<Position>({
     lat: 0,
     lng: 0,
   });

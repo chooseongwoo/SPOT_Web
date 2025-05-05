@@ -3,3 +3,5 @@ export type {
   GoogleGeocodeResponse,
   GoogleGeocodeResult,
 } from "./googleGeocode.type";
+
+export type { Position, PositionType } from "./position.type";

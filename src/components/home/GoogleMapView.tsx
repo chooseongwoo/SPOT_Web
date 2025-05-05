@@ -9,16 +9,11 @@ import {
 import React, { useState } from "react";
 import { circleOptions, mapOptions } from "@/constants";
 import { useWatchPosition } from "@/hooks";
+import { Position, PositionType } from "@/types";
 
-interface GoogleMapViewProps {
+interface GoogleMapViewProps extends PositionType {
   mapRef: React.RefObject<google.maps.Map | null>;
-  position: {
-    lat: number;
-    lng: number;
-  };
-  setPosition: React.Dispatch<
-    React.SetStateAction<{ lat: number; lng: number }>
-  >;
+  setPosition: React.Dispatch<React.SetStateAction<Position>>;
 }
 
 export default function GoogleMapView({
@@ -53,6 +48,7 @@ export default function GoogleMapView({
           mapRef.current = map;
         }}
       >
+        {/* 사용자 위치 */}
         <Marker
           position={position}
           icon={{
