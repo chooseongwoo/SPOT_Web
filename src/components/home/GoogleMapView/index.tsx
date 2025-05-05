@@ -6,42 +6,33 @@ import {
   Marker,
   useLoadScript,
 } from "@react-google-maps/api";
-import { useRef, useState } from "react";
-import { useAddressQuery } from "@/services/map/location.query";
-import { extractShortAddress } from "@/utils";
-import AlarmIcon from "@/components/icons/AlarmIcon";
+import React, { useState } from "react";
 import { circleOptions, mapOptions } from "@/constants";
 import { useWatchPosition } from "@/hooks";
-import { GPSIcon } from "@/components/icons";
 
-const containerStyle = {
-  width: "100%",
-  height: "100%",
-};
+interface GoogleMapViewProps {
+  mapRef: React.RefObject<google.maps.Map | null>;
+  position: {
+    lat: number;
+    lng: number;
+  };
+  setPosition: React.Dispatch<
+    React.SetStateAction<{ lat: number; lng: number }>
+  >;
+}
 
-export default function GoogleMapView() {
-  const mapRef = useRef<google.maps.Map | null>(null);
-
+export default function GoogleMapView({
+  mapRef,
+  position = { lat: 0, lng: 0 },
+  setPosition,
+}: GoogleMapViewProps) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
   });
 
-  const [position, setPosition] = useState<{ lat: number; lng: number }>({
-    lat: 0,
-    lng: 0,
-  });
-
   const [heading, setHeading] = useState<number>(0);
 
-  const { data: currentLocation } = useAddressQuery(position.lat, position.lng);
   useWatchPosition({ setPosition, setHeading });
-
-  const handleGetUserrLocation = () => {
-    if (mapRef.current) {
-      mapRef.current.setCenter(position);
-      mapRef.current.setZoom(19);
-    }
-  };
 
   if (!isLoaded) {
     return (
@@ -53,21 +44,6 @@ export default function GoogleMapView() {
 
   return (
     <>
-      <div className="absolute left-1/2 top-[55px] z-50 flex w-[85%] -translate-x-1/2 items-center justify-between">
-        <p className="text-t3 text-black">
-          {extractShortAddress(currentLocation)}
-        </p>
-        <div className="rounded-xl bg-white p-[10px] shadow-custom-gray">
-          <AlarmIcon />
-        </div>
-      </div>
-      <div
-        onClick={handleGetUserrLocation}
-        className="p-[10px] rounded-[100%] bg-white shadow-custom-gray absolute left-6 bottom-[167px] z-50"
-      >
-        <GPSIcon />
-      </div>
-
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={position}
@@ -91,3 +67,8 @@ export default function GoogleMapView() {
     </>
   );
 }
+
+const containerStyle = {
+  width: "100%",
+  height: "100%",
+};
