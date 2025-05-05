@@ -34,7 +34,7 @@ export default function Home() {
           {extractShortAddress(currentLocation)}
         </p>
         <div className="rounded-xl bg-white p-[10px] shadow-custom-gray">
-          <AlarmIcon />
+          <AlarmIcon isRead />
         </div>
       </div>
       <div

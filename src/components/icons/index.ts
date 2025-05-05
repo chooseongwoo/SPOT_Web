@@ -6,3 +6,4 @@ export { default as KakaoLogo } from "./KakaoLogo";
 export { default as CameraIcon } from "./CameraIcon";
 export { default as ChevronLeftIcon } from "./ChevronLeftIcon";
 export { default as GPSIcon } from "./GPSIcon";
+export { default as AlarmIcon } from "./AlarmIcon";
