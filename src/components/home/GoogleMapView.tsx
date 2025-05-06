@@ -4,12 +4,15 @@ import {
   Circle,
   GoogleMap,
   Marker,
+  OverlayView,
   useLoadScript,
 } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { circleOptions, mapOptions } from "@/constants";
 import { useWatchPosition } from "@/hooks";
 import { Position, PositionType } from "@/types";
+import MessageMarker from "@/components/home/MessageMarker";
+import { messageData } from "@/data/messageData";
 
 interface GoogleMapViewProps extends PositionType {
   mapRef: React.RefObject<google.maps.Map | null>;
@@ -58,6 +61,23 @@ export default function GoogleMapView({
             anchor: new window.google.maps.Point(20, 20),
           }}
         />
+        {messageData.map((message) => (
+          <OverlayView
+            key={message.id}
+            position={{ lat: message.lat, lng: message.lng }}
+            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+          >
+            <MessageMarker
+              type={message.is_time_capsule ? "capsule" : "message"}
+              read={message.read}
+              locked={
+                message.open_at ? new Date(message.open_at) > new Date() : false
+              }
+              remainTime="23:09:33"
+            />
+          </OverlayView>
+        ))}
+
         <Circle center={position} options={circleOptions} />
       </GoogleMap>
     </>
