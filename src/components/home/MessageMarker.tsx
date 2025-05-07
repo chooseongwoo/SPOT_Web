@@ -1,9 +1,11 @@
 import {
   CapsuleIcon,
+  LockIcon,
   MarkerBackgroundIcon,
   MessageIcon,
 } from "@/components/icons";
 import { formatTime } from "@/utils";
+import clsx from "clsx";
 
 interface MessageMarkerProps {
   type: "message" | "capsule";
@@ -23,7 +25,7 @@ export default function MessageMarker({
 
   return (
     <div className="relative h-[38px] w-[30px]">
-      <div className="absolute">
+      <div className={clsx("absolute", isLocked && "blur-[1px]")}>
         <MarkerBackgroundIcon read={isLocked ? true : read} />
       </div>
       <div className="absolute left-1/2 top-2 z-10 -translate-x-1/2">
@@ -34,9 +36,10 @@ export default function MessageMarker({
         )}
       </div>
       {isLocked && remainTime !== null && (
-        <p className="absolute left-1/2 top-6 z-10 -translate-x-1/2 text-cap2 text-gray-5">
-          {formatTime(remainTime)}
-        </p>
+        <div className="absolute left-1/2 top-1 z-10 flex -translate-x-1/2 flex-col items-center">
+          <LockIcon />
+          <p className="text-cap2 text-gray-5">{formatTime(remainTime)}</p>
+        </div>
       )}
     </div>
   );
