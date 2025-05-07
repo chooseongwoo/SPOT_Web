@@ -3,6 +3,7 @@ import {
   MarkerBackgroundIcon,
   MessageIcon,
 } from "@/components/icons";
+import { formatTime } from "@/utils";
 
 interface MessageMarkerProps {
   type: "message" | "capsule";
@@ -20,18 +21,6 @@ export default function MessageMarker({
   const isLocked = openAt ? openAt.getTime() > now.getTime() : false;
   const remainTime = isLocked ? openAt!.getTime() - now.getTime() : null;
 
-  const formatRemainTime = (ms: number): string => {
-    const totalSeconds = Math.floor(ms / 1000);
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-      2,
-      "0"
-    )}:${String(seconds).padStart(2, "0")}`;
-  };
-
   return (
     <div className="relative h-[38px] w-[30px]">
       <div className="absolute">
@@ -46,7 +35,7 @@ export default function MessageMarker({
       </div>
       {isLocked && remainTime !== null && (
         <p className="absolute left-1/2 top-6 z-10 -translate-x-1/2 text-cap2 text-gray-5">
-          {formatRemainTime(remainTime)}
+          {formatTime(remainTime)}
         </p>
       )}
     </div>
