@@ -8,3 +8,4 @@ export { default as ChevronLeftIcon } from "./ChevronLeftIcon";
 export { default as GPSIcon } from "./GPSIcon";
 export { default as AlarmIcon } from "./AlarmIcon";
 export { default as MarkerBackgroundIcon } from "./MarkerBackgroundIcon";
+export { default as CapsuleIcon } from "./CapsuleIcon";

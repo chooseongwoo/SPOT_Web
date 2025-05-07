@@ -70,10 +70,7 @@ export default function GoogleMapView({
             <MessageMarker
               type={message.is_time_capsule ? "capsule" : "message"}
               read={message.read}
-              locked={
-                message.open_at ? new Date(message.open_at) > new Date() : false
-              }
-              remainTime="23:09:33"
+              open_at={message.open_at}
             />
           </OverlayView>
         ))}

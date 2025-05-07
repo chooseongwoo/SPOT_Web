@@ -1,23 +1,53 @@
-import { MarkerBackgroundIcon } from "@/components/icons";
+import {
+  CapsuleIcon,
+  MarkerBackgroundIcon,
+  MessageIcon,
+} from "@/components/icons";
 
 interface MessageMarkerProps {
   type: "message" | "capsule";
   read: boolean;
-  locked?: boolean;
-  remainTime?: string;
+  open_at?: string | null;
 }
 
 export default function MessageMarker({
   type,
   read,
-  locked,
-  remainTime,
+  open_at,
 }: MessageMarkerProps) {
+  const now = new Date();
+  const openAt = open_at ? new Date(open_at) : null;
+  const isLocked = openAt ? openAt.getTime() > now.getTime() : false;
+  const remainTime = isLocked ? openAt!.getTime() - now.getTime() : null;
+
+  const formatRemainTime = (ms: number): string => {
+    const totalSeconds = Math.floor(ms / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+      2,
+      "0"
+    )}:${String(seconds).padStart(2, "0")}`;
+  };
+
   return (
-    <div className="relative">
-      <MarkerBackgroundIcon read={read} />
-      {type === "capsule" && (
-        <
+    <div className="relative h-[38px] w-[30px]">
+      <div className="absolute">
+        <MarkerBackgroundIcon read={isLocked ? true : read} />
+      </div>
+      <div className="absolute left-1/2 top-2 z-10 -translate-x-1/2">
+        {type === "message" ? (
+          <MessageIcon color="#FFF" size={16} />
+        ) : (
+          <CapsuleIcon />
+        )}
+      </div>
+      {isLocked && remainTime !== null && (
+        <p className="absolute left-1/2 top-6 z-10 -translate-x-1/2 text-cap2 text-gray-5">
+          {formatRemainTime(remainTime)}
+        </p>
       )}
     </div>
   );
