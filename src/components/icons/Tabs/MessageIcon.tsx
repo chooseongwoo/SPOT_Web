@@ -1,6 +1,6 @@
 import { IconType } from "@/types";
 
-const IconHistory = ({ color }: IconType) => {
+const IconMessage = ({ color }: IconType) => {
   return (
     <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
       <g id="icon_invite">
@@ -16,4 +16,4 @@ const IconHistory = ({ color }: IconType) => {
   );
 };
 
-export default IconHistory;
+export default IconMessage;

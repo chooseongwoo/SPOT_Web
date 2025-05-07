@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { IconHome, IconHistory, IconProfile } from "@/components/icons";
+import { HomeIcon, MessageIcon, ProfileIcon } from "@/components/icons";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
 const menuItems = [
-  { label: "홈", icon: IconHome, path: "/" },
-  { label: "메시지", icon: IconHistory, path: "/message" },
-  { label: "프로필", icon: IconProfile, path: "/profile" },
+  { label: "홈", icon: HomeIcon, path: "/" },
+  { label: "메시지", icon: MessageIcon, path: "/message" },
+  { label: "프로필", icon: ProfileIcon, path: "/profile" },
 ];
 
 const Navigationbar = () => {

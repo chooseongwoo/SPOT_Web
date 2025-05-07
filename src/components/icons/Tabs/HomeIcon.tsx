@@ -1,6 +1,6 @@
 import { IconType } from "@/types";
 
-const IconHome = ({ color }: IconType) => {
+const HomeIcon = ({ color }: IconType) => {
   return (
     <svg width="24" height="25" viewBox="0 0 24 25" fill="none">
       <path
@@ -11,4 +11,4 @@ const IconHome = ({ color }: IconType) => {
   );
 };
 
-export default IconHome;
+export default HomeIcon;
