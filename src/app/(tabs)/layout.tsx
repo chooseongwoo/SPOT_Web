@@ -1,4 +1,4 @@
-import BottomNav from "@/components/common/TabNavigationBar";
+import { BottomTabBar } from "@/components/common";
 
 export default function TabsLayout({
   children,
@@ -8,7 +8,7 @@ export default function TabsLayout({
   return (
     <main>
       {children}
-      <BottomNav />
+      <BottomTabBar />
     </main>
   );
 }

@@ -11,7 +11,7 @@ const menuItems = [
   { label: "프로필", icon: ProfileIcon, path: "/profile" },
 ];
 
-const Navigationbar = () => {
+const BottomTabBar = () => {
   const pathname = usePathname();
 
   return (
@@ -40,4 +40,4 @@ const Navigationbar = () => {
   );
 };
 
-export default Navigationbar;
+export default BottomTabBar;
