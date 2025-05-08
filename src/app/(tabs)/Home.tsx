@@ -1,7 +1,7 @@
 "use client";
 
 import { BottomSheet } from "@/components/home";
-import { GPSIcon } from "@/components/icons";
+import { GPSIcon, PlusIcon } from "@/components/icons";
 import AlarmIcon from "@/components/icons/AlarmIcon";
 import { useAddressQuery } from "@/services/map/location.query";
 import { Position } from "@/types";
@@ -19,6 +19,8 @@ export default function Home() {
     lat: 0,
     lng: 0,
   });
+
+  const [sheetHeight, setSheetHeight] = useState(150);
 
   const { data: currentLocation } = useAddressQuery(position.lat, position.lng);
 
@@ -39,19 +41,33 @@ export default function Home() {
           <AlarmIcon isRead />
         </div>
       </div>
-      <div
-        onClick={handleGetUserLocation}
-        className="absolute bottom-[167px] left-6 z-50 rounded-[100%] bg-white p-[10px] shadow-custom-gray"
-      >
-        <GPSIcon />
-      </div>
+
       <GoogleMapView
         mapRef={mapRef}
         position={position}
         setPosition={setPosition}
       />
-      <BottomSheet maxHeight={520} height={180} minHeight={180}>
-        ㅏㅏ
+      <div
+        onClick={handleGetUserLocation}
+        style={{
+          transform: `translateY(-${sheetHeight + 60}px)`,
+          transition: "transform 0.1s ease-out",
+        }}
+        className="fixed left-6 z-50 rounded-full bg-white p-[10px] shadow-custom-gray transition-all"
+      >
+        <GPSIcon />
+      </div>
+
+      <BottomSheet
+        maxHeight={520}
+        height={150}
+        minHeight={150}
+        onHeightChange={setSheetHeight}
+      >
+        <div className="flex w-full items-center justify-between">
+          <p className="text-headline text-black">기록</p>
+          <PlusIcon />
+        </div>
       </BottomSheet>
     </div>
   );

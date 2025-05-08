@@ -7,6 +7,7 @@ interface BottomSheetProps {
   height: number;
   minHeight: number;
   maxHeight: number;
+  onHeightChange?: (_: number) => void;
 }
 
 export default function BottomSheet({
@@ -14,6 +15,7 @@ export default function BottomSheet({
   height,
   minHeight,
   maxHeight,
+  onHeightChange,
 }: BottomSheetProps) {
   const [heightValue, setHeightValue] = useState(height);
   const [isDragging, setIsDragging] = useState(false);
@@ -25,6 +27,10 @@ export default function BottomSheet({
     setMaxHeightValue(maxHeight || window.innerHeight * 0.8);
   }, [maxHeight]);
 
+  useEffect(() => {
+    onHeightChange?.(heightValue);
+  }, [heightValue, onHeightChange]);
+
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     setIsDragging(true);
     dragStartY.current = "touches" in e ? e.touches[0].clientY : e.clientY;
@@ -34,14 +40,12 @@ export default function BottomSheet({
   const handleDrag = useCallback(
     (e: MouseEvent | TouchEvent) => {
       if (!isDragging) return;
-
       const currentY = "touches" in e ? e.touches[0].clientY : e.clientY;
       const deltaY = dragStartY.current - currentY;
       const newHeight = Math.min(
         Math.max(startHeight.current + deltaY, minHeight),
         maxHeightValue || window.innerHeight * 0.8
       );
-
       setHeightValue(newHeight);
     },
     [isDragging, maxHeightValue, minHeight]
@@ -56,7 +60,6 @@ export default function BottomSheet({
     document.addEventListener("mouseup", handleDragEnd);
     document.addEventListener("touchmove", handleDrag);
     document.addEventListener("touchend", handleDragEnd);
-
     return () => {
       document.removeEventListener("mousemove", handleDrag);
       document.removeEventListener("mouseup", handleDragEnd);
@@ -71,7 +74,7 @@ export default function BottomSheet({
 
   return (
     <div
-      className="shadow-lg fixed bottom-0 left-0 z-40 w-full rounded-t-2xl bg-white"
+      className="shadow-lg fixed bottom-0 left-0 z-40 w-full rounded-t-2xl bg-white px-6"
       style={{
         height: heightValue,
         transition: isDragging ? "none" : "height 0.2s ease",
