@@ -1,5 +1,6 @@
 "use client";
 
+import { BottomSheet } from "@/components/home";
 import { GPSIcon } from "@/components/icons";
 import AlarmIcon from "@/components/icons/AlarmIcon";
 import { useAddressQuery } from "@/services/map/location.query";
@@ -40,7 +41,7 @@ export default function Home() {
       </div>
       <div
         onClick={handleGetUserLocation}
-        className="p-[10px] rounded-[100%] bg-white shadow-custom-gray absolute left-6 bottom-[167px] z-50"
+        className="absolute bottom-[167px] left-6 z-50 rounded-[100%] bg-white p-[10px] shadow-custom-gray"
       >
         <GPSIcon />
       </div>
@@ -49,6 +50,9 @@ export default function Home() {
         position={position}
         setPosition={setPosition}
       />
+      <BottomSheet maxHeight={520} height={180} minHeight={180}>
+        ㅏㅏ
+      </BottomSheet>
     </div>
   );
 }

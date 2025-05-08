@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronLeftIcon } from "@/components/icons";
 import { useRouter } from "next/navigation";
 
