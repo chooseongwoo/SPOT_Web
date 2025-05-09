@@ -25,7 +25,7 @@ module.exports = {
       colors: {
         green: {
           light: "#EAFAF4",
-          DEFAULT: "#2AD18E",
+          default: "#2AD18E",
           hover: "#26BC80",
           active: "#22A772",
         },
