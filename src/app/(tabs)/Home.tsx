@@ -1,6 +1,7 @@
 "use client";
 
-import { BottomSheet, ErrorAlert } from "@/components/home";
+import { BottomSheet } from "@/components/home";
+import EmptyHistory from "@/components/home/EmptyHistory";
 import { GPSIcon, PlusIcon } from "@/components/icons";
 import AlarmIcon from "@/components/icons/AlarmIcon";
 import { useAddressQuery } from "@/services/map/location.query";
@@ -33,7 +34,6 @@ export default function Home() {
 
   return (
     <div className="size-full flex-1">
-      <ErrorAlert errorMessage="아직 타임캡슐이 잠겨있어요!" />
       <div className="absolute left-1/2 top-[55px] z-50 flex w-[85%] -translate-x-1/2 items-center justify-between">
         <p className="text-t3 text-black">
           {extractShortAddress(currentLocation)}
@@ -61,7 +61,7 @@ export default function Home() {
 
       <BottomSheet
         maxHeight={520}
-        height={150}
+        height={520}
         minHeight={150}
         onHeightChange={setSheetHeight}
       >
@@ -69,7 +69,7 @@ export default function Home() {
           <p className="text-headline text-black">기록</p>
           <PlusIcon />
         </div>
-        <div className="flex flex-col "></div>
+        <EmptyHistory />
       </BottomSheet>
     </div>
   );
