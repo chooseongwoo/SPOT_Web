@@ -1,6 +1,17 @@
 import { IconType } from "@/types";
+import clsx from "clsx";
 
-export default function ChevronLeftIcon({ handleClick }: IconType) {
+export default function ChevronIcon({
+  handleClick,
+  direction = "left",
+}: IconType) {
+  const rotationClass = clsx({
+    "rotate-0": direction === "left",
+    "rotate-180": direction === "right",
+    "-rotate-90": direction === "up",
+    "rotate-90": direction === "down",
+  });
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,6 +20,7 @@ export default function ChevronLeftIcon({ handleClick }: IconType) {
       viewBox="0 0 16 24"
       fill="none"
       onClick={handleClick}
+      className={rotationClass + " transition-transform"}
     >
       <path
         fillRule="evenodd"
