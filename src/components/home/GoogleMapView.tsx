@@ -10,19 +10,20 @@ import {
 import React, { useState } from "react";
 import { circleOptions, mapOptions } from "@/constants";
 import { useWatchPosition } from "@/hooks";
-import { Position, PositionType } from "@/types";
+import { MessageType, Position, PositionType } from "@/types";
 import MessageMarker from "@/components/home/MessageMarker";
-import { messageData } from "@/data/messageData";
 
 interface GoogleMapViewProps extends PositionType {
   mapRef: React.RefObject<google.maps.Map | null>;
   setPosition: React.Dispatch<React.SetStateAction<Position>>;
+  messageData: MessageType[];
 }
 
 export default function GoogleMapView({
   mapRef,
   position = { lat: 0, lng: 0 },
   setPosition,
+  messageData,
 }: GoogleMapViewProps) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,

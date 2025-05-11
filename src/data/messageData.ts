@@ -1,6 +1,6 @@
 export const messageData = [
   {
-    id: "msg1",
+    id: 1,
     user_id: "user1",
     content: "📬 일반 메시지 (안 읽음)",
     lat: 35.1889725,
@@ -12,7 +12,7 @@ export const messageData = [
     read: false,
   },
   {
-    id: "msg2",
+    id: 2,
     user_id: "user2",
     content: "📭 일반 메시지 (읽음)",
     lat: 35.1886725,
@@ -24,7 +24,7 @@ export const messageData = [
     read: true,
   },
   {
-    id: "msg3",
+    id: 3,
     user_id: "user3",
     content: "⏳ 타임캡슐 (아직 열람 불가)",
     lat: 35.1888725,
@@ -36,7 +36,7 @@ export const messageData = [
     read: false,
   },
   {
-    id: "msg4",
+    id: 4,
     user_id: "user4",
     content: "📬 타임캡슐 (열람 가능)",
     lat: 35.1887725,
@@ -48,7 +48,7 @@ export const messageData = [
     read: false,
   },
   {
-    id: "msg5",
+    id: 5,
     user_id: "user5",
     content: "📬 타임캡슐 (열람 가능 & 읽음)",
     lat: 35.1885925,
