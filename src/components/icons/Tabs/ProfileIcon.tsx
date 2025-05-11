@@ -1,7 +1,7 @@
 import { IconType } from "@/types";
 import React from "react";
 
-const IconProfile = ({ color }: IconType) => {
+const ProfileIcon = ({ color }: IconType) => {
   return (
     <svg width="24" height="25" viewBox="0 0 24 25" fill="none">
       <g id="icon_profile">
@@ -20,4 +20,4 @@ const IconProfile = ({ color }: IconType) => {
   );
 };
 
-export default IconProfile;
+export default ProfileIcon;
