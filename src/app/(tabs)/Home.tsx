@@ -1,6 +1,6 @@
 "use client";
 
-import { BottomSheet } from "@/components/home";
+import { BottomSheet, MessageItem } from "@/components/home";
 import EmptyHistory from "@/components/home/EmptyHistory";
 import { GPSIcon, PlusIcon } from "@/components/icons";
 import AlarmIcon from "@/components/icons/AlarmIcon";
@@ -9,6 +9,7 @@ import { Position } from "@/types";
 import { extractShortAddress } from "@/utils";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
+import { messageData } from "@/data/messageData";
 
 const GoogleMapView = dynamic(() => import("@/components/home/GoogleMapView"), {
   ssr: false,
@@ -47,6 +48,7 @@ export default function Home() {
         mapRef={mapRef}
         position={position}
         setPosition={setPosition}
+        messageData={messageData}
       />
       <div
         onClick={handleGetUserLocation}
@@ -69,7 +71,21 @@ export default function Home() {
           <p className="text-headline text-black">기록</p>
           <PlusIcon />
         </div>
-        <EmptyHistory />
+        {messageData.length > 0 ? (
+          <div className="flex w-full flex-col divide-y divide-gray-1 py-3">
+            {messageData.map((message) => (
+              <div key={message.id} className="py-[10px]">
+                <MessageItem
+                  type={message.is_time_capsule ? "capsule" : "message"}
+                  read={message.read}
+                  open_at={message.open_at}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <EmptyHistory />
+        )}
       </BottomSheet>
     </div>
   );
