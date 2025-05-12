@@ -4,6 +4,7 @@ import {
   LockIcon,
   MessageIcon,
 } from "@/components/icons";
+import { useRemainTime } from "@/hooks";
 import { formatTime } from "@/utils";
 import clsx from "clsx";
 
@@ -14,10 +15,7 @@ interface MessageItemProps {
 }
 
 export default function MessageItem({ type, read, open_at }: MessageItemProps) {
-  const now = new Date();
-  const openAt = open_at ? new Date(open_at) : null;
-  const isLocked = openAt ? openAt.getTime() > now.getTime() : false;
-  const remainTime = isLocked ? openAt!.getTime() - now.getTime() : null;
+  const { remainTime, isLocked } = useRemainTime(open_at!);
 
   return (
     <div className="flex w-full items-center justify-between">
