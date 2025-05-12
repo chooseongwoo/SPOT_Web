@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface BottomSheetProps {
@@ -87,7 +88,15 @@ export default function BottomSheet({
       >
         <div className="h-1 w-[47px] rounded-full bg-gray-300" />
       </div>
-      <div className="size-full overflow-y-auto">{children}</div>
+      <div
+        className={clsx(
+          "size-full",
+          heightValue === minHeight && "overflow-hidden",
+          heightValue !== minHeight && "overflow-y-auto"
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 }
