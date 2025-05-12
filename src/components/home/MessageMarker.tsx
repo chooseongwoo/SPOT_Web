@@ -30,7 +30,7 @@ export default function MessageMarker({
         {type === "message" ? (
           <MessageIcon color="#FFF" size={16} />
         ) : (
-          <CapsuleIcon />
+          <CapsuleIcon size={16} />
         )}
       </div>
       {isLocked && remainTime !== null && (

@@ -72,7 +72,16 @@ export default function Home() {
           <PlusIcon />
         </div>
         {messageData.length > 0 ? (
-          <div className="flex w-full flex-col divide-y divide-gray-1 py-3">
+          <div className="flex w-full flex-col divide-y divide-gray-1 pb-[45px] pt-3">
+            {messageData.map((message) => (
+              <div key={message.id} className="py-[10px]">
+                <MessageItem
+                  type={message.is_time_capsule ? "capsule" : "message"}
+                  read={message.read}
+                  open_at={message.open_at}
+                />
+              </div>
+            ))}
             {messageData.map((message) => (
               <div key={message.id} className="py-[10px]">
                 <MessageItem

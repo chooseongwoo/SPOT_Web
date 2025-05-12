@@ -6,7 +6,6 @@ import {
 } from "@/components/icons";
 import { useRemainTime } from "@/hooks";
 import { formatTime } from "@/utils";
-import clsx from "clsx";
 
 interface MessageItemProps {
   type: "message" | "capsule";
@@ -30,12 +29,15 @@ export default function MessageItem({ type, read, open_at }: MessageItemProps) {
             <MessageIcon size={24} color={read ? "#C3C3C3" : "#2AD18E"} />
           )}
         </div>
-        <div
-          className={clsx(
-            "relative flex w-full items-center justify-between",
-            isLocked && "bg-white/50 blur-[3.5px]"
+        <div className="relative flex w-full items-center justify-between">
+          {isLocked && (
+            <div className="absolute z-50 flex items-center gap-1 py-[11px]">
+              <LockIcon size={24} />
+              <p className="text-btn1 text-gray-4" suppressHydrationWarning>
+                {formatTime(remainTime)}
+              </p>
+            </div>
           )}
-        >
           <div className="flex w-full flex-col">
             <div className="flex items-center gap-[5px]">
               <p className="text-b2 text-black">추성우</p>
@@ -46,16 +48,11 @@ export default function MessageItem({ type, read, open_at }: MessageItemProps) {
             </p>
           </div>
           <ChevronIcon direction="right" color="#C3C3C3" />
+          {isLocked && (
+            <div className="absolute inset-0 z-0 bg-white/60 backdrop-blur-[2.5px]" />
+          )}
         </div>
       </div>
-      {isLocked && (
-        <div className="absolute flex items-center gap-1 px-[50px] py-[11px]">
-          <LockIcon size={24} />
-          <p className="text-btn1 text-gray-4" suppressHydrationWarning>
-            {formatTime(remainTime)}
-          </p>
-        </div>
-      )}
     </div>
   );
 }
