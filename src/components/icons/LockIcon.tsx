@@ -1,8 +1,10 @@
-export default function LockIcon() {
+import { IconType } from "@/types";
+
+export default function LockIcon({ size = 19 }: IconType) {
   return (
     <svg
-      width="19"
-      height="18"
+      width={size}
+      height={size}
       viewBox="0 0 19 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

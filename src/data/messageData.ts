@@ -31,7 +31,7 @@ export const messageData = [
     lng: 128.9036629,
     is_time_capsule: true,
     ar_required: false,
-    open_at: "2025-05-08T12:00:00Z",
+    open_at: "2025-05-15T12:00:00Z",
     created_at: "2025-05-01T10:00:00Z",
     read: false,
   },
