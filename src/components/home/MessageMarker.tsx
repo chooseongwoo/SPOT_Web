@@ -36,7 +36,9 @@ export default function MessageMarker({
       {isLocked && remainTime !== null && (
         <div className="absolute left-1/2 top-1 z-10 flex -translate-x-1/2 flex-col items-center">
           <LockIcon />
-          <p className="text-cap2 text-gray-5">{formatTime(remainTime)}</p>
+          <p className="text-cap2 text-gray-5" suppressHydrationWarning>
+            {formatTime(remainTime)}
+          </p>
         </div>
       )}
     </div>

@@ -51,7 +51,9 @@ export default function MessageItem({ type, read, open_at }: MessageItemProps) {
       {isLocked && (
         <div className="absolute flex items-center gap-1 px-[50px] py-[11px]">
           <LockIcon size={24} />
-          <p className="text-btn1 text-gray-4">{formatTime(remainTime)}</p>
+          <p className="text-btn1 text-gray-4" suppressHydrationWarning>
+            {formatTime(remainTime)}
+          </p>
         </div>
       )}
     </div>
