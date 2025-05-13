@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import { circleOptions, mapOptions } from "@/constants";
 import { useWatchPosition } from "@/hooks";
 import { MessageType, Position, PositionType } from "@/types";
-import MessageMarker from "@/components/home/MessageMarker";
+import MessageMarker from "./MessageMarker";
 
 interface GoogleMapViewProps extends PositionType {
   mapRef: React.RefObject<google.maps.Map | null>;

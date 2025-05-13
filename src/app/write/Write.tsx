@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { CloseIcon } from "@/components/icons";
 import HistoryTypeContainer from "@/app/write/HistoryTypeContainer";
-import { CustomButton } from "@/components/common";
+import { CustomButton } from "@/components/";
 import { useRouter } from "next/navigation";
 
 export default function Write() {

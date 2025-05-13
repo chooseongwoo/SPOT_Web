@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { CustomInput, CustomButton, Header } from "@/components/common";
+import { CustomInput, CustomButton, Header } from "@/components";
 import { CameraIcon } from "@/components/icons";
 import useUploadImage from "@/hooks/useUploadImage";
 import { useUpdateUserMutation } from "@/services/user/mutation";

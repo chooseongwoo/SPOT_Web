@@ -1,4 +1,4 @@
-import { BottomTabBar } from "@/components/common";
+import { BottomTabBar } from "@/components";
 
 export default function TabsLayout({
   children,

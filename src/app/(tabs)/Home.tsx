@@ -1,7 +1,10 @@
 "use client";
 
-import { BottomSheet, MessageItem } from "@/components/home";
-import EmptyHistory from "@/components/home/EmptyHistory";
+import {
+  BottomSheet,
+  MessageItem,
+  EmptyHistory,
+} from "@/app/(tabs)/components";
 import { GPSIcon, PlusIcon } from "@/components/icons";
 import AlarmIcon from "@/components/icons/AlarmIcon";
 import { useAddressQuery } from "@/services/map/location.query";
@@ -12,9 +15,12 @@ import { useRef, useState } from "react";
 import { messageData } from "@/data/messageData";
 import { useRouter } from "next/navigation";
 
-const GoogleMapView = dynamic(() => import("@/components/home/GoogleMapView"), {
-  ssr: false,
-});
+const GoogleMapView = dynamic(
+  () => import("@/app/(tabs)/components/GoogleMapView"),
+  {
+    ssr: false,
+  }
+);
 
 export default function Home() {
   const router = useRouter();
