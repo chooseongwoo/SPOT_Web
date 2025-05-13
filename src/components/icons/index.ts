@@ -11,3 +11,4 @@ export { default as MarkerBackgroundIcon } from "./MarkerBackgroundIcon";
 export { default as CapsuleIcon } from "./CapsuleIcon";
 export { default as LockIcon } from "./LockIcon";
 export { default as PlusIcon } from "./PlusIcon";
+export { default as CloseIcon } from "./CloseIcon";

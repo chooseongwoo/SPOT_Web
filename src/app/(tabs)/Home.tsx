@@ -10,12 +10,14 @@ import { extractShortAddress } from "@/utils";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import { messageData } from "@/data/messageData";
+import { useRouter } from "next/navigation";
 
 const GoogleMapView = dynamic(() => import("@/components/home/GoogleMapView"), {
   ssr: false,
 });
 
 export default function Home() {
+  const router = useRouter();
   const mapRef = useRef<google.maps.Map | null>(null);
   const [position, setPosition] = useState<Position>({
     lat: 0,
@@ -69,7 +71,12 @@ export default function Home() {
       >
         <div className="flex w-full items-center justify-between">
           <p className="text-headline text-black">기록</p>
-          <PlusIcon />
+          <div
+            className="flex justify-center items-center"
+            onClick={() => router.push("/write")}
+          >
+            <PlusIcon />
+          </div>
         </div>
         {messageData.length > 0 ? (
           <div className="flex w-full flex-col divide-y divide-gray-1 pb-[45px] pt-3">

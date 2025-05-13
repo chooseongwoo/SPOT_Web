@@ -14,7 +14,7 @@ const CustomButton = ({ title, onClick, disabled = false }: ButtonProps) => {
       onClick={onClick}
       disabled={disabled}
       className={clsx(
-        "flex h-14 items-center justify-center rounded-xl p-[10px]",
+        "flex h-14 items-center w-full justify-center rounded-xl p-[10px]",
         disabled ? "cursor-not-allowed bg-gray-3" : "bg-green-default"
       )}
     >
