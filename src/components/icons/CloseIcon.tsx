@@ -1,4 +1,6 @@
-export default function CloseIcon() {
+import { SVGProps } from "react";
+
+export default function CloseIcon({ ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,6 +8,7 @@ export default function CloseIcon() {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
+      {...props}
     >
       <path
         fillRule="evenodd"

@@ -12,7 +12,7 @@ export default function Write() {
   return (
     <div className="w-full h-screen flex flex-col items-center">
       <div className="w-full px-6 py-3 flex justify-end items-start">
-        <CloseIcon />
+        <CloseIcon onClick={() => router.back()} />
       </div>
       <div className="flex flex-col gap-[30px] mt-60 h-full">
         <p className="text-black text-b1">어떤 방식으로 기록을 남길까요?</p>
