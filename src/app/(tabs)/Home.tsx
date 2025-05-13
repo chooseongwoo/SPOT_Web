@@ -63,7 +63,7 @@ export default function Home() {
 
       <BottomSheet
         maxHeight={520}
-        height={520}
+        height={150}
         minHeight={150}
         onHeightChange={setSheetHeight}
       >
