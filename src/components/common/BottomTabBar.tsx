@@ -24,7 +24,7 @@ const BottomTabBar = () => {
             href={item.path}
             className="flex h-max w-[72px] flex-col items-center gap-[2px]"
           >
-            <item.icon color={isActive ? "#26BC80" : "#C3C3C3"} />
+            <item.icon color={isActive ? "#2AD18E" : "#C3C3C3"} />
             <p
               className={clsx(
                 "text-cap2",
