@@ -1,12 +1,12 @@
 "use client";
 
-import BackButton from "@/app/write/BackButton";
+import { CloseTab, CustomButton } from "@/components";
 import AnonymousSelect from "../AnonymousSelect";
 import Textarea from "../Textarea";
-import { CloseTab, CustomButton } from "@/components";
 import { useState } from "react";
+import BackButton from "@/app/write/BackButton";
 
-export default function Message() {
+export default function Capsule() {
   const [isAnonymous, setIsAnonymous] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
   const [content, setContent] = useState("");

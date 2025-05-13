@@ -7,8 +7,8 @@ export default function CloseTab() {
   const router = useRouter();
 
   return (
-    <div className="w-full py-3 flex justify-end items-start">
-      <CloseIcon onClick={() => router.back()} />
+    <div className="flex w-full items-start justify-end py-3">
+      <CloseIcon onClick={() => router.push("/")} />
     </div>
   );
 }
