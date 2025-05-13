@@ -28,7 +28,7 @@ const CustomInput = ({
         placeholder={placeholder}
         className={clsx(
           "h-14 rounded-lg border px-4 py-2 text-b2 text-black outline-none placeholder:text-gray-3",
-          isFocused ? "border-green-500" : "border-gray-300"
+          isFocused ? "border-green-active" : "border-gray-2"
         )}
         value={value}
         onChange={(e) => setValue(e.target.value)}

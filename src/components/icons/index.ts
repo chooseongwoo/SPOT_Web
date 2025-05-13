@@ -12,3 +12,5 @@ export { default as CapsuleIcon } from "./CapsuleIcon";
 export { default as LockIcon } from "./LockIcon";
 export { default as PlusIcon } from "./PlusIcon";
 export { default as CloseIcon } from "./CloseIcon";
+export { default as Checked } from "./Checked";
+export { default as Unchecked } from "./Unchecked";

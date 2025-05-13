@@ -29,7 +29,9 @@ export default function Write() {
       <div className="absolute bottom-10 w-full px-6">
         <CustomButton
           title="다음"
-          onClick={() => router.push(`${selected === "capsule"}`)}
+          onClick={() =>
+            router.push(`${selected === "capsule" ? "capsule" : "message"}`)
+          }
           disabled={!selected}
         />
       </div>
