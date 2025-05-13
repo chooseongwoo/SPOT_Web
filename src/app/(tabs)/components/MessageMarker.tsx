@@ -5,7 +5,7 @@ import {
   MessageIcon,
 } from "@/components/icons";
 import { useRemainTime } from "@/hooks";
-import { formatTime } from "@/utils";
+import { formatRemainTime } from "@/utils";
 import clsx from "clsx";
 
 interface MessageMarkerProps {
@@ -37,7 +37,7 @@ export default function MessageMarker({
         <div className="absolute left-1/2 top-1 z-10 flex -translate-x-1/2 flex-col items-center">
           <LockIcon />
           <p className="text-cap2 text-gray-5" suppressHydrationWarning>
-            {formatTime(remainTime)}
+            {formatRemainTime(remainTime)}
           </p>
         </div>
       )}

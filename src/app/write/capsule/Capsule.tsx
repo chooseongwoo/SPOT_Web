@@ -1,15 +1,30 @@
 "use client";
 
-import { CloseTab, CustomButton } from "@/components";
+import { CloseTab, CustomButton, CustomInput } from "@/components";
 import AnonymousSelect from "../AnonymousSelect";
 import Textarea from "../Textarea";
 import { useState } from "react";
 import BackButton from "@/app/write/BackButton";
+import { formatInputDate, formatInputTime } from "@/utils";
 
 export default function Capsule() {
   const [isAnonymous, setIsAnonymous] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
-  const [content, setContent] = useState("");
+  const [values, setValues] = useState<{
+    date: string;
+    time: string;
+    content: string;
+  }>({ date: "", time: "", content: "" });
+
+  const handleValueChange = (
+    field: "date" | "time" | "content",
+    value: string
+  ) => {
+    setValues((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   return (
     <>
@@ -20,11 +35,25 @@ export default function Capsule() {
             isAnonymous={isAnonymous}
             setIsAnonymous={setIsAnonymous}
           />
+          <CustomInput
+            label="날짜"
+            placeholder="2025/01/01"
+            value={values.date}
+            setValue={(val) => handleValueChange("date", val)}
+            formatter={formatInputDate}
+          />
+          <CustomInput
+            label="시간"
+            placeholder="13:00"
+            value={values.time}
+            setValue={(val) => handleValueChange("time", val)}
+            formatter={formatInputTime}
+          />
           <Textarea
             isFocused={isFocused}
             setIsFocused={setIsFocused}
-            content={content}
-            setContent={setContent}
+            content={values.content}
+            setContent={(val) => handleValueChange("content", val)}
           />
         </div>
       </div>
@@ -32,6 +61,7 @@ export default function Capsule() {
         <BackButton />
         <CustomButton
           title="다음"
+          disabled={!values.date || !values.time || !values.content}
           onClick={() => {
             return 0;
           }}

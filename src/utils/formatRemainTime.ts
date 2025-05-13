@@ -1,4 +1,4 @@
-const formatTime = (ms: number | null): string => {
+const formatRemainTime = (ms: number | null): string => {
   const totalSeconds = Math.floor(ms! / 1000);
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -10,4 +10,4 @@ const formatTime = (ms: number | null): string => {
   )}:${String(seconds).padStart(2, "0")}`;
 };
 
-export default formatTime;
+export default formatRemainTime;

@@ -5,7 +5,7 @@ import {
   MessageIcon,
 } from "@/components/icons";
 import { useRemainTime } from "@/hooks";
-import { formatTime } from "@/utils";
+import { formatRemainTime } from "@/utils";
 
 interface MessageItemProps {
   type: "message" | "capsule";
@@ -34,7 +34,7 @@ export default function MessageItem({ type, read, open_at }: MessageItemProps) {
             <div className="absolute z-50 flex items-center gap-1 py-[11px]">
               <LockIcon size={24} />
               <p className="text-btn1 text-gray-4" suppressHydrationWarning>
-                {formatTime(remainTime)}
+                {formatRemainTime(remainTime)}
               </p>
             </div>
           )}

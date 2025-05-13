@@ -8,17 +8,25 @@ interface InputProps {
   placeholder: string;
   type?: React.HTMLInputTypeAttribute;
   value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  setValue: (_: string) => void;
+  formatter?: (_: string) => string;
 }
 
-const CustomInput = ({
+export default function CustomInput({
   label,
   placeholder,
   type = "text",
   value,
   setValue,
-}: InputProps) => {
+  formatter,
+}: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    const formatted = formatter ? formatter(raw) : raw;
+    setValue(formatted);
+  };
 
   return (
     <div className="flex w-full flex-col gap-2">
@@ -31,12 +39,10 @@ const CustomInput = ({
           isFocused ? "border-green-active" : "border-gray-2"
         )}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={handleChange}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       />
     </div>
   );
-};
-
-export default CustomInput;
+}

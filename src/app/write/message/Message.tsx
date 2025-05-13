@@ -32,6 +32,7 @@ export default function Message() {
         <BackButton />
         <CustomButton
           title="다음"
+          disabled={!content}
           onClick={() => {
             return 0;
           }}

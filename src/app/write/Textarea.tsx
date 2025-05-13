@@ -4,7 +4,7 @@ interface TextareaProps {
   isFocused: boolean;
   setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
   content: string;
-  setContent: React.Dispatch<React.SetStateAction<string>>;
+  setContent: (_: string) => void;
 }
 
 export default function Textarea({
