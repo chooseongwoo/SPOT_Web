@@ -16,7 +16,7 @@ export default function HistoryTypeContainer({
     <div
       onClick={onClick}
       className={clsx(
-        "flex flex-col items-center justify-between cursor-pointer border px-2 w-28 py-6 rounded-xl",
+        "flex w-28 cursor-pointer flex-col items-center justify-between rounded-xl border px-2 py-6",
         isSelected ? "border-green-default bg-green-light" : "border-gray-200"
       )}
     >

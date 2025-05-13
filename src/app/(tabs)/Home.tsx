@@ -78,7 +78,7 @@ export default function Home() {
         <div className="flex w-full items-center justify-between">
           <p className="text-headline text-black">기록</p>
           <div
-            className="flex justify-center items-center"
+            className="flex items-center justify-center"
             onClick={() => router.push("/write")}
           >
             <PlusIcon />

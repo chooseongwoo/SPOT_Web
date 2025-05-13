@@ -18,12 +18,7 @@ export default function useWatchPosition({
         setPosition({ lat: pos.coords.latitude, lng: pos.coords.longitude });
         setHeading(pos.coords.heading ?? 0);
       },
-      (error) => {
-        // console.error("📡 위치 수신 실패:", {
-        //   code: error.code,
-        //   message: error.message,
-        //   error,
-        // });
+      () => {
         setPosition({ lat: 35.1681608, lng: 129.0573853 });
       },
       {

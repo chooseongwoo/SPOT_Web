@@ -9,11 +9,11 @@ export default function Write() {
   const router = useRouter();
   const [selected, setSelected] = useState<"message" | "capsule" | null>(null);
   return (
-    <div className="w-full h-screen flex flex-col items-center">
+    <div className="flex h-screen w-full flex-col items-center">
       <CloseTab />
-      <div className="flex flex-col gap-[30px] mt-60 h-full">
-        <p className="text-black text-b1">어떤 방식으로 기록을 남길까요?</p>
-        <div className="flex gap-4 justify-center">
+      <div className="mt-60 flex h-full flex-col gap-[30px]">
+        <p className="text-b1 text-black">어떤 방식으로 기록을 남길까요?</p>
+        <div className="flex justify-center gap-4">
           <HistoryTypeContainer
             type="message"
             isSelected={selected === "message"}
