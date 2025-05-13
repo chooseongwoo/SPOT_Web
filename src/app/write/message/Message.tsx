@@ -29,7 +29,7 @@ export default function Message() {
         </div>
       </div>
       <div className="absolute bottom-10 flex w-full gap-[10px] px-6">
-        <BackButton />
+        <BackButton name="이전" />
         <CustomButton
           title="다음"
           disabled={!content}

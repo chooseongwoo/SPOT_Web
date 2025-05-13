@@ -1,4 +1,4 @@
-export default function Unchecked() {
+export default function UncheckedIcon() {
   return (
     <svg
       width="24"

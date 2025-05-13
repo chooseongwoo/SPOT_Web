@@ -1,4 +1,4 @@
-export default function Checked() {
+export default function CheckedIcon() {
   return (
     <svg
       width="24"
