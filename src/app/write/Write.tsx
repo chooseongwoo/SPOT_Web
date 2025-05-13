@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { CloseIcon } from "@/components/icons";
 import HistoryTypeContainer from "@/app/write/HistoryTypeContainer";
-import { CustomButton } from "@/components/";
+import { CustomButton, CloseTab } from "@/components/";
 import { useRouter } from "next/navigation";
 
 export default function Write() {
@@ -11,9 +10,7 @@ export default function Write() {
   const [selected, setSelected] = useState<"message" | "capsule" | null>(null);
   return (
     <div className="w-full h-screen flex flex-col items-center">
-      <div className="w-full px-6 py-3 flex justify-end items-start">
-        <CloseIcon onClick={() => router.back()} />
-      </div>
+      <CloseTab />
       <div className="flex flex-col gap-[30px] mt-60 h-full">
         <p className="text-black text-b1">어떤 방식으로 기록을 남길까요?</p>
         <div className="flex gap-4 justify-center">
