@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import MineContainer from "@/app/(tabs)/message/MineContainer";
+import { messageData } from "@/data/messageData";
 
 export default function Message() {
   const [selectedTab, setSelectedTab] = useState<"mine" | "found">("mine");
@@ -37,12 +39,16 @@ export default function Message() {
         <motion.div
           layout
           transition={{ type: "spring", stiffness: 380, damping: 40 }}
-          className="absolute bottom-0 h-[2px] w-[calc(50%-20px)] bg-black"
+          className="absolute bottom-0 h-[2px] w-[calc(50%-25px)] bg-black"
           style={{
-            left:
-              selectedTab === "mine" ? "calc(0% + 20px)" : "calc(50% + 4px)",
+            left: selectedTab === "mine" ? "calc(0% + 26px)" : "calc(50%)",
           }}
         />
+      </div>
+      <div className="mt-[10px] flex flex-col gap-[10px] px-6 pb-24">
+        {messageData.map((message) => (
+          <MineContainer key={message.id} {...message} />
+        ))}
       </div>
     </div>
   );

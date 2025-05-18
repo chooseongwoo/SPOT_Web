@@ -9,7 +9,7 @@ import { GPSIcon, PlusIcon } from "@/components/icons";
 import AlarmIcon from "@/components/icons/AlarmIcon";
 import { useAddressQuery } from "@/services/map/location.query";
 import { Position } from "@/types";
-import { extractShortAddress } from "@/utils";
+import { extractCleanAddress } from "@/utils";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import { messageData } from "@/data/messageData";
@@ -45,7 +45,7 @@ export default function Home() {
     <div className="size-full flex-1">
       <div className="absolute left-1/2 top-[55px] z-50 flex w-[85%] -translate-x-1/2 items-center justify-between">
         <p className="text-t3 text-black">
-          {extractShortAddress(currentLocation)}
+          {extractCleanAddress(currentLocation?.address_components)}
         </p>
         <div className="rounded-xl bg-white p-[10px] shadow-custom-gray">
           <AlarmIcon isRead />
