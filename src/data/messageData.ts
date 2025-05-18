@@ -10,6 +10,7 @@ export const messageData = [
     open_at: null,
     created_at: "2025-05-05T13:00:00Z",
     read: false,
+    is_anonymous: true,
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ export const messageData = [
     open_at: null,
     created_at: "2025-05-04T10:00:00Z",
     read: true,
+    is_anonymous: false,
   },
   {
     id: 3,
@@ -34,6 +36,7 @@ export const messageData = [
     open_at: "2025-05-15T12:00:00Z",
     created_at: "2025-05-01T10:00:00Z",
     read: false,
+    is_anonymous: true,
   },
   {
     id: 4,
@@ -46,6 +49,7 @@ export const messageData = [
     open_at: "2025-05-01T10:00:00Z",
     created_at: "2025-04-29T09:00:00Z",
     read: false,
+    is_anonymous: false,
   },
   {
     id: 5,
@@ -58,5 +62,6 @@ export const messageData = [
     open_at: "2025-05-02T10:00:00Z",
     created_at: "2025-04-30T14:00:00Z",
     read: true,
+    is_anonymous: true,
   },
 ];

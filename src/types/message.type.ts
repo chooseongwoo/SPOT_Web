@@ -9,6 +9,7 @@ interface MessageType {
   open_at: string | null;
   created_at: string;
   read: boolean;
+  is_anonymous: boolean;
 }
 
 export default MessageType;
