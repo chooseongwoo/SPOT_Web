@@ -24,7 +24,7 @@ export interface GoogleGeocodeResult {
   types: string[];
 }
 
-interface AddressComponent {
+export interface AddressComponent {
   long_name: string;
   short_name: string;
   types: string[];
