@@ -1,4 +1,4 @@
-export default function LocationIcon() {
+export default function FilledLocationIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

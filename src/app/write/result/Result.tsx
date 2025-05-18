@@ -2,7 +2,7 @@
 
 import BackButton from "@/app/write/BackButton";
 import { CloseTab, CustomButton } from "@/components";
-import { LocationIcon, MessageIcon } from "@/components/icons";
+import { FilledLocationIcon, MessageIcon } from "@/components/icons";
 
 export default function Result() {
   return (
@@ -22,7 +22,7 @@ export default function Result() {
 
       <div className="absolute bottom-10 flex w-full flex-col gap-5 px-6">
         <div className="flex items-center justify-center gap-1">
-          <LocationIcon />
+          <FilledLocationIcon />
           <p className="text-footnote text-gray-5">
             <span className="text-green-default">부산광역시 강서구 봉림동</span>
             에 위치해 있습니다.

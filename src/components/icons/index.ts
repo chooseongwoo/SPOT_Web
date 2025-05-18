@@ -14,4 +14,7 @@ export { default as PlusIcon } from "./PlusIcon";
 export { default as CloseIcon } from "./CloseIcon";
 export { default as CheckedIcon } from "./CheckedIcon";
 export { default as UncheckedIcon } from "./UncheckedIcon";
-export { default as LocationIcon } from "./LocationIcon";
+export { default as FilledLocationIcon } from "./FilledLocationIcon";
+export { default as OutlinedLocationIcon } from "./OutlinedLocationIcon";
+export { default as TrashIcon } from "./TrashIcon";
+export { default as CalendarIcon } from "./CalendarIcon";
