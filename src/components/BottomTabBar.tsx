@@ -1,17 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { HomeIcon, MessageIcon, ProfileIcon } from "@/components/icons";
+import { ClockIcon, HomeIcon, ProfileIcon } from "@/components/icons";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
 const menuItems = [
   { label: "홈", icon: HomeIcon, path: "/" },
-  { label: "메시지", icon: MessageIcon, path: "/message" },
+  { label: "기록", icon: ClockIcon, path: "/history" },
   { label: "프로필", icon: ProfileIcon, path: "/profile" },
 ];
 
-const BottomTabBar = () => {
+export default function BottomTabBar() {
   const pathname = usePathname();
 
   return (
@@ -24,7 +24,7 @@ const BottomTabBar = () => {
             href={item.path}
             className="flex h-max w-[72px] flex-col items-center gap-[2px]"
           >
-            <item.icon color={isActive ? "#2AD18E" : "#C3C3C3"} />
+            <item.icon color={isActive ? "#2AD18E" : "#C3C3C3"} size={25} />
             <p
               className={clsx(
                 "text-cap2",
@@ -38,6 +38,4 @@ const BottomTabBar = () => {
       })}
     </div>
   );
-};
-
-export default BottomTabBar;
+}

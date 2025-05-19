@@ -49,7 +49,7 @@ export default function FoundContainer({
         </p>
       </div>
       <p className="break-words text-b2 text-black">{content}</p>
-      <div className="flex gap-[10px] items-center">
+      <div className="flex items-center gap-[10px]">
         <Image
           alt="프로필 이미지"
           src="/images/DefaultProfileImage.png"

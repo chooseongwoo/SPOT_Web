@@ -3,18 +3,18 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import MineContainer from "@/app/(tabs)/message/MineContainer";
+import MineContainer from "@/app/(tabs)/history/MineContainer";
+import FoundContainer from "@/app/(tabs)/history/FoundContainer";
 import { messageData } from "@/data/messageData";
-import FoundContainer from "@/app/(tabs)/message/FoundContainer";
 
-export default function Message() {
+export default function History() {
   const [selectedTab, setSelectedTab] = useState<"mine" | "found">("found");
 
   return (
     <div className="flex h-screen w-full flex-col">
       <div className="fixed flex w-full flex-col bg-white">
         <div className="flex w-full justify-start px-6 py-3">
-          <p className="text-headline text-black">메시지</p>
+          <p className="text-headline text-black">기록</p>
         </div>
 
         <div className="relative flex w-full justify-center gap-[18px] px-6">
@@ -25,7 +25,7 @@ export default function Message() {
               selectedTab === "mine" ? "text-black" : "text-gray-400"
             )}
           >
-            내 메시지
+            내 기록
           </div>
           <div
             onClick={() => setSelectedTab("found")}
@@ -34,7 +34,7 @@ export default function Message() {
               selectedTab === "found" ? "text-black" : "text-gray-400"
             )}
           >
-            발견한 메시지
+            발견한 기록
           </div>
 
           <motion.div
