@@ -4,7 +4,7 @@ import { CloseTab, CustomButton, CustomInput } from "@/components";
 import AnonymousSelect from "../AnonymousSelect";
 import Textarea from "../Textarea";
 import { useState } from "react";
-import BackButton from "@/app/write/BackButton";
+import BackButton from "@/app/(history)/write/BackButton";
 import { formatInputDate, formatInputTime } from "@/utils";
 
 export default function Capsule() {

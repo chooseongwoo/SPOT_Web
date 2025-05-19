@@ -1,6 +1,6 @@
 "use client";
 
-import BackButton from "@/app/write/BackButton";
+import BackButton from "@/app/(history)/write/BackButton";
 import { CloseTab, CustomButton } from "@/components";
 import { FilledLocationIcon, MessageIcon } from "@/components/icons";
 

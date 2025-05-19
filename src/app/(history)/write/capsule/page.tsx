@@ -1,4 +1,4 @@
-import Capsule from "@/app/write/capsule/Capsule";
+import Capsule from "@/app/(history)/write/capsule/Capsule";
 import React from "react";
 
 export default function Page() {

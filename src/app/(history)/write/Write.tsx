@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import HistoryTypeContainer from "@/app/write/HistoryTypeContainer";
+import HistoryTypeContainer from "@/app/(history)/write/HistoryTypeContainer";
 import { CustomButton, CloseTab } from "@/components/";
 import { useRouter } from "next/navigation";
 
@@ -32,7 +32,9 @@ export default function Write() {
         <CustomButton
           title="다음"
           onClick={() =>
-            router.push(`${selected === "capsule" ? "capsule" : "message"}`)
+            router.push(
+              `/write/${selected === "capsule" ? "capsule" : "message"}`
+            )
           }
           disabled={!selected}
         />

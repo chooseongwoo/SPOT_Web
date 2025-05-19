@@ -1,6 +1,6 @@
 "use client";
 
-import BackButton from "@/app/write/BackButton";
+import BackButton from "@/app/(history)/write/BackButton";
 import AnonymousSelect from "../AnonymousSelect";
 import Textarea from "../Textarea";
 import { CloseTab, CustomButton } from "@/components";
