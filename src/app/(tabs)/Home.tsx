@@ -85,7 +85,7 @@ export default function Home() {
           </div>
         </div>
         {messageData.length > 0 ? (
-          <div className="flex w-full flex-col divide-y divide-gray-1 pb-[45px] pt-3">
+          <div className="flex w-full flex-col divide-y divide-gray-1 pb-28 pt-3">
             {messageData.map((message) => (
               <div key={message.id} className="py-[10px]">
                 <MessageItem
