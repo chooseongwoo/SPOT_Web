@@ -2,7 +2,7 @@ import { Header } from "@/components";
 import { CalendarIcon, OutlinedLocationIcon } from "@/components/icons";
 import Image from "next/image";
 
-export default function Message() {
+export default function MessageDetail() {
   return (
     <div className="flex flex-col">
       <Header title="메시지" />
