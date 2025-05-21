@@ -24,7 +24,7 @@ export default function Cameraview() {
       autoPlay
       playsInline
       muted
-      className="absolute left-0 top-0 size-full object-cover"
+      className="absolute left-0 top-0 z-0 size-full object-cover"
     />
   );
 }

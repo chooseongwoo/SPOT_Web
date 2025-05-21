@@ -19,3 +19,6 @@ export { default as FilledLocationIcon } from "./FilledLocationIcon";
 export { default as OutlinedLocationIcon } from "./OutlinedLocationIcon";
 export { default as TrashIcon } from "./TrashIcon";
 export { default as CalendarIcon } from "./CalendarIcon";
+export { default as ArrowWardIcon } from "./ArrowWardIcon";
+export { default as ClickIcon } from "./ClickIcon";
+export { default as Capsule3DIcon } from "./Capsule3DIcon";

@@ -10,8 +10,8 @@ export default function ChevronIcon({
   const rotationClass = clsx({
     "rotate-0": direction === "left",
     "rotate-180": direction === "right",
-    "-rotate-90": direction === "up",
-    "rotate-90": direction === "down",
+    "rotate-90": direction === "up",
+    "-rotate-90": direction === "down",
   });
 
   return (
