@@ -284,7 +284,7 @@ export default function Capsule3DIcon() {
           y2="73.1382"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stopOpacity="0.8" />
+          <stop stopColor="white" stopOpacity="0.8" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <radialGradient
@@ -295,7 +295,7 @@ export default function Capsule3DIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(93.0145 75.519) rotate(90) scale(18.3333)"
         >
-          <stop stop-color="#E7EEFF" />
+          <stop stopColor="#E7EEFF" />
           <stop offset="1" stopColor="#37B985" />
         </radialGradient>
         <linearGradient
@@ -306,7 +306,7 @@ export default function Capsule3DIcon() {
           y2="68.6434"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
+          <stop stopColor="white" />
           <stop offset="1" stopColor="#EFEFEF" />
         </linearGradient>
         <linearGradient
@@ -317,7 +317,7 @@ export default function Capsule3DIcon() {
           y2="70.1717"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F7F7F7" />
+          <stop stopColor="#F7F7F7" />
           <stop offset="1" stopColor="white" />
         </linearGradient>
       </defs>
