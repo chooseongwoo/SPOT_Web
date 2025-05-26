@@ -3,7 +3,12 @@
 import { useRef, useState } from "react";
 import Cameraview from "@/app/(history)/read/capsule/[id]/CameraView";
 import { CloseTab } from "@/components";
-import { ArrowWardIcon, Capsule3DIcon, ClickIcon } from "@/components/icons";
+import {
+  ArrowWardIcon,
+  Capsule3DIcon,
+  ClickIcon,
+  ShadowIcon,
+} from "@/components/icons";
 
 export default function CapsuleDetail() {
   const touchStartY = useRef<number | null>(null);
@@ -43,11 +48,12 @@ export default function CapsuleDetail() {
       </div>
 
       <div
-        className="absolute bottom-2 left-1/2 -translate-x-1/2 touch-none"
+        className="absolute bottom-2 left-1/2 flex -translate-x-1/2 touch-none flex-col items-center"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <Capsule3DIcon />
+        <Capsule3DIcon width={120} height={150} rotation={15} />
+        <ShadowIcon />
       </div>
     </div>
   );
