@@ -10,29 +10,39 @@ import {
   ShadowIcon,
 } from "@/components/icons";
 
+const MAX_DRAG_DISTANCE = 250;
 export default function CapsuleDetail() {
   const touchStartY = useRef<number | null>(null);
   const [opened, setOpened] = useState(false);
+  const [dragY, setDragY] = useState(0);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     touchStartY.current = e.touches[0].clientY;
   };
 
-  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartY.current === null) return;
+    const touchEndY = e.touches[0].clientY;
+    const distance = touchEndY - touchStartY.current;
+
+    if (distance < 0) {
+      setDragY(Math.max(distance, -MAX_DRAG_DISTANCE));
+    }
+  };
+
+  const handleTouchEnd = () => {
     if (touchStartY.current === null) return;
 
-    const touchEndY = e.changedTouches[0].clientY;
-    const distance = touchStartY.current - touchEndY;
-
-    if (distance > 200) {
+    if (Math.abs(dragY) >= MAX_DRAG_DISTANCE) {
       setOpened(true);
     }
 
     touchStartY.current = null;
+    setDragY(0);
   };
 
   return (
-    <div className="h-screen w-full">
+    <div className="h-screen w-full overflow-hidden">
       <Cameraview />
       <div className="px-6 py-3">
         <CloseTab />
@@ -51,9 +61,14 @@ export default function CapsuleDetail() {
       <div
         className="absolute bottom-2 left-1/2 flex -translate-x-1/2 touch-none flex-col items-center"
         onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {!opened && <Capsule3DIcon width={120} height={150} rotation={15} />}
+        {!opened && (
+          <div style={{ transform: `translateY(${dragY}px)` }}>
+            <Capsule3DIcon width={120} height={150} rotation={15} />
+          </div>
+        )}
         <ShadowIcon />
       </div>
     </div>
