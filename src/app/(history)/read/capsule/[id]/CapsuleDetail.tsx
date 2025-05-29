@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef, useState } from "react";
 import Cameraview from "@/app/(history)/read/capsule/[id]/CameraView";
 import { CloseTab } from "@/components";
 import {
@@ -10,37 +9,11 @@ import {
   ShadowIcon,
 } from "@/components/icons";
 import OpenAnimation from "@/app/(history)/read/capsule/[id]/OpenAnimation";
+import { useOpenCapsule } from "@/hooks";
 
-const MAX_DRAG_DISTANCE = 250;
 export default function CapsuleDetail() {
-  const touchStartY = useRef<number | null>(null);
-  const [opened, setOpened] = useState(false);
-  const [dragY, setDragY] = useState(0);
-
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    touchStartY.current = e.touches[0].clientY;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (touchStartY.current === null) return;
-    const touchEndY = e.touches[0].clientY;
-    const distance = touchEndY - touchStartY.current;
-
-    if (distance < 0) {
-      setDragY(Math.max(distance, -MAX_DRAG_DISTANCE));
-    }
-  };
-
-  const handleTouchEnd = () => {
-    if (touchStartY.current === null) return;
-
-    if (Math.abs(dragY) >= MAX_DRAG_DISTANCE) {
-      setOpened(true);
-    }
-
-    touchStartY.current = null;
-    setDragY(0);
-  };
+  const { dragY, opened, handleTouchStart, handleTouchMove, handleTouchEnd } =
+    useOpenCapsule();
 
   return (
     <div className="h-screen w-full overflow-hidden">
