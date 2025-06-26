@@ -4,6 +4,7 @@ import { useHashParams } from "@/hooks";
 import { TOKEN } from "@/constants";
 import { Storage } from "@/storage";
 import { useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient";
 import { useLoginMutation } from "@/services/user/mutation";
 
 export default function Callback() {
@@ -18,6 +19,8 @@ export default function Callback() {
     if (accessToken && refreshToken) {
       Storage.setItem(TOKEN.ACCESS, accessToken);
       Storage.setItem(TOKEN.REFRESH, refreshToken);
+
+      supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
 
       loginMutate();
     } else {
