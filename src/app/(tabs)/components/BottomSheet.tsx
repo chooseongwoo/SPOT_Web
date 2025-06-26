@@ -54,6 +54,12 @@ export default function BottomSheet({
 
   const handleDragEnd = () => {
     setIsDragging(false);
+    const targetHeight =
+      heightValue >
+      ((maxHeightValue || window.innerHeight * 0.8) + minHeight) / 2
+        ? maxHeightValue || window.innerHeight * 0.8
+        : minHeight;
+    setHeightValue(targetHeight);
   };
 
   useEffect(() => {
