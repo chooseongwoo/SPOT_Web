@@ -10,21 +10,23 @@ import {
 } from "@/components/icons";
 import OpenAnimation from "@/app/(history)/read/capsule/[id]/OpenAnimation";
 import { useOpenCapsule } from "@/hooks";
+import { useState } from "react";
 
 export default function CapsuleDetail() {
   const { dragY, opened, handleTouchStart, handleTouchMove, handleTouchEnd } =
     useOpenCapsule();
+  const [isMounted, setIsMounted] = useState(false);
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <Cameraview />
+      <Cameraview isMounted={isMounted} />
       <div className="px-6 py-3">
         <CloseTab />
       </div>
 
       <div className="absolute left-1/2 top-1/2 z-50 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center">
         {opened ? (
-          <OpenAnimation />
+          <OpenAnimation isMounted={isMounted} setIsMounted={setIsMounted} />
         ) : (
           <div className="flex flex-col items-center gap-5">
             <div className="flex flex-col items-center">
@@ -49,7 +51,7 @@ export default function CapsuleDetail() {
             <Capsule3DIcon width={120} height={150} rotation={15} />
           </div>
         )}
-        <ShadowIcon />
+        {!isMounted && <ShadowIcon />}
       </div>
     </div>
   );

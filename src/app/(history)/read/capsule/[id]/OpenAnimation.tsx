@@ -1,18 +1,42 @@
+import CapsuleResult from "@/app/(history)/read/capsule/[id]/CapsuleResult";
 import { Capsule3DIcon } from "@/components/icons";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function OpenAnimation() {
+interface OpenAnimationProps {
+  isMounted: boolean;
+  setIsMounted: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function OpenAnimation({
+  isMounted,
+  setIsMounted,
+}: OpenAnimationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isGlow, setIsGlow] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    const openTimer = setTimeout(() => {
       setIsOpen(true);
-      setTimeout(() => {
-        setIsGlow(true);
-      }, 700);
     }, 100);
-  }, []);
+
+    const glowTimer = setTimeout(() => {
+      setIsGlow(true);
+    }, 800);
+
+    const mountTimer = setTimeout(() => {
+      setIsMounted(true);
+    }, 2400);
+
+    return () => {
+      clearTimeout(openTimer);
+      clearTimeout(glowTimer);
+      clearTimeout(mountTimer);
+    };
+  }, [setIsMounted]);
+
+  if (isMounted) {
+    return <CapsuleResult />;
+  }
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-start gap-44 pt-36">
