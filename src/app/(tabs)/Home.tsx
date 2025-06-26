@@ -96,6 +96,9 @@ export default function Home() {
                       mapRef.current.panTo({ lat: message.lat, lng: message.lng });
                       mapRef.current.setZoom(19);
                     }
+                    router.push(
+                      `/read/${message.is_time_capsule ? 'capsule' : 'message'}/${message.id}`
+                    );
                   }}
                 />
               </div>

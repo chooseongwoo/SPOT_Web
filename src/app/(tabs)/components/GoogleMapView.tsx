@@ -8,6 +8,7 @@ import {
   useLoadScript,
 } from "@react-google-maps/api";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { circleOptions, mapOptions } from "@/constants";
 import { useWatchPosition } from "@/hooks";
 import { MessageType, Position, PositionType } from "@/types";
@@ -30,6 +31,7 @@ export default function GoogleMapView({
   });
 
   const [heading, setHeading] = useState<number>(0);
+  const router = useRouter();
 
   useWatchPosition({ setPosition, setHeading });
 
@@ -68,11 +70,19 @@ export default function GoogleMapView({
             position={{ lat: message.lat, lng: message.lng }}
             mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
           >
-            <MessageMarker
-              type={message.is_time_capsule ? "capsule" : "message"}
-              read={message.read}
-              open_at={message.open_at}
-            />
+            <div
+              onClick={() =>
+                router.push(
+                  `/read/${message.is_time_capsule ? "capsule" : "message"}/${message.id}`
+                )
+              }
+            >
+              <MessageMarker
+                type={message.is_time_capsule ? "capsule" : "message"}
+                read={message.read}
+                open_at={message.open_at}
+              />
+            </div>
           </OverlayView>
         ))}
 
