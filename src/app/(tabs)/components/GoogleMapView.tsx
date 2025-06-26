@@ -1,13 +1,12 @@
 "use client";
 
 import {
-  Circle,
   GoogleMap,
   Marker,
   OverlayView,
   useLoadScript,
 } from "@react-google-maps/api";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { circleOptions, mapOptions } from "@/constants";
 import { useWatchPosition } from "@/hooks";
@@ -31,9 +30,14 @@ export default function GoogleMapView({
   });
 
   const [heading, setHeading] = useState<number>(0);
+  const circleRef = useRef<google.maps.Circle | null>(null);
   const router = useRouter();
 
   useWatchPosition({ setPosition, setHeading });
+
+  useEffect(() => {
+    circleRef.current?.setCenter(position);
+  }, [position]);
 
   if (!isLoaded) {
     return (
@@ -52,6 +56,18 @@ export default function GoogleMapView({
         options={mapOptions}
         onLoad={(map) => {
           mapRef.current = map;
+          if (!circleRef.current) {
+            circleRef.current = new window.google.maps.Circle({
+              ...circleOptions,
+              center: position,
+              map,
+            });
+          }
+        }}
+        onUnmount={() => {
+          circleRef.current?.setMap(null);
+          circleRef.current = null;
+          mapRef.current = null;
         }}
       >
         {/* 사용자 위치 */}
@@ -86,7 +102,6 @@ export default function GoogleMapView({
           </OverlayView>
         ))}
 
-        <Circle center={position} options={circleOptions} />
       </GoogleMap>
     </>
   );
