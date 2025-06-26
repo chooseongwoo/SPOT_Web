@@ -12,7 +12,7 @@ import { Position } from "@/types";
 import { extractCleanAddress } from "@/utils";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
-import { messageData } from "@/data/messageData";
+import { useNearbyMessagesQuery } from "@/services/message/query";
 import { useRouter } from "next/navigation";
 
 const GoogleMapView = dynamic(
@@ -31,6 +31,7 @@ export default function Home() {
   });
 
   const [sheetHeight, setSheetHeight] = useState(150);
+  const { data: messages } = useNearbyMessagesQuery(position.lat, position.lng);
 
   const { data: currentLocation } = useAddressQuery(position.lat, position.lng);
 
@@ -56,7 +57,7 @@ export default function Home() {
         mapRef={mapRef}
         position={position}
         setPosition={setPosition}
-        messageData={messageData}
+        messageData={messages || []}
       />
       <div
         onClick={handleGetUserLocation}
@@ -84,23 +85,20 @@ export default function Home() {
             <PlusIcon />
           </div>
         </div>
-        {messageData.length > 0 ? (
+        {messages && messages.length > 0 ? (
           <div className="flex w-full flex-col divide-y divide-gray-1 pb-28 pt-3">
-            {messageData.map((message) => (
+            {messages.map((message) => (
               <div key={message.id} className="py-[10px]">
                 <MessageItem
                   type={message.is_time_capsule ? "capsule" : "message"}
                   read={message.read}
                   open_at={message.open_at}
-                />
-              </div>
-            ))}
-            {messageData.map((message) => (
-              <div key={message.id} className="py-[10px]">
-                <MessageItem
-                  type={message.is_time_capsule ? "capsule" : "message"}
-                  read={message.read}
-                  open_at={message.open_at}
+                  onClick={() => {
+                    if (mapRef.current) {
+                      mapRef.current.panTo({ lat: message.lat, lng: message.lng });
+                      mapRef.current.setZoom(19);
+                    }
+                  }}
                 />
               </div>
             ))}

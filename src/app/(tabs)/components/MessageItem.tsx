@@ -11,13 +11,14 @@ interface MessageItemProps {
   type: "message" | "capsule";
   read: boolean;
   open_at?: string | null;
+  onClick?: () => void;
 }
 
-export default function MessageItem({ type, read, open_at }: MessageItemProps) {
+export default function MessageItem({ type, read, open_at, onClick }: MessageItemProps) {
   const { remainTime, isLocked } = useRemainTime(open_at!);
 
   return (
-    <div className="flex w-full items-center justify-between">
+    <div className="flex w-full items-center justify-between" onClick={onClick}>
       <div className="flex w-full gap-[10px]">
         <div className="rounded-full border border-solid border-gray-1 p-[10px]">
           {type === "capsule" ? (
