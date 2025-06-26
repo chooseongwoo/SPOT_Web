@@ -7,15 +7,16 @@ import {
 import { useRemainTime } from "@/hooks";
 import { formatRemainTime } from "@/utils";
 
+import MessageType from "@/types/message.type";
+
 interface MessageItemProps {
-  type: "message" | "capsule";
-  read: boolean;
-  open_at?: string | null;
+  message: MessageType;
   onClick?: () => void;
 }
 
-export default function MessageItem({ type, read, open_at, onClick }: MessageItemProps) {
-  const { remainTime, isLocked } = useRemainTime(open_at!);
+export default function MessageItem({ message, onClick }: MessageItemProps) {
+  const { remainTime, isLocked } = useRemainTime(message.open_at!);
+  const type = message.is_time_capsule ? "capsule" : "message";
 
   return (
     <div className="flex w-full items-center justify-between" onClick={onClick}>
@@ -24,10 +25,10 @@ export default function MessageItem({ type, read, open_at, onClick }: MessageIte
           {type === "capsule" ? (
             <CapsuleIcon
               size={24}
-              color={isLocked ? "#C3C3C3" : read ? "#C3C3C3" : "#2AD18E"}
+              color={isLocked ? "#C3C3C3" : message.read ? "#C3C3C3" : "#2AD18E"}
             />
           ) : (
-            <MessageIcon size={24} color={read ? "#C3C3C3" : "#2AD18E"} />
+            <MessageIcon size={24} color={message.read ? "#C3C3C3" : "#2AD18E"} />
           )}
         </div>
         <div className="relative flex w-full items-center justify-between">
@@ -40,12 +41,9 @@ export default function MessageItem({ type, read, open_at, onClick }: MessageIte
             </div>
           )}
           <div className="flex w-full flex-col">
-            <div className="flex items-center gap-[5px]">
-              <p className="text-b2 text-black">추성우</p>
-              <p className="text-cap1 text-gray-3">3시간 전</p>
-            </div>
-            <p className="text-b3 text-gray-4">
-              부산광역시 강서구 가락대로 1393
+            <p className="text-b2 text-black truncate">{message.content}</p>
+            <p className="text-cap1 text-gray-3">
+              {new Date(message.created_at).toLocaleString()}
             </p>
           </div>
           <ChevronIcon direction="right" color="#C3C3C3" />

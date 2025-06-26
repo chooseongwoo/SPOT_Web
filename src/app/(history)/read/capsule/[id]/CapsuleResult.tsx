@@ -1,7 +1,10 @@
 import { CalendarIcon, OutlinedLocationIcon } from "@/components/icons";
 import Image from "next/image";
+import MessageType from "@/types/message.type";
+import { useAddressQuery } from "@/services/map/location.query";
 
-export default function CapsuleResult() {
+export default function CapsuleResult({ message }: { message: MessageType }) {
+  const { data: address } = useAddressQuery(message.lat, message.lng);
   return (
     <div className="flex w-full flex-col items-center gap-16 p-10">
       <div className="flex flex-col items-center gap-3">
@@ -24,24 +27,22 @@ export default function CapsuleResult() {
             width={46}
             height={46}
           />
-          <p className="text-b2 text-black">추성우</p>
+          <p className="text-b2 text-black">{message.user_id}</p>
         </div>
         <div className="flex w-full flex-col gap-1">
           <p className="flex items-center gap-[5px] text-footnote text-gray-4">
             <CalendarIcon />
-            2025년 5월 12일 12시 34분
+            {new Date(message.created_at).toLocaleString()}
           </p>
-          <p className="flex items-center gap-[5px] text-footnote text-gray-4">
-            <OutlinedLocationIcon />
-            부산광역시 강서구 가락대로 1393
-          </p>
+          {address && (
+            <p className="flex items-center gap-[5px] text-footnote text-gray-4">
+              <OutlinedLocationIcon />
+              {address.formatted_address}
+            </p>
+          )}
         </div>
         <div className="h-[2px] w-full bg-gray-1" />
-        <p className="text-b2 text-black">
-          타임캡슐 내용입니다타임캡슐 내용입니다타임캡슐 내용입니다타임캡슐
-          내용입니다다타임캡슐 내용입니다타임캡슐 내용입니다타임캡슐
-          내용입니다다타임캡슐 내용입니다타임캡슐 내용입니다타임캡슐 내용입니다
-        </p>
+        <p className="text-b2 text-black whitespace-pre-wrap">{message.content}</p>
       </div>
     </div>
   );

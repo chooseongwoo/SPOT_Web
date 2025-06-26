@@ -90,9 +90,7 @@ export default function Home() {
             {messages.map((message) => (
               <div key={message.id} className="py-[10px]">
                 <MessageItem
-                  type={message.is_time_capsule ? "capsule" : "message"}
-                  read={message.read}
-                  open_at={message.open_at}
+                  message={message}
                   onClick={() => {
                     if (mapRef.current) {
                       mapRef.current.panTo({ lat: message.lat, lng: message.lng });
