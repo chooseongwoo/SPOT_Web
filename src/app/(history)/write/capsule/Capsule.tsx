@@ -67,7 +67,13 @@ export default function Capsule() {
           title="다음"
           disabled={!values.date || !values.time || !values.content}
           onClick={() => {
-            const openAt = new Date(`${values.date}T${values.time}:00`).toISOString();
+            const formattedDate = values.date.replace(/\//g, "-");
+            const openAtDate = new Date(`${formattedDate}T${values.time}:00`);
+            if (Number.isNaN(openAtDate.getTime())) {
+              alert("잘못된 날짜 또는 시간입니다.");
+              return;
+            }
+            const openAt = openAtDate.toISOString();
             navigator.geolocation.getCurrentPosition(
               (pos) => {
                 createCapsule(
