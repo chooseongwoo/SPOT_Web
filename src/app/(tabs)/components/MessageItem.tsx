@@ -25,10 +25,15 @@ export default function MessageItem({ message, onClick }: MessageItemProps) {
           {type === "capsule" ? (
             <CapsuleIcon
               size={24}
-              color={isLocked ? "#C3C3C3" : message.read ? "#C3C3C3" : "#2AD18E"}
+              color={
+                isLocked ? "#C3C3C3" : message.read ? "#C3C3C3" : "#2AD18E"
+              }
             />
           ) : (
-            <MessageIcon size={24} color={message.read ? "#C3C3C3" : "#2AD18E"} />
+            <MessageIcon
+              size={24}
+              color={message.read ? "#C3C3C3" : "#2AD18E"}
+            />
           )}
         </div>
         <div className="relative flex w-full items-center justify-between">
@@ -41,7 +46,7 @@ export default function MessageItem({ message, onClick }: MessageItemProps) {
             </div>
           )}
           <div className="flex w-full flex-col">
-            <p className="text-b2 text-black truncate">{message.content}</p>
+            <p className="truncate text-b2 text-black">{message.nickname}</p>
             <p className="text-cap1 text-gray-3">
               {new Date(message.created_at).toLocaleString()}
             </p>
