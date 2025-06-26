@@ -52,7 +52,7 @@ export default function BottomSheet({
     [isDragging, maxHeightValue, minHeight]
   );
 
-  const handleDragEnd = () => {
+  const handleDragEnd = useCallback(() => {
     setIsDragging(false);
     const targetHeight =
       heightValue >
@@ -60,7 +60,7 @@ export default function BottomSheet({
         ? maxHeightValue || window.innerHeight * 0.8
         : minHeight;
     setHeightValue(targetHeight);
-  };
+  }, [heightValue, maxHeightValue, minHeight]);
 
   useEffect(() => {
     document.addEventListener("mousemove", handleDrag);
@@ -73,7 +73,7 @@ export default function BottomSheet({
       document.removeEventListener("touchmove", handleDrag);
       document.removeEventListener("touchend", handleDragEnd);
     };
-  }, [isDragging, handleDrag]);
+  }, [isDragging, handleDrag, handleDragEnd]);
 
   useEffect(() => {
     setHeightValue(height);

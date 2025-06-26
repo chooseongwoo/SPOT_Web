@@ -5,7 +5,7 @@ import {
   MessageIcon,
 } from "@/components/icons";
 import { useRemainTime } from "@/hooks";
-import { formatRemainTime, formatDateKST } from "@/utils";
+import { formatRemainTime } from "@/utils";
 
 import MessageType from "@/types/message.type";
 
@@ -25,13 +25,10 @@ export default function MessageItem({ message, onClick }: MessageItemProps) {
           {type === "capsule" ? (
             <CapsuleIcon
               size={24}
-            <p className="text-cap1 text-gray-3">{formatDateKST(message.created_at)}</p>
+              color={isLocked ? "#C3C3C3" : message.read ? "#C3C3C3" : "#2AD18E"}
             />
           ) : (
-            <MessageIcon
-              size={24}
-              color={message.read ? "#C3C3C3" : "#2AD18E"}
-            />
+            <MessageIcon size={24} color={message.read ? "#C3C3C3" : "#2AD18E"} />
           )}
         </div>
         <div className="relative flex w-full items-center justify-between">
