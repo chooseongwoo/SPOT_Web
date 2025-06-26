@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 import clsx from "clsx";
 import MineContainer from "@/app/(tabs)/history/MineContainer";
 import FoundContainer from "@/app/(tabs)/history/FoundContainer";
-import { messageData } from "@/data/messageData";
+import { useMyMessagesQuery, useFoundMessagesQuery } from "@/services/message/query";
 
 export default function History() {
   const [selectedTab, setSelectedTab] = useState<"mine" | "found">("found");
+  const { data: myMessages } = useMyMessagesQuery();
+  const { data: foundMessages } = useFoundMessagesQuery();
 
   return (
     <div className="flex h-screen w-full flex-col">
@@ -50,11 +52,11 @@ export default function History() {
 
       <div className="mt-[10px] flex flex-col gap-[10px] px-6 pb-24 pt-20">
         {selectedTab === "mine" &&
-          messageData.map((message) => (
+          myMessages?.map((message) => (
             <MineContainer key={message.id} {...message} />
           ))}
         {selectedTab === "found" &&
-          messageData.map((message) => (
+          foundMessages?.map((message) => (
             <FoundContainer key={message.id} {...message} />
           ))}
       </div>

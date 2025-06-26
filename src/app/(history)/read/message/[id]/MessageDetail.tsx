@@ -4,13 +4,21 @@ import { Header } from "@/components";
 import { CalendarIcon, OutlinedLocationIcon } from "@/components/icons";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
 import { useMessageQuery } from "@/services/message/query";
+import { useReadMessageMutation } from "@/services/message/mutation";
 import { useAddressQuery } from "@/services/map/location.query";
 
 export default function MessageDetail() {
   const params = useParams<{ id: string }>();
   const { data: message } = useMessageQuery(params.id);
+  const { mutate: readMessage } = useReadMessageMutation();
   const { data: address } = useAddressQuery(message?.lat ?? 0, message?.lng ?? 0);
+  useEffect(() => {
+    if (message) {
+      readMessage(message.id);
+    }
+  }, [message, readMessage]);
 
   if (!message) return null;
 
@@ -28,7 +36,7 @@ export default function MessageDetail() {
             height={46}
             className="rounded-full border border-gray-2"
           />
-          <p className="text-b2 text-black">{message.user_id}</p>
+          <p className="text-b2 text-black">{message.nickname}</p>
         </div>
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-[5px]">

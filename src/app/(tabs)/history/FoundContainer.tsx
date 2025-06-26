@@ -18,6 +18,8 @@ export default function FoundContainer({
   lat,
   lng,
   is_anonymous,
+  created_at,
+  nickname,
 }: MessageType) {
   const { data: currentLocation } = useAddressQuery(lat, lng);
 
@@ -40,7 +42,7 @@ export default function FoundContainer({
       </div>
       <div className="flex items-center gap-[5px]">
         <CalendarIcon />
-        <p className="text-footnote text-gray-4">2025년 5월 12일 12시 34분</p>
+        <p className="text-footnote text-gray-4">{new Date(created_at).toLocaleString()}</p>
       </div>
       <div className="flex items-center gap-[5px]">
         <OutlinedLocationIcon />
@@ -57,7 +59,7 @@ export default function FoundContainer({
           width={24}
           height={24}
         />
-        <p className="text-b3 text-black">{is_anonymous ? "익명" : "추성우"}</p>
+        <p className="text-b3 text-black">{is_anonymous ? "익명" : nickname}</p>
       </div>
     </div>
   );

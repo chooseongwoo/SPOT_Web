@@ -27,7 +27,7 @@ export default function CapsuleResult({ message }: { message: MessageType }) {
             width={46}
             height={46}
           />
-          <p className="text-b2 text-black">{message.user_id}</p>
+          <p className="text-b2 text-black">{message.nickname}</p>
         </div>
         <div className="flex w-full flex-col gap-1">
           <p className="flex items-center gap-[5px] text-footnote text-gray-4">

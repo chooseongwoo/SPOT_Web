@@ -7,9 +7,14 @@ export const getNearbyMessages = async (
   lat: number,
   lng: number
 ): Promise<MessageType[]> => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user.id;
+
   const { data, error } = await supabase
     .from("messages")
-    .select("*")
+    .select("*, users(nickname)")
     .gte("lat", lat - RANGE)
     .lte("lat", lat + RANGE)
     .gte("lng", lng - RANGE)
@@ -17,17 +22,49 @@ export const getNearbyMessages = async (
     .order("created_at", { ascending: false });
 
   if (error) throw new Error(error.message);
-  return data as MessageType[];
+  const ids = data?.map((d) => d.id) || [];
+  const { data: views } = userId
+    ? await supabase
+        .from("message_views")
+        .select("message_id")
+        .eq("user_id", userId)
+        .in("message_id", ids)
+    : { data: [] };
+  const readIds = views?.map((v) => v.message_id) ?? [];
+  return (data || []).map((m: any) => ({
+    ...(m as Omit<MessageType, "nickname" | "read">),
+    nickname: m.users.nickname,
+    read: readIds.includes(m.id),
+  }));
 };
 
 export const getMessage = async (id: string): Promise<MessageType> => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user.id;
+
   const { data, error } = await supabase
     .from("messages")
-    .select("*")
+    .select("*, users(nickname)")
     .eq("id", id)
     .single();
   if (error) throw new Error(error.message);
-  return data as MessageType;
+
+  const { data: view } = userId
+    ? await supabase
+        .from("message_views")
+        .select("id")
+        .eq("user_id", userId)
+        .eq("message_id", id)
+        .maybeSingle()
+    : { data: null };
+
+  return {
+    ...(data as Omit<MessageType, "nickname" | "read">),
+    nickname: (data as any).users.nickname,
+    read: !!view,
+  } as MessageType;
 };
 
 export const createMessage = async ({
@@ -94,4 +131,58 @@ export const createCapsule = async ({
     .single();
   if (error) throw new Error(error.message);
   return data as MessageType;
+};
+
+export const readMessage = async (id: string) => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user.id;
+  if (!userId) throw new Error("세션 없음");
+
+  await supabase
+    .from("message_views")
+    .insert([{ user_id: userId, message_id: id }]);
+};
+
+export const getMyMessages = async (): Promise<MessageType[]> => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user.id;
+  if (!userId) throw new Error("세션 없음");
+
+  const { data, error } = await supabase
+    .from("messages")
+    .select("*, users(nickname)")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) throw new Error(error.message);
+  return (data || []).map((m: any) => ({
+    ...(m as Omit<MessageType, "nickname" | "read">),
+    nickname: m.users.nickname,
+    read: true,
+  }));
+};
+
+export const getFoundMessages = async (): Promise<MessageType[]> => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user.id;
+  if (!userId) throw new Error("세션 없음");
+
+  const { data, error } = await supabase
+    .from("message_views")
+    .select("message:messages(*, users(nickname))")
+    .eq("user_id", userId)
+    .order("viewed_at", { ascending: false });
+
+  if (error) throw new Error(error.message);
+  return (data || []).map((v: any) => ({
+    ...(v.message as Omit<MessageType, "nickname" | "read">),
+    nickname: v.message.users.nickname,
+    read: true,
+  }));
 };

@@ -10,9 +10,10 @@ import {
 } from "@/components/icons";
 import OpenAnimation from "@/app/(history)/read/capsule/[id]/OpenAnimation";
 import { useOpenCapsule } from "@/hooks";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useMessageQuery } from "@/services/message/query";
+import { useReadMessageMutation } from "@/services/message/mutation";
 
 export default function CapsuleDetail() {
   const { dragY, opened, handleTouchStart, handleTouchMove, handleTouchEnd } =
@@ -20,6 +21,13 @@ export default function CapsuleDetail() {
   const [isMounted, setIsMounted] = useState(false);
   const params = useParams<{ id: string }>();
   const { data: message } = useMessageQuery(params.id);
+  const { mutate: readMessage } = useReadMessageMutation();
+
+  useEffect(() => {
+    if (message) {
+      readMessage(message.id);
+    }
+  }, [message, readMessage]);
 
   if (!message) return null;
 

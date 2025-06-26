@@ -3,6 +3,8 @@ const QUERY_KEY = {
   message: {
     NEARBY: "message.query.nearby",
     DETAIL: "message.query.detail",
+    MINE: "message.query.mine",
+    FOUND: "message.query.found",
   },
 };
 
