@@ -9,7 +9,7 @@ import {
 } from "@/components/icons";
 import { useAddressQuery } from "@/services/map/location.query";
 import { MessageType } from "@/types";
-import { extractCleanAddress } from "@/utils";
+import { extractCleanAddress, formatDateKST } from "@/utils";
 import Image from "next/image";
 
 export default function FoundContainer({
@@ -42,7 +42,7 @@ export default function FoundContainer({
       </div>
       <div className="flex items-center gap-[5px]">
         <CalendarIcon />
-        <p className="text-footnote text-gray-4">{new Date(created_at).toLocaleString()}</p>
+        <p className="text-footnote text-gray-4">{formatDateKST(created_at)}</p>
       </div>
       <div className="flex items-center gap-[5px]">
         <OutlinedLocationIcon />

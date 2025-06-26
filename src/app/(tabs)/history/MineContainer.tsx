@@ -9,7 +9,7 @@ import {
 } from "@/components/icons";
 import { useAddressQuery } from "@/services/map/location.query";
 import { MessageType } from "@/types";
-import { extractCleanAddress } from "@/utils";
+import { extractCleanAddress, formatDateKST } from "@/utils";
 
 export default function MineContainer({
   is_time_capsule,
@@ -39,7 +39,7 @@ export default function MineContainer({
       </div>
       <div className="flex items-center gap-[5px]">
         <CalendarIcon />
-        <p className="text-footnote text-gray-4">{new Date(created_at).toLocaleString()}</p>
+        <p className="text-footnote text-gray-4">{formatDateKST(created_at)}</p>
       </div>
       <div className="flex items-center gap-[5px]">
         <OutlinedLocationIcon />
