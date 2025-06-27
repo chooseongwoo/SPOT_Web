@@ -8,7 +8,7 @@ import FoundContainer from "@/app/(tabs)/history/FoundContainer";
 import { useMyMessagesQuery, useFoundMessagesQuery } from "@/services/message/query";
 
 export default function History() {
-  const [selectedTab, setSelectedTab] = useState<"mine" | "found">("found");
+  const [selectedTab, setSelectedTab] = useState<"mine" | "found">("mine");
   const { data: myMessages } = useMyMessagesQuery();
   const { data: foundMessages } = useFoundMessagesQuery();
 
