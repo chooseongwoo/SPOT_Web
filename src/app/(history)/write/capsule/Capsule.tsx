@@ -73,7 +73,7 @@ export default function Capsule() {
               alert("잘못된 날짜 또는 시간입니다.");
               return;
             }
-            const openAt = openAtDate.toISOString();
+            const openAt = `${formattedDate}T${values.time}:00+09:00`;
             navigator.geolocation.getCurrentPosition(
               (pos) => {
                 createCapsule(
