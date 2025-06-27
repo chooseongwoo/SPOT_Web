@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabaseClient";
 import MessageType from "@/types/message.type";
+import { formatDateKSTForDB } from "@/utils";
 
 const RANGE = 0.00045; // roughly 50 meters
 
@@ -87,7 +88,14 @@ export const createMessage = async ({
   const { data, error } = await supabase
     .from("messages")
     .insert([
-      { user_id: userId, content, lat, lng, is_anonymous },
+      {
+        user_id: userId,
+        content,
+        lat,
+        lng,
+        is_anonymous,
+        created_at: formatDateKSTForDB(new Date()),
+      },
     ])
     .select()
     .single();
@@ -114,6 +122,8 @@ export const createCapsule = async ({
   const userId = session?.user.id;
   if (!userId) throw new Error("세션 없음");
 
+  const openAt = formatDateKSTForDB(new Date(open_at));
+
   const { data, error } = await supabase
     .from("messages")
     .insert([
@@ -124,7 +134,8 @@ export const createCapsule = async ({
         lng,
         is_anonymous,
         is_time_capsule: true,
-        open_at,
+        open_at: openAt,
+        created_at: formatDateKSTForDB(new Date()),
       },
     ])
     .select()
