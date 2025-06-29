@@ -2,7 +2,6 @@
 
 import { Header } from "@/components";
 import { CalendarIcon, OutlinedLocationIcon } from "@/components/icons";
-import { formatDateKST } from "@/utils";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
@@ -43,7 +42,7 @@ export default function MessageDetail() {
           <div className="flex items-center gap-[5px]">
             <CalendarIcon />
             <p className="text-footnote text-gray-4">
-              {formatDateKST(message.created_at)}
+              {new Date(message.created_at).toLocaleString("ko-KR")}
             </p>
           </div>
           {address && (

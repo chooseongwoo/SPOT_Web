@@ -5,7 +5,7 @@ import {
   MessageIcon,
 } from "@/components/icons";
 import { useRemainTime } from "@/hooks";
-import { formatRemainTime, formatDateKST } from "@/utils";
+import { formatRemainTime } from "@/utils";
 
 import MessageType from "@/types/message.type";
 
@@ -25,7 +25,11 @@ export default function MessageItem({ message, onClick }: MessageItemProps) {
           {type === "capsule" ? (
             <CapsuleIcon
               size={24}
-            <p className="text-cap1 text-gray-3">{formatDateKST(message.created_at)}</p>
+            <p className="text-cap1 text-gray-3">
+              {message.is_anonymous ? "익명" : message.nickname}
+              {" · "}
+              {new Date(message.created_at).toLocaleString("ko-KR")}
+            </p>
             />
           ) : (
             <MessageIcon

@@ -6,7 +6,6 @@ import { FilledLocationIcon, MessageIcon, CapsuleIcon } from "@/components/icons
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMessageQuery } from "@/services/message/query";
 import { useAddressQuery } from "@/services/map/location.query";
-import { formatDateKST } from "@/utils";
 
 export default function Result() {
   const params = useSearchParams();
@@ -29,7 +28,9 @@ export default function Result() {
           </div>
           <div className="flex flex-col items-center gap-3">
             <p className="text-headline text-black">{message.content}</p>
-            <p className="text-b2 text-gray-4">{formatDateKST(message.created_at)}</p>
+            <p className="text-b2 text-gray-4">
+              {new Date(message.created_at).toLocaleString("ko-KR")}
+            </p>
           </div>
         </div>
       </div>

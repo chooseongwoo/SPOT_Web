@@ -92,6 +92,13 @@ export default function Home() {
                 <MessageItem
                   message={message}
                   onClick={() => {
+                    if (
+                      message.is_time_capsule &&
+                      message.open_at &&
+                      new Date(message.open_at).getTime() > Date.now()
+                    ) {
+                      return;
+                    }
                     if (mapRef.current) {
                       mapRef.current.panTo({ lat: message.lat, lng: message.lng });
                       mapRef.current.setZoom(19);

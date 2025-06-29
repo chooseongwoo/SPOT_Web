@@ -6,9 +6,11 @@ export default function Cameraview({ isMounted }: { isMounted: boolean }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
+    let stream: MediaStream | null = null;
     navigator.mediaDevices
       .getUserMedia({ video: { facingMode: { ideal: "environment" } } })
-      .then((stream) => {
+      .then((s) => {
+        stream = s;
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
@@ -16,6 +18,10 @@ export default function Cameraview({ isMounted }: { isMounted: boolean }) {
       .catch((err) => {
         console.error("카메라 접근 실패:", err);
       });
+
+    return () => {
+      stream?.getTracks().forEach((track) => track.stop());
+    };
   }, []);
 
   return (

@@ -1,5 +1,4 @@
 import { CalendarIcon, OutlinedLocationIcon } from "@/components/icons";
-import { formatDateKST } from "@/utils";
 import Image from "next/image";
 import MessageType from "@/types/message.type";
 import { useAddressQuery } from "@/services/map/location.query";
@@ -33,7 +32,7 @@ export default function CapsuleResult({ message }: { message: MessageType }) {
         <div className="flex w-full flex-col gap-1">
           <p className="flex items-center gap-[5px] text-footnote text-gray-4">
             <CalendarIcon />
-            {formatDateKST(message.created_at)}
+            {new Date(message.created_at).toLocaleString("ko-KR")}
           </p>
           {address && (
             <p className="flex items-center gap-[5px] text-footnote text-gray-4">
