@@ -8,7 +8,7 @@ import {
   TrashIcon,
 } from "@/components/icons";
 import { useAddressQuery } from "@/services/map/location.query";
-import { MessageType } from "@/types";
+import { HistoryType } from "@/types";
 import { extractCleanAddress } from "@/utils";
 
 export default function MineContainer({
@@ -17,7 +17,7 @@ export default function MineContainer({
   lat,
   lng,
   created_at,
-}: MessageType) {
+}: HistoryType) {
   const { data: currentLocation } = useAddressQuery(lat, lng);
 
   return (

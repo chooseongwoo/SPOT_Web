@@ -5,7 +5,8 @@ import {
   MessageIcon,
 } from "@/components/icons";
 import { useRemainTime } from "@/hooks";
-import { formatRemainTime } from "@/utils";
+import { useAddressQuery } from "@/services/map/location.query";
+import { extractCleanAddress, formatRemainTime, formatTimeAgo } from "@/utils";
 
 import { HistoryType } from "@/types";
 
@@ -17,6 +18,7 @@ interface HistoryItemProps {
 export default function HistoryItem({ history, onClick }: HistoryItemProps) {
   const { remainTime, isLocked } = useRemainTime(history.open_at!);
   const type = history.is_time_capsule ? "capsule" : "message";
+  const { data: address } = useAddressQuery(history.lat, history.lng);
 
   return (
     <div className="flex w-full items-center justify-between" onClick={onClick}>
@@ -50,11 +52,13 @@ export default function HistoryItem({ history, onClick }: HistoryItemProps) {
               <p className="truncate text-b2 text-black">
                 {history.is_anonymous ? "익명의 누군가" : history.nickname}
               </p>
-              <p className="text-cap1 text-gray-3">
-                {new Date(history.created_at).toLocaleString()}
+              <p className="text-cap1 text-gray-3" suppressHydrationWarning>
+                {formatTimeAgo(history.created_at)}
               </p>
             </div>
-            <p className="text-b3 text-gray-4">주소</p>
+            <p className="text-b3 text-gray-4">
+              {extractCleanAddress(address?.address_components)}
+            </p>
           </div>
 
           <ChevronIcon direction="right" color="#C3C3C3" />
