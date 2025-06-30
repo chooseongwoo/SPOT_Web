@@ -1,15 +1,18 @@
 import CapsuleResult from "@/app/(history)/read/capsule/[id]/CapsuleResult";
 import { Capsule3DIcon } from "@/components/icons";
 import React, { useEffect, useState } from "react";
+import MessageType from "@/types/history.type";
 
 interface OpenAnimationProps {
   isMounted: boolean;
   setIsMounted: React.Dispatch<React.SetStateAction<boolean>>;
+  message: MessageType;
 }
 
 export default function OpenAnimation({
   isMounted,
   setIsMounted,
+  message,
 }: OpenAnimationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isGlow, setIsGlow] = useState(false);
@@ -35,7 +38,7 @@ export default function OpenAnimation({
   }, [setIsMounted]);
 
   if (isMounted) {
-    return <CapsuleResult />;
+    return <CapsuleResult message={message} />;
   }
 
   return (

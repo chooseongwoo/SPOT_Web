@@ -1,17 +1,17 @@
 "use client";
 
 import {
-  Circle,
   GoogleMap,
   Marker,
   OverlayView,
   useLoadScript,
 } from "@react-google-maps/api";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { circleOptions, mapOptions } from "@/constants";
 import { useWatchPosition } from "@/hooks";
 import { MessageType, Position, PositionType } from "@/types";
-import MessageMarker from "./MessageMarker";
+import HistoryMarker from "./HistoryMarker";
 
 interface GoogleMapViewProps extends PositionType {
   mapRef: React.RefObject<google.maps.Map | null>;
@@ -30,8 +30,14 @@ export default function GoogleMapView({
   });
 
   const [heading, setHeading] = useState<number>(0);
+  const circleRef = useRef<google.maps.Circle | null>(null);
+  const router = useRouter();
 
   useWatchPosition({ setPosition, setHeading });
+
+  useEffect(() => {
+    circleRef.current?.setCenter(position);
+  }, [position]);
 
   if (!isLoaded) {
     return (
@@ -50,6 +56,18 @@ export default function GoogleMapView({
         options={mapOptions}
         onLoad={(map) => {
           mapRef.current = map;
+          if (!circleRef.current) {
+            circleRef.current = new window.google.maps.Circle({
+              ...circleOptions,
+              center: position,
+              map,
+            });
+          }
+        }}
+        onUnmount={() => {
+          circleRef.current?.setMap(null);
+          circleRef.current = null;
+          mapRef.current = null;
         }}
       >
         {/* 사용자 위치 */}
@@ -68,15 +86,30 @@ export default function GoogleMapView({
             position={{ lat: message.lat, lng: message.lng }}
             mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
           >
-            <MessageMarker
-              type={message.is_time_capsule ? "capsule" : "message"}
-              read={message.read}
-              open_at={message.open_at}
-            />
+            <div
+              onClick={() => {
+                if (
+                  message.is_time_capsule &&
+                  message.open_at &&
+                  new Date(message.open_at).getTime() > Date.now()
+                ) {
+                  return;
+                }
+                router.push(
+                  `/read/${message.is_time_capsule ? "capsule" : "message"}/${
+                    message.id
+                  }`
+                );
+              }}
+            >
+              <HistoryMarker
+                type={message.is_time_capsule ? "capsule" : "message"}
+                read={message.read}
+                open_at={message.open_at}
+              />
+            </div>
           </OverlayView>
         ))}
-
-        <Circle center={position} options={circleOptions} />
       </GoogleMap>
     </>
   );

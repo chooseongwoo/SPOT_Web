@@ -7,26 +7,33 @@ import {
 import { useRemainTime } from "@/hooks";
 import { formatRemainTime } from "@/utils";
 
-interface MessageItemProps {
-  type: "message" | "capsule";
-  read: boolean;
-  open_at?: string | null;
+import { HistoryType } from "@/types";
+
+interface HistoryItemProps {
+  history: HistoryType;
+  onClick?: () => void;
 }
 
-export default function MessageItem({ type, read, open_at }: MessageItemProps) {
-  const { remainTime, isLocked } = useRemainTime(open_at!);
+export default function HistoryItem({ history, onClick }: HistoryItemProps) {
+  const { remainTime, isLocked } = useRemainTime(history.open_at!);
+  const type = history.is_time_capsule ? "capsule" : "message";
 
   return (
-    <div className="flex w-full items-center justify-between">
+    <div className="flex w-full items-center justify-between" onClick={onClick}>
       <div className="flex w-full gap-[10px]">
         <div className="rounded-full border border-solid border-gray-1 p-[10px]">
           {type === "capsule" ? (
             <CapsuleIcon
               size={24}
-              color={isLocked ? "#C3C3C3" : read ? "#C3C3C3" : "#2AD18E"}
+              color={
+                isLocked ? "#C3C3C3" : history.read ? "#C3C3C3" : "#2AD18E"
+              }
             />
           ) : (
-            <MessageIcon size={24} color={read ? "#C3C3C3" : "#2AD18E"} />
+            <MessageIcon
+              size={24}
+              color={history.read ? "#C3C3C3" : "#2AD18E"}
+            />
           )}
         </div>
         <div className="relative flex w-full items-center justify-between">
@@ -38,15 +45,18 @@ export default function MessageItem({ type, read, open_at }: MessageItemProps) {
               </p>
             </div>
           )}
-          <div className="flex w-full flex-col">
-            <div className="flex items-center gap-[5px]">
-              <p className="text-b2 text-black">추성우</p>
-              <p className="text-cap1 text-gray-3">3시간 전</p>
+          <div>
+            <div className="flex w-full items-center gap-[5px]">
+              <p className="truncate text-b2 text-black">
+                {history.is_anonymous ? "익명의 누군가" : history.nickname}
+              </p>
+              <p className="text-cap1 text-gray-3">
+                {new Date(history.created_at).toLocaleString()}
+              </p>
             </div>
-            <p className="text-b3 text-gray-4">
-              부산광역시 강서구 가락대로 1393
-            </p>
+            <p className="text-b3 text-gray-4">주소</p>
           </div>
+
           <ChevronIcon direction="right" color="#C3C3C3" />
           {isLocked && (
             <div className="absolute inset-0 z-0 bg-white/60 backdrop-blur-[2.5px]" />

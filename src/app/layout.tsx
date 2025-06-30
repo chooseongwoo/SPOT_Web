@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import QueryProvider from "@/app/providers";
+import AuthGuard from "@/components/AuthGuard";
 
 export const metadata: Metadata = {
   title: "SPOT",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <AuthGuard>{children}</AuthGuard>
+        </QueryProvider>
       </body>
     </html>
   );

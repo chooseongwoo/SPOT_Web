@@ -1,5 +1,5 @@
 interface MessageType {
-  id: number;
+  id: string;
   user_id: string;
   content: string;
   lat: number;
@@ -10,6 +10,7 @@ interface MessageType {
   created_at: string;
   read: boolean;
   is_anonymous: boolean;
+  nickname: string;
 }
 
 export default MessageType;

@@ -5,11 +5,15 @@ import AnonymousSelect from "../AnonymousSelect";
 import Textarea from "../Textarea";
 import { CloseTab, CustomButton } from "@/components";
 import { useState } from "react";
+import { useCreateMessageMutation } from "@/services/message/mutation";
+import { useRouter } from "next/navigation";
 
 export default function Message() {
   const [isAnonymous, setIsAnonymous] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
   const [content, setContent] = useState("");
+  const router = useRouter();
+  const { mutate: createMessage } = useCreateMessageMutation();
 
   return (
     <>
@@ -34,7 +38,27 @@ export default function Message() {
           title="다음"
           disabled={!content}
           onClick={() => {
-            return 0;
+            navigator.geolocation.getCurrentPosition(
+              (pos) => {
+                createMessage(
+                  {
+                    content,
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude,
+                    is_anonymous: isAnonymous,
+                  },
+                  {
+                    onSuccess: (data) => {
+                      router.push(`/write/result?id=${data.id}`);
+                    },
+                    onError: () => {
+                      alert("메시지 작성 실패");
+                    },
+                  }
+                );
+              },
+              () => alert("위치 정보를 가져올 수 없습니다.")
+            );
           }}
         />
       </div>

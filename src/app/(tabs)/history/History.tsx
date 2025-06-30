@@ -5,10 +5,16 @@ import { motion } from "framer-motion";
 import clsx from "clsx";
 import MineContainer from "@/app/(tabs)/history/MineContainer";
 import FoundContainer from "@/app/(tabs)/history/FoundContainer";
-import { messageData } from "@/data/messageData";
+import {
+  useMyMessagesQuery,
+  useFoundMessagesQuery,
+} from "@/services/message/query";
+import { EmptyHistory } from "@/app/(tabs)/components";
 
 export default function History() {
-  const [selectedTab, setSelectedTab] = useState<"mine" | "found">("found");
+  const [selectedTab, setSelectedTab] = useState<"mine" | "found">("mine");
+  const { data: myMessages } = useMyMessagesQuery();
+  const { data: foundMessages } = useFoundMessagesQuery();
 
   return (
     <div className="flex h-screen w-full flex-col">
@@ -48,14 +54,26 @@ export default function History() {
         </div>
       </div>
 
-      <div className="mt-[10px] flex flex-col gap-[10px] px-6 pb-24 pt-20">
+      <div className="mt-[10px] flex flex-1 flex-col gap-[10px] px-6 pb-24 pt-20">
         {selectedTab === "mine" &&
-          messageData.map((message) => (
-            <MineContainer key={message.id} {...message} />
+          (myMessages && myMessages.length > 0 ? (
+            myMessages.map((message) => (
+              <MineContainer key={message.id} {...message} />
+            ))
+          ) : (
+            <EmptyHistory
+              message="아직 기록을 남기지 않았어요..."
+              buttonText="기록 남기러 가기"
+            />
           ))}
+
         {selectedTab === "found" &&
-          messageData.map((message) => (
-            <FoundContainer key={message.id} {...message} />
+          (foundMessages && foundMessages.length > 0 ? (
+            foundMessages.map((message) => (
+              <FoundContainer key={message.id} {...message} />
+            ))
+          ) : (
+            <EmptyHistory message="아직 발견한 기록이 없어요..." />
           ))}
       </div>
     </div>

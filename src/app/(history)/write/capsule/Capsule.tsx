@@ -4,6 +4,8 @@ import { CloseTab, CustomButton, CustomInput } from "@/components";
 import AnonymousSelect from "../AnonymousSelect";
 import Textarea from "../Textarea";
 import { useState } from "react";
+import { useCreateCapsuleMutation } from "@/services/message/mutation";
+import { useRouter } from "next/navigation";
 import BackButton from "@/app/(history)/write/BackButton";
 import { formatInputDate, formatInputTime } from "@/utils";
 
@@ -15,6 +17,8 @@ export default function Capsule() {
     time: string;
     content: string;
   }>({ date: "", time: "", content: "" });
+  const router = useRouter();
+  const { mutate: createCapsule } = useCreateCapsuleMutation();
 
   const handleValueChange = (
     field: "date" | "time" | "content",
@@ -63,7 +67,35 @@ export default function Capsule() {
           title="다음"
           disabled={!values.date || !values.time || !values.content}
           onClick={() => {
-            return 0;
+            const formattedDate = values.date.replace(/\//g, "-");
+            const openAtDate = new Date(`${formattedDate}T${values.time}:00+09:00`);
+            if (Number.isNaN(openAtDate.getTime())) {
+              alert("잘못된 날짜 또는 시간입니다.");
+              return;
+            }
+            const openAt = `${formattedDate}T${values.time}:00+09:00`;
+            navigator.geolocation.getCurrentPosition(
+              (pos) => {
+                createCapsule(
+                  {
+                    content: values.content,
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude,
+                    open_at: openAt,
+                    is_anonymous: isAnonymous,
+                  },
+                  {
+                    onSuccess: (data) => {
+                      router.push(`/write/result?id=${data.id}`);
+                    },
+                    onError: () => {
+                      alert("타임캡슐 작성 실패");
+                    },
+                  }
+                );
+              },
+              () => alert("위치 정보를 가져올 수 없습니다.")
+            );
           }}
         />
       </div>

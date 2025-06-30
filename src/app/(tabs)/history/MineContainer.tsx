@@ -16,6 +16,7 @@ export default function MineContainer({
   content,
   lat,
   lng,
+  created_at,
 }: MessageType) {
   const { data: currentLocation } = useAddressQuery(lat, lng);
 
@@ -38,7 +39,9 @@ export default function MineContainer({
       </div>
       <div className="flex items-center gap-[5px]">
         <CalendarIcon />
-        <p className="text-footnote text-gray-4">2025년 5월 12일 12시 34분</p>
+        <p className="text-footnote text-gray-4">
+          {new Date(created_at).toLocaleString("ko-KR")}
+        </p>
       </div>
       <div className="flex items-center gap-[5px]">
         <OutlinedLocationIcon />
