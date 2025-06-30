@@ -10,13 +10,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { circleOptions, mapOptions } from "@/constants";
 import { useWatchPosition } from "@/hooks";
-import { MessageType, Position, PositionType } from "@/types";
+import { HistoryType, Position, PositionType } from "@/types";
 import HistoryMarker from "./HistoryMarker";
 
 interface GoogleMapViewProps extends PositionType {
   mapRef: React.RefObject<google.maps.Map | null>;
   setPosition: React.Dispatch<React.SetStateAction<Position>>;
-  messageData: MessageType[];
+  messageData: HistoryType[];
 }
 
 export default function GoogleMapView({

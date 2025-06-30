@@ -1,4 +1,4 @@
-interface MessageType {
+interface HistoryType {
   id: string;
   user_id: string;
   content: string;
@@ -13,4 +13,4 @@ interface MessageType {
   nickname: string;
 }
 
-export default MessageType;
+export default HistoryType;

@@ -1,9 +1,9 @@
 import { CalendarIcon, OutlinedLocationIcon } from "@/components/icons";
 import Image from "next/image";
-import MessageType from "@/types/history.type";
+import { HistoryType } from "@/types";
 import { useAddressQuery } from "@/services/map/location.query";
 
-export default function CapsuleResult({ message }: { message: MessageType }) {
+export default function CapsuleResult({ message }: { message: HistoryType }) {
   const { data: address } = useAddressQuery(message.lat, message.lng);
   return (
     <div className="flex w-full flex-col items-center gap-16 p-10">

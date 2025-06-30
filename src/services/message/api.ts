@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabaseClient";
-import MessageType from "@/types/history.type";
+import HistoryType from "@/types/history.type";
 import { formatDateKSTForDB } from "@/utils";
 
 const RANGE = 0.00045;
@@ -7,7 +7,7 @@ const RANGE = 0.00045;
 export const getNearbyMessages = async (
   lat: number,
   lng: number
-): Promise<MessageType[]> => {
+): Promise<HistoryType[]> => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -33,13 +33,13 @@ export const getNearbyMessages = async (
     : { data: [] };
   const readIds = views?.map((v) => v.message_id) ?? [];
   return (data || []).map((m: any) => ({
-    ...(m as Omit<MessageType, "nickname" | "read">),
+    ...(m as Omit<HistoryType, "nickname" | "read">),
     nickname: m.users.nickname,
     read: readIds.includes(m.id),
   }));
 };
 
-export const getMessage = async (id: string): Promise<MessageType> => {
+export const getMessage = async (id: string): Promise<HistoryType> => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -62,10 +62,10 @@ export const getMessage = async (id: string): Promise<MessageType> => {
     : { data: null };
 
   return {
-    ...(data as Omit<MessageType, "nickname" | "read">),
+    ...(data as Omit<HistoryType, "nickname" | "read">),
     nickname: (data as any).users.nickname,
     read: !!view,
-  } as MessageType;
+  } as HistoryType;
 };
 
 export const createMessage = async ({
@@ -100,7 +100,7 @@ export const createMessage = async ({
     .select()
     .single();
   if (error) throw new Error(error.message);
-  return data as MessageType;
+  return data as HistoryType;
 };
 
 export const createCapsule = async ({
@@ -141,7 +141,7 @@ export const createCapsule = async ({
     .select()
     .single();
   if (error) throw new Error(error.message);
-  return data as MessageType;
+  return data as HistoryType;
 };
 
 export const readMessage = async (id: string) => {
@@ -156,7 +156,7 @@ export const readMessage = async (id: string) => {
     .insert([{ user_id: userId, message_id: id }]);
 };
 
-export const getMyMessages = async (): Promise<MessageType[]> => {
+export const getMyMessages = async (): Promise<HistoryType[]> => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -171,13 +171,13 @@ export const getMyMessages = async (): Promise<MessageType[]> => {
 
   if (error) throw new Error(error.message);
   return (data || []).map((m: any) => ({
-    ...(m as Omit<MessageType, "nickname" | "read">),
+    ...(m as Omit<HistoryType, "nickname" | "read">),
     nickname: m.users.nickname,
     read: true,
   }));
 };
 
-export const getFoundMessages = async (): Promise<MessageType[]> => {
+export const getFoundMessages = async (): Promise<HistoryType[]> => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -192,7 +192,7 @@ export const getFoundMessages = async (): Promise<MessageType[]> => {
 
   if (error) throw new Error(error.message);
   return (data || []).map((v: any) => ({
-    ...(v.message as Omit<MessageType, "nickname" | "read">),
+    ...(v.message as Omit<HistoryType, "nickname" | "read">),
     nickname: v.message.users.nickname,
     read: true,
   }));

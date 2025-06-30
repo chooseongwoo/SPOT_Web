@@ -8,7 +8,7 @@ import {
   TrashIcon,
 } from "@/components/icons";
 import { useAddressQuery } from "@/services/map/location.query";
-import { MessageType } from "@/types";
+import { HistoryType } from "@/types";
 import { extractCleanAddress } from "@/utils";
 import Image from "next/image";
 
@@ -20,7 +20,7 @@ export default function FoundContainer({
   is_anonymous,
   created_at,
   nickname,
-}: MessageType) {
+}: HistoryType) {
   const { data: currentLocation } = useAddressQuery(lat, lng);
 
   return (
