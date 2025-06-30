@@ -1,7 +1,7 @@
 import CapsuleResult from "@/app/(history)/read/capsule/[id]/CapsuleResult";
 import { Capsule3DIcon } from "@/components/icons";
 import React, { useEffect, useState } from "react";
-import MessageType from "@/types/message.type";
+import MessageType from "@/types/history.type";
 
 interface OpenAnimationProps {
   isMounted: boolean;

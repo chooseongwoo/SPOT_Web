@@ -90,7 +90,7 @@ export default function Home() {
             {messages.map((message) => (
               <div key={message.id} className="py-[10px]">
                 <HistoryItem
-                  message={message}
+                  history={message}
                   onClick={() => {
                     if (
                       message.is_time_capsule &&

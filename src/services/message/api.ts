@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabaseClient";
-import MessageType from "@/types/message.type";
+import MessageType from "@/types/history.type";
 import { formatDateKSTForDB } from "@/utils";
 
 const RANGE = 0.00045;

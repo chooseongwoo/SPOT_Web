@@ -1,6 +1,6 @@
 import { CalendarIcon, OutlinedLocationIcon } from "@/components/icons";
 import Image from "next/image";
-import MessageType from "@/types/message.type";
+import MessageType from "@/types/history.type";
 import { useAddressQuery } from "@/services/map/location.query";
 
 export default function CapsuleResult({ message }: { message: MessageType }) {

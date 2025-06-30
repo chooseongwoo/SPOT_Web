@@ -7,16 +7,16 @@ import {
 import { useRemainTime } from "@/hooks";
 import { formatRemainTime } from "@/utils";
 
-import MessageType from "@/types/message.type";
+import { HistoryType } from "@/types";
 
 interface HistoryItemProps {
-  message: MessageType;
+  history: HistoryType;
   onClick?: () => void;
 }
 
-export default function HistoryItem({ message, onClick }: HistoryItemProps) {
-  const { remainTime, isLocked } = useRemainTime(message.open_at!);
-  const type = message.is_time_capsule ? "capsule" : "message";
+export default function HistoryItem({ history, onClick }: HistoryItemProps) {
+  const { remainTime, isLocked } = useRemainTime(history.open_at!);
+  const type = history.is_time_capsule ? "capsule" : "message";
 
   return (
     <div className="flex w-full items-center justify-between" onClick={onClick}>
@@ -26,13 +26,13 @@ export default function HistoryItem({ message, onClick }: HistoryItemProps) {
             <CapsuleIcon
               size={24}
               color={
-                isLocked ? "#C3C3C3" : message.read ? "#C3C3C3" : "#2AD18E"
+                isLocked ? "#C3C3C3" : history.read ? "#C3C3C3" : "#2AD18E"
               }
             />
           ) : (
             <MessageIcon
               size={24}
-              color={message.read ? "#C3C3C3" : "#2AD18E"}
+              color={history.read ? "#C3C3C3" : "#2AD18E"}
             />
           )}
         </div>
@@ -45,14 +45,18 @@ export default function HistoryItem({ message, onClick }: HistoryItemProps) {
               </p>
             </div>
           )}
-          <div className="flex w-full flex-col">
-            <p className="truncate text-b2 text-black">
-              {message.is_anonymous ? "익명의 누군가" : message.nickname}
-            </p>
-            <p className="text-cap1 text-gray-3">
-              {new Date(message.created_at).toLocaleString()}
-            </p>
+          <div>
+            <div className="flex w-full items-center gap-[5px]">
+              <p className="truncate text-b2 text-black">
+                {history.is_anonymous ? "익명의 누군가" : history.nickname}
+              </p>
+              <p className="text-cap1 text-gray-3">
+                {new Date(history.created_at).toLocaleString()}
+              </p>
+            </div>
+            <p className="text-b3 text-gray-4">주소</p>
           </div>
+
           <ChevronIcon direction="right" color="#C3C3C3" />
           {isLocked && (
             <div className="absolute inset-0 z-0 bg-white/60 backdrop-blur-[2.5px]" />
