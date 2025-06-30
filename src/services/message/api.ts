@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabaseClient";
 import MessageType from "@/types/message.type";
 import { formatDateKSTForDB } from "@/utils";
 
-const RANGE = 0.00045; // roughly 50 meters
+const RANGE = 0.00045;
 
 export const getNearbyMessages = async (
   lat: number,

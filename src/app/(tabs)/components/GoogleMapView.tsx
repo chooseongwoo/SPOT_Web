@@ -87,11 +87,18 @@ export default function GoogleMapView({
             mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
           >
             <div
-              onClick={() =>
+              onClick={() => {
+                if (
+                  message.is_time_capsule &&
+                  message.open_at &&
+                  new Date(message.open_at).getTime() > Date.now()
+                ) {
+                  return;
+                }
                 router.push(
                   `/read/${message.is_time_capsule ? "capsule" : "message"}/${message.id}`
-                )
-              }
+                );
+              }}
             >
               <MessageMarker
                 type={message.is_time_capsule ? "capsule" : "message"}

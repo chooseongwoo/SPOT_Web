@@ -1,19 +1,24 @@
 "use client";
 
-import BackButton from "@/app/(history)/write/BackButton";
 import { CloseTab, CustomButton } from "@/components";
-import { FilledLocationIcon, MessageIcon, CapsuleIcon } from "@/components/icons";
+import {
+  FilledLocationIcon,
+  MessageIcon,
+  CapsuleIcon,
+} from "@/components/icons";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMessageQuery } from "@/services/message/query";
 import { useAddressQuery } from "@/services/map/location.query";
-import { formatDateKST } from "@/utils";
 
 export default function Result() {
   const params = useSearchParams();
   const router = useRouter();
   const id = params.get("id") ?? "";
   const { data: message } = useMessageQuery(id);
-  const { data: address } = useAddressQuery(message?.lat ?? 0, message?.lng ?? 0);
+  const { data: address } = useAddressQuery(
+    message?.lat ?? 0,
+    message?.lng ?? 0
+  );
 
   if (!message) return null;
 
@@ -29,7 +34,9 @@ export default function Result() {
           </div>
           <div className="flex flex-col items-center gap-3">
             <p className="text-headline text-black">{message.content}</p>
-            <p className="text-b2 text-gray-4">{formatDateKST(message.created_at)}</p>
+            <p className="text-b2 text-gray-4">
+              {new Date(message.created_at).toLocaleString("ko-KR")}
+            </p>
           </div>
         </div>
       </div>
@@ -47,7 +54,6 @@ export default function Result() {
           )}
         </div>
         <div className="flex gap-[10px]">
-          <BackButton name="수정" />
           <CustomButton title="완료" onClick={() => router.push("/")} />
         </div>
       </div>

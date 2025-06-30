@@ -2,7 +2,6 @@
 
 import { Header } from "@/components";
 import { CalendarIcon, OutlinedLocationIcon } from "@/components/icons";
-import { formatDateKST } from "@/utils";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
@@ -14,7 +13,10 @@ export default function MessageDetail() {
   const params = useParams<{ id: string }>();
   const { data: message } = useMessageQuery(params.id);
   const { mutate: readMessage } = useReadMessageMutation();
-  const { data: address } = useAddressQuery(message?.lat ?? 0, message?.lng ?? 0);
+  const { data: address } = useAddressQuery(
+    message?.lat ?? 0,
+    message?.lng ?? 0
+  );
   useEffect(() => {
     if (message) {
       readMessage(message.id);
@@ -27,7 +29,9 @@ export default function MessageDetail() {
     <div className="flex flex-col">
       <Header title="메시지" />
       <div className="flex flex-col gap-3 px-6 pt-[10px]">
-        <p className="text-b2 text-black whitespace-pre-wrap">{message.content}</p>
+        <p className="whitespace-pre-wrap text-b2 text-black">
+          {message.content}
+        </p>
         <div className="h-[2px] w-full bg-gray-1" />
         <div className="flex items-center gap-[10px]">
           <Image
@@ -43,7 +47,7 @@ export default function MessageDetail() {
           <div className="flex items-center gap-[5px]">
             <CalendarIcon />
             <p className="text-footnote text-gray-4">
-              {formatDateKST(message.created_at)}
+              {new Date(message.created_at).toLocaleString("ko-KR")}
             </p>
           </div>
           {address && (
