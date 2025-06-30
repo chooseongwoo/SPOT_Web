@@ -2,7 +2,7 @@
 
 import {
   BottomSheet,
-  MessageItem,
+  HistoryItem,
   EmptyHistory,
 } from "@/app/(tabs)/components";
 import { GPSIcon, PlusIcon } from "@/components/icons";
@@ -89,7 +89,7 @@ export default function Home() {
           <div className="flex w-full flex-col divide-y divide-gray-1 pb-28 pt-3">
             {messages.map((message) => (
               <div key={message.id} className="py-[10px]">
-                <MessageItem
+                <HistoryItem
                   message={message}
                   onClick={() => {
                     if (

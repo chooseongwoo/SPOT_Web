@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { circleOptions, mapOptions } from "@/constants";
 import { useWatchPosition } from "@/hooks";
 import { MessageType, Position, PositionType } from "@/types";
-import MessageMarker from "./MessageMarker";
+import HistoryMarker from "./HistoryMarker";
 
 interface GoogleMapViewProps extends PositionType {
   mapRef: React.RefObject<google.maps.Map | null>;
@@ -96,11 +96,13 @@ export default function GoogleMapView({
                   return;
                 }
                 router.push(
-                  `/read/${message.is_time_capsule ? "capsule" : "message"}/${message.id}`
+                  `/read/${message.is_time_capsule ? "capsule" : "message"}/${
+                    message.id
+                  }`
                 );
               }}
             >
-              <MessageMarker
+              <HistoryMarker
                 type={message.is_time_capsule ? "capsule" : "message"}
                 read={message.read}
                 open_at={message.open_at}
@@ -108,7 +110,6 @@ export default function GoogleMapView({
             </div>
           </OverlayView>
         ))}
-
       </GoogleMap>
     </>
   );

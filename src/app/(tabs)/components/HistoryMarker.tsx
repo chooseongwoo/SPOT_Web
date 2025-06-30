@@ -8,17 +8,17 @@ import { useRemainTime } from "@/hooks";
 import { formatRemainTime } from "@/utils";
 import clsx from "clsx";
 
-interface MessageMarkerProps {
+interface HistoryMarkerProps {
   type: "message" | "capsule";
   read: boolean;
   open_at?: string | null;
 }
 
-export default function MessageMarker({
+export default function HistoryMarker({
   type,
   read,
   open_at,
-}: MessageMarkerProps) {
+}: HistoryMarkerProps) {
   const { remainTime, isLocked } = useRemainTime(open_at!);
 
   return (

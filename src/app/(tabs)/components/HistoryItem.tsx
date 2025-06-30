@@ -9,12 +9,12 @@ import { formatRemainTime } from "@/utils";
 
 import MessageType from "@/types/message.type";
 
-interface MessageItemProps {
+interface HistoryItemProps {
   message: MessageType;
   onClick?: () => void;
 }
 
-export default function MessageItem({ message, onClick }: MessageItemProps) {
+export default function HistoryItem({ message, onClick }: HistoryItemProps) {
   const { remainTime, isLocked } = useRemainTime(message.open_at!);
   const type = message.is_time_capsule ? "capsule" : "message";
 

@@ -54,7 +54,7 @@ export default function History() {
         </div>
       </div>
 
-      <div className="mt-[10px] flex flex-1 flex-col items-center justify-center gap-[10px] px-6 pb-24 pt-20">
+      <div className="mt-[10px] flex flex-1 flex-col gap-[10px] px-6 pb-24 pt-20">
         {selectedTab === "mine" &&
           (myMessages && myMessages.length > 0 ? (
             myMessages.map((message) => (
