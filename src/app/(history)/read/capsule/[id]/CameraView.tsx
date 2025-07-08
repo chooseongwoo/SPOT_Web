@@ -15,8 +15,8 @@ export default function Cameraview({ isMounted }: { isMounted: boolean }) {
           videoRef.current.srcObject = stream;
         }
       })
-      .catch((err) => {
-        console.error("카메라 접근 실패:", err);
+      .catch(() => {
+        alert("카메라 접근 실패:");
       });
 
     return () => {

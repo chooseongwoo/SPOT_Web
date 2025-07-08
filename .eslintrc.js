@@ -30,6 +30,7 @@ module.exports = {
     "react/jsx-key": "off",
     "tailwindcss/classnames-order": "warn",
     "tailwindcss/no-custom-classname": "off",
+    "@typescript-eslint/no-explicit-any": "off",
   },
   settings: {
     react: {
