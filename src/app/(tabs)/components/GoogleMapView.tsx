@@ -33,6 +33,8 @@ export default function GoogleMapView({
   const circleRef = useRef<google.maps.Circle | null>(null);
   const router = useRouter();
 
+  const [defaultCenter] = useState(position);
+
   useWatchPosition({ setPosition, setHeading });
 
   useEffect(() => {
@@ -51,7 +53,7 @@ export default function GoogleMapView({
     <>
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={position}
+        center={defaultCenter}
         zoom={19}
         options={mapOptions}
         onLoad={(map) => {

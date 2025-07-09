@@ -16,6 +16,8 @@ export default function useWatchPosition({
     let prevLat = 0;
     let prevLng = 0;
 
+    const THRESHOLD = 0.00015; // 약 15m
+
     const watcher = navigator.geolocation.watchPosition(
       (pos) => {
         const { latitude, longitude, heading } = pos.coords;
@@ -23,8 +25,8 @@ export default function useWatchPosition({
         const roundedLng = parseFloat(longitude.toFixed(6));
 
         if (
-          Math.abs(prevLat - roundedLat) > 0.00001 ||
-          Math.abs(prevLng - roundedLng) > 0.00001
+          Math.abs(prevLat - roundedLat) > THRESHOLD ||
+          Math.abs(prevLng - roundedLng) > THRESHOLD
         ) {
           prevLat = roundedLat;
           prevLng = roundedLng;
