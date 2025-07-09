@@ -12,30 +12,22 @@ import { HistoryType } from "@/types";
 import { extractCleanAddress } from "@/utils";
 import Image from "next/image";
 
-export default function FoundContainer({
-  is_time_capsule,
-  content,
-  lat,
-  lng,
-  is_anonymous,
-  created_at,
-  nickname,
-}: HistoryType) {
-  const { data: currentLocation } = useAddressQuery(lat, lng);
+export default function FoundContainer(message: HistoryType) {
+  const { data: currentLocation } = useAddressQuery(message.lat, message.lng);
 
   return (
     <div className="flex flex-col gap-2 rounded-xl border p-5">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-[10px]">
           <div className="flex size-8 items-center justify-center rounded-lg bg-green-default">
-            {is_time_capsule ? (
+            {message.is_time_capsule ? (
               <CapsuleIcon size={18} />
             ) : (
               <MessageIcon size={18} />
             )}
           </div>
           <p className="text-btn2 text-black">
-            {is_time_capsule ? "타임캡슐" : "메시지"}
+            {message.is_time_capsule ? "타임캡슐" : "메시지"}
           </p>
         </div>
         <TrashIcon />
@@ -43,7 +35,7 @@ export default function FoundContainer({
       <div className="flex items-center gap-[5px]">
         <CalendarIcon />
         <p className="text-footnote text-gray-4">
-          {new Date(created_at).toLocaleString("ko-KR")}
+          {new Date(message.created_at).toLocaleString("ko-KR")}
         </p>
       </div>
       <div className="flex items-center gap-[5px]">
@@ -52,16 +44,18 @@ export default function FoundContainer({
           {extractCleanAddress(currentLocation?.address_components)}
         </p>
       </div>
-      <p className="break-words text-b2 text-black">{content}</p>
+      <p className="break-words text-b2 text-black">{message.content}</p>
       <div className="flex items-center gap-[10px]">
         <Image
           alt="프로필 이미지"
-          src="/images/DefaultProfileImage.png"
+          src={message.profile_image_url}
           className="rounded-full"
           width={24}
           height={24}
         />
-        <p className="text-b3 text-black">{is_anonymous ? "익명" : nickname}</p>
+        <p className="text-b3 text-black">
+          {message.is_anonymous ? "익명" : message.nickname}
+        </p>
       </div>
     </div>
   );

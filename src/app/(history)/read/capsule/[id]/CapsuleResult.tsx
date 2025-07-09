@@ -3,14 +3,14 @@ import Image from "next/image";
 import { HistoryType } from "@/types";
 import { useAddressQuery } from "@/services/map/location.query";
 
-export default function CapsuleResult({ message }: { message: HistoryType }) {
+export default function CapsuleResult(message: HistoryType) {
   const { data: address } = useAddressQuery(message.lat, message.lng);
   return (
     <div className="flex w-full flex-col items-center gap-16 p-10">
       <div className="flex flex-col items-center gap-3">
         <Image
           alt="캡슐 결과 이미지"
-          src="/images/CapsuleResultImage.png"
+          src={message.profile_image_url}
           width={128}
           height={160}
         />

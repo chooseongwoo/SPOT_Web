@@ -36,7 +36,7 @@ export default function MessageDetail() {
         <div className="flex items-center gap-[10px]">
           <Image
             alt="프로필 이미지"
-            src="/images/DefaultProfileImage.png"
+            src={message.profile_image_url}
             width={46}
             height={46}
             className="rounded-full border border-gray-2"

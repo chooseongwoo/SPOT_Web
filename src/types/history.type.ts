@@ -11,6 +11,7 @@ interface HistoryType {
   read: boolean;
   is_anonymous: boolean;
   nickname: string;
+  profile_image_url: string;
 }
 
 export default HistoryType;
