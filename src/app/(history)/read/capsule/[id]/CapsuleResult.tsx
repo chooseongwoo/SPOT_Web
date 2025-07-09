@@ -3,7 +3,7 @@ import Image from "next/image";
 import { HistoryType } from "@/types";
 import { useAddressQuery } from "@/services/map/location.query";
 
-export default function CapsuleResult(message: HistoryType) {
+export default function CapsuleResult({ message }: { message: HistoryType }) {
   const { data: address } = useAddressQuery(message.lat, message.lng);
   return (
     <div className="flex w-full flex-col items-center gap-16 p-10">
