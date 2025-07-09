@@ -41,10 +41,10 @@ export default function GoogleMapView({
     circleRef.current?.setCenter(position);
   }, [position]);
 
-  if (!isLoaded) {
+  if (!isLoaded || !position || (position.lat === 0 && position.lng === 0)) {
     return (
       <div className="flex h-screen w-screen items-center justify-center">
-        <p className="text-b2 text-black">지도 불러오는 중...</p>
+        <p className="text-b2 text-black">내 위치를 불러오는 중...</p>
       </div>
     );
   }
