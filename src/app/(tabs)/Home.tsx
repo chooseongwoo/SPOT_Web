@@ -85,7 +85,7 @@ export default function Home() {
             <PlusIcon />
           </div>
         </div>
-        {messages && messages.length > 0 ? (
+        {messages && messages.length < 0 ? (
           <div className="flex w-full flex-col divide-y divide-gray-1 pb-28 pt-3">
             {messages.map((message) => (
               <div key={message.id} className="py-[10px]">
@@ -117,13 +117,14 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          <EmptyHistory
-            message="주변에 남겨진 기록이 없어요..."
-            subTitle="내가 제일 먼저 기록을 남겨볼까요?"
-            buttonText="기록 남기러 가기"
-            onClick={() => router.push("/write")}
-            className="pt-[120px]"
-          />
+          <div className="pt-[120px]">
+            <EmptyHistory
+              message="주변에 남겨진 기록이 없어요..."
+              subTitle="내가 제일 먼저 기록을 남겨볼까요?"
+              buttonText="기록 남기러 가기"
+              onClick={() => router.push("/write")}
+            />
+          </div>
         )}
       </BottomSheet>
     </div>
