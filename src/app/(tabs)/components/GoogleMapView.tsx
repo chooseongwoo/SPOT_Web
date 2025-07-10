@@ -29,19 +29,26 @@ export default function GoogleMapView({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
   });
 
+  const [initialCenter, setInitialCenter] = useState<Position | null>(null);
   const [heading, setHeading] = useState<number>(0);
   const circleRef = useRef<google.maps.Circle | null>(null);
   const router = useRouter();
 
-  const [defaultCenter] = useState(position);
-
   useWatchPosition({ setPosition, setHeading });
 
   useEffect(() => {
-    circleRef.current?.setCenter(position);
-  }, [position]);
+    if (position.lat !== 0 && position.lng !== 0 && !initialCenter) {
+      setInitialCenter(position);
+    }
 
-  if (!isLoaded || !position || (position.lat === 0 && position.lng === 0)) {
+    if (mapRef.current && initialCenter) {
+      mapRef.current.panTo(position);
+    }
+
+    circleRef.current?.setCenter(position);
+  }, [position, initialCenter, mapRef]);
+
+  if (!isLoaded || !initialCenter) {
     return (
       <div className="flex h-screen w-screen items-center justify-center">
         <p className="text-b2 text-black">내 위치를 불러오는 중...</p>
@@ -53,7 +60,7 @@ export default function GoogleMapView({
     <>
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={defaultCenter}
+        center={initialCenter}
         zoom={19}
         options={mapOptions}
         onLoad={(map) => {

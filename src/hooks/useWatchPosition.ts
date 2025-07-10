@@ -16,7 +16,7 @@ export default function useWatchPosition({
     let prevLat = 0;
     let prevLng = 0;
 
-    const THRESHOLD = 0.00015; // 약 15m
+    const THRESHOLD = 0.00015;
 
     const watcher = navigator.geolocation.watchPosition(
       (pos) => {
@@ -35,7 +35,8 @@ export default function useWatchPosition({
         }
       },
       () => {
-        setPosition({ lat: 35.1681608, lng: 129.0573853 });
+        setPosition({ lat: -1, lng: -1 });
+        alert("위치를 불러오지 못함");
       },
       {
         enableHighAccuracy: true,
