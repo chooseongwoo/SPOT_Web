@@ -10,7 +10,7 @@ export default function CapsuleResult({ message }: { message: HistoryType }) {
       <div className="flex flex-col items-center gap-3">
         <Image
           alt="캡슐 결과 이미지"
-          src={message.profile_image_url}
+          src="/images/CapsuleResultImage.png"
           width={128}
           height={160}
         />
@@ -22,12 +22,12 @@ export default function CapsuleResult({ message }: { message: HistoryType }) {
         <div className="flex items-center gap-[10px]">
           <Image
             alt="프로필 이미지"
-            src="/images/DefaultProfileImage.png"
-            className="rounded-full"
+            src={message.users.profile_image_url}
+            className="aspect-square rounded-full object-cover"
             width={46}
             height={46}
           />
-          <p className="text-b2 text-black">{message.nickname}</p>
+          <p className="text-b2 text-black">{message.users.nickname}</p>
         </div>
         <div className="flex w-full flex-col gap-1">
           <p className="flex items-center gap-[5px] text-footnote text-gray-4">

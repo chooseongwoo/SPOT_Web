@@ -56,13 +56,13 @@ export default function FoundContainer(message: HistoryType) {
       <div className="flex items-center gap-[10px]">
         <Image
           alt="프로필 이미지"
-          src={message.profile_image_url}
-          className="rounded-full"
+          src={message.users.profile_image_url}
+          className="aspect-square rounded-full object-cover"
           width={24}
           height={24}
         />
         <p className="text-b3 text-black">
-          {message.is_anonymous ? "익명" : message.nickname}
+          {message.is_anonymous ? "익명" : message.users.nickname}
         </p>
       </div>
     </div>

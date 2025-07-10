@@ -36,12 +36,12 @@ export default function MessageDetail() {
         <div className="flex items-center gap-[10px]">
           <Image
             alt="프로필 이미지"
-            src={message.profile_image_url}
+            src={message.users.profile_image_url}
             width={46}
             height={46}
             className="rounded-full border border-gray-2"
           />
-          <p className="text-b2 text-black">{message.nickname}</p>
+          <p className="text-b2 text-black">{message.users.nickname}</p>
         </div>
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-[5px]">

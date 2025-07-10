@@ -10,8 +10,10 @@ interface HistoryType {
   created_at: string;
   read: boolean;
   is_anonymous: boolean;
-  nickname: string;
-  profile_image_url: string;
+  users: {
+    nickname: string;
+    profile_image_url: string;
+  };
 }
 
 export default HistoryType;

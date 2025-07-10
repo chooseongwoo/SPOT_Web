@@ -47,9 +47,10 @@ export const getMessage = async (id: string): Promise<HistoryType> => {
 
   const { data, error } = await supabase
     .from("messages")
-    .select("*, users(nickname)")
+    .select("*, users(nickname, profile_image_url)")
     .eq("id", id)
     .single();
+
   if (error) throw new Error(error.message);
 
   const { data: view } = userId
@@ -151,9 +152,18 @@ export const readMessage = async (id: string) => {
   const userId = session?.user.id;
   if (!userId) throw new Error("세션 없음");
 
-  await supabase
+  const { data: existing } = await supabase
     .from("message_views")
-    .insert([{ user_id: userId, message_id: id }]);
+    .select("id")
+    .eq("user_id", userId)
+    .eq("message_id", id)
+    .maybeSingle();
+
+  if (!existing) {
+    await supabase
+      .from("message_views")
+      .insert([{ user_id: userId, message_id: id }]);
+  }
 };
 
 export const getMyMessages = async (): Promise<HistoryType[]> => {
@@ -186,7 +196,7 @@ export const getFoundMessages = async (): Promise<HistoryType[]> => {
 
   const { data, error } = await supabase
     .from("message_views")
-    .select("message:messages(*, users(nickname))")
+    .select("message:messages(*, users(nickname, profile_image_url))")
     .eq("user_id", userId)
     .order("viewed_at", { ascending: false });
 
