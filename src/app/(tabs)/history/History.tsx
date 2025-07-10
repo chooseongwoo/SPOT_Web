@@ -10,11 +10,13 @@ import {
   useFoundMessagesQuery,
 } from "@/services/message/query";
 import { EmptyHistory } from "@/app/(tabs)/components";
+import { useRouter } from "next/navigation";
 
 export default function History() {
   const [selectedTab, setSelectedTab] = useState<"mine" | "found">("mine");
   const { data: myMessages } = useMyMessagesQuery();
   const { data: foundMessages } = useFoundMessagesQuery();
+  const router = useRouter();
 
   return (
     <div className="flex h-screen w-full flex-col">
@@ -62,6 +64,7 @@ export default function History() {
             ))
           ) : (
             <EmptyHistory
+              onClick={() => router.push("/write")}
               message="아직 기록을 남기지 않았어요..."
               buttonText="기록 남기러 가기"
             />

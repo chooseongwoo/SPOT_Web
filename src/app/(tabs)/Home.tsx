@@ -117,13 +117,13 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          <div className="pt-[120px]">
-            <EmptyHistory
-              message="주변에 남겨진 기록이 없어요..."
-              subTitle="내가 제일 먼저 기록을 남겨볼까요?"
-              buttonText="기록 남기러 가기"
-            />
-          </div>
+          <EmptyHistory
+            message="주변에 남겨진 기록이 없어요..."
+            subTitle="내가 제일 먼저 기록을 남겨볼까요?"
+            buttonText="기록 남기러 가기"
+            onClick={() => router.push("/write")}
+            className="pt-[120px]"
+          />
         )}
       </BottomSheet>
     </div>

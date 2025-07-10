@@ -1,7 +1,7 @@
 import { ChevronIcon } from "@/components/icons";
 import Image from "next/image";
 
-interface EmptyHistoryProps {
+interface EmptyHistoryProps extends React.HTMLAttributes<HTMLDivElement> {
   message: string;
   subTitle?: string;
   buttonText?: string;
@@ -11,9 +11,13 @@ export default function EmptyHistory({
   message,
   subTitle,
   buttonText,
+  ...props
 }: EmptyHistoryProps) {
   return (
-    <div className="flex h-[calc(100%-25.2px)] flex-col items-center justify-center gap-[10px]">
+    <div
+      className="flex h-[calc(100%-25.2px)] flex-col items-center justify-center gap-[10px]"
+      {...props}
+    >
       <Image
         alt="메시지 이미지"
         src="/images/MessageImage.png"
