@@ -5,3 +5,4 @@ export type {
 } from "./googleGeocode.type";
 export type { Position, PositionType } from "./position.type";
 export type { default as HistoryType } from "./history.type";
+export type { default as ProfileSection } from "./profileSection.type";
