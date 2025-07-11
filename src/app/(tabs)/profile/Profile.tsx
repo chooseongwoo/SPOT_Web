@@ -3,13 +3,32 @@
 import { CameraIcon, ChevronIcon } from "@/components/icons";
 import { profileSections } from "@/constants";
 import { useUploadImage } from "@/hooks";
+import {
+  useDeleteUserMutation,
+  useSignOutMutation,
+} from "@/services/user/mutation";
+import { useUserInfoQuery } from "@/services/user/query";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Profile() {
   const uploadImage = useUploadImage();
   const DefaultProfile = "/images/DefaultProfileImage.png";
   const [selectedImage, setSelectedImage] = useState<string>(DefaultProfile);
+  const { data: userInfo } = useUserInfoQuery();
+  const { mutate: signOut } = useSignOutMutation();
+  const { mutate: deleteUser } = useDeleteUserMutation();
+
+  const actionMap: Record<string, () => void> = {
+    signOut,
+    deleteUser,
+  };
+
+  useEffect(() => {
+    if (userInfo?.profile_image_url) {
+      setSelectedImage(userInfo.profile_image_url);
+    }
+  }, [userInfo]);
 
   return (
     <div className="flex w-full flex-col bg-gray-1 pb-[110px]">
@@ -32,7 +51,7 @@ export default function Profile() {
             <CameraIcon />
           </button>
         </div>
-        <p className="text-b1 text-black">닉네임123</p>
+        <p className="text-b1 text-black">{userInfo?.nickname ?? "..."}</p>
         <button className="rounded-[20px] bg-white px-3 py-[10px] text-btn3 text-gray-4 shadow-[0px_2px_4px_0px_rgba(165,165,165,0.15)]">
           내 정보 수정
         </button>
@@ -51,6 +70,11 @@ export default function Profile() {
                 <div
                   key={idx}
                   className="flex items-center justify-between py-3"
+                  onClick={() => {
+                    if ("actionKey" in item && item.actionKey) {
+                      actionMap[item.actionKey]?.();
+                    }
+                  }}
                 >
                   <p className={`text-b2 ${item.className ?? "text-gray-5"}`}>
                     {item.label}

@@ -3,6 +3,7 @@ type ProfileSectionItem =
       label: string;
       showChevron?: boolean;
       className?: string;
+      actionKey?: string;
     }
   | {
       custom: React.ReactNode;

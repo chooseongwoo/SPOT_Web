@@ -30,8 +30,18 @@ const profileSections: ProfileSection[] = [
   {
     title: null,
     items: [
-      { label: "로그아웃", className: "text-red", showChevron: false },
-      { label: "회원탈퇴", className: "text-red", showChevron: false },
+      {
+        label: "로그아웃",
+        className: "text-red",
+        showChevron: false,
+        actionKey: "signOut",
+      },
+      {
+        label: "회원탈퇴",
+        className: "text-red",
+        showChevron: false,
+        actionKey: "deleteUser",
+      },
     ],
   },
 ];
