@@ -50,7 +50,9 @@ export default function HistoryItem({ history, onClick }: HistoryItemProps) {
           <div>
             <div className="flex w-full items-center gap-[5px]">
               <p className="truncate text-b2 text-black">
-                {history.is_anonymous ? "익명의 누군가" : history.nickname}
+                {history.is_anonymous
+                  ? "익명의 누군가"
+                  : history.users.nickname}
               </p>
               <p className="text-cap1 text-gray-3" suppressHydrationWarning>
                 {formatTimeAgo(history.created_at)}
