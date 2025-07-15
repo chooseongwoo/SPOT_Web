@@ -46,7 +46,8 @@ export default function CanvasCameraView({
           draw();
         }
       } catch (err) {
-        alert(`카메라 접근 실패: ${err}`);
+        console.log(err);
+        setTimeout(() => startCamera(), 1000);
       }
     };
 
