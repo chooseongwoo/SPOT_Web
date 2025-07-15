@@ -10,23 +10,12 @@ import {
 import { useAddressQuery } from "@/services/map/location.query";
 import { HistoryType } from "@/types";
 import { extractCleanAddress } from "@/utils";
-import { useRouter } from "next/navigation";
 
 export default function MineContainer(message: HistoryType) {
   const { data: currentLocation } = useAddressQuery(message.lat, message.lng);
-  const router = useRouter();
 
   return (
-    <div
-      className="flex flex-col gap-2 rounded-xl border p-5"
-      onClick={() =>
-        router.push(
-          `/read/${message.is_time_capsule ? "capsule" : "message"}/${
-            message.id
-          }`
-        )
-      }
-    >
+    <div className="flex flex-col gap-2 rounded-xl border p-5">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-[10px]">
           <div className="flex size-8 items-center justify-center rounded-lg bg-green-default">
