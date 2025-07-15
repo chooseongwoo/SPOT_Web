@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CanvasCameraView({
   isMounted,
@@ -9,17 +10,21 @@ export default function CanvasCameraView({
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     let animationFrameId: number;
+    let video: HTMLVideoElement | null = null;
 
     const startCamera = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: { ideal: "environment" } },
         });
+        streamRef.current = stream;
 
-        const video = videoRef.current;
+        video = videoRef.current;
         const canvas = canvasRef.current;
 
         if (video && canvas) {
@@ -32,8 +37,8 @@ export default function CanvasCameraView({
           canvas.height = video.videoHeight;
 
           const draw = () => {
-            if (ctx && video.videoWidth > 0 && video.videoHeight > 0) {
-              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            if (ctx && video!.videoWidth > 0 && video!.videoHeight > 0) {
+              ctx.drawImage(video!, 0, 0, canvas.width, canvas.height);
             }
             animationFrameId = requestAnimationFrame(draw);
           };
@@ -47,12 +52,22 @@ export default function CanvasCameraView({
 
     startCamera();
 
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      if (video) {
+        video.pause();
+        video.srcObject = null;
+      }
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
+      }
+    };
+  }, [router]);
 
   return (
     <div className="absolute inset-0">
-      <video ref={videoRef} style={{ display: "none" }} playsInline muted />
+      <video ref={videoRef} playsInline muted style={{ display: "none" }} />
       <canvas
         ref={canvasRef}
         className="absolute left-0 top-0 z-0 size-full"

@@ -49,7 +49,7 @@ export default function Home() {
           {extractCleanAddress(currentLocation?.address_components)}
         </p>
         <div className="rounded-xl bg-white p-[10px] shadow-custom-gray">
-          <AlarmIcon isRead />
+          <AlarmIcon isRead={false} />
         </div>
       </div>
 
