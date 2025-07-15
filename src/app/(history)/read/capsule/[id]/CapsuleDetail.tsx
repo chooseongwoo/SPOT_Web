@@ -34,7 +34,7 @@ export default function CapsuleDetail() {
   return (
     <div className="h-screen w-full overflow-hidden">
       <Cameraview isMounted={isMounted} />
-      <div className="relative z-50 px-6 py-3">
+      <div className="relative z-50 p-6">
         <CloseTab color="white" />
       </div>
 
