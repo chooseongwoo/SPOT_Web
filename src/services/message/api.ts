@@ -75,11 +75,13 @@ export const createMessage = async ({
   lat,
   lng,
   is_anonymous,
+  image_url,
 }: {
   content: string;
   lat: number;
   lng: number;
   is_anonymous: boolean;
+  image_url?: string;
 }) => {
   const {
     data: { session },
@@ -97,6 +99,7 @@ export const createMessage = async ({
         lng,
         is_anonymous,
         created_at: new Date(),
+        image_url: image_url || '',
       },
     ])
     .select()

@@ -15,17 +15,17 @@ export default function AnonymousSelect({
       <div className="flex gap-20">
         <div
           className="flex cursor-pointer items-center gap-[5px]"
-          onClick={() => setIsAnonymous(true)}
-        >
-          {isAnonymous === true ? <CheckedIcon /> : <UncheckedIcon />}
-          <p className="text-b2 text-black">익명</p>
-        </div>
-        <div
-          className="flex cursor-pointer items-center gap-[5px]"
           onClick={() => setIsAnonymous(false)}
         >
           {isAnonymous === false ? <CheckedIcon /> : <UncheckedIcon />}
           <p className="text-b2 text-black">닉네임</p>
+        </div>
+        <div
+          className="flex cursor-pointer items-center gap-[5px]"
+          onClick={() => setIsAnonymous(true)}
+        >
+          {isAnonymous === true ? <CheckedIcon /> : <UncheckedIcon />}
+          <p className="text-b2 text-black">익명</p>
         </div>
       </div>
     </div>

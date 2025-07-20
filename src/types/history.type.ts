@@ -8,6 +8,7 @@ interface HistoryType {
   ar_required: boolean;
   open_at: string | null;
   created_at: string;
+  image_url: string;
   read: boolean;
   is_anonymous: boolean;
   users: {

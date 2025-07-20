@@ -26,12 +26,23 @@ export default function MessageDetailContent({
   );
 
   return (
-    <div className="flex flex-col">
+    <div className="mb-4 flex flex-col">
       <Header title="메시지" />
       <div className="flex flex-col gap-3 px-6 pt-[10px]">
         <p className="whitespace-pre-wrap text-b2 text-black">
           {message.content}
         </p>
+        {message.image_url && (
+          <Image
+            src={message.image_url}
+            alt="메시지 이미지"
+            width={800}
+            height={400}
+            sizes="100vw"
+            className="w-full rounded-lg object-cover"
+            priority
+          />
+        )}
         <div className="h-[2px] w-full bg-gray-1" />
         <div className="flex items-center gap-[10px]">
           <Image
