@@ -9,6 +9,9 @@ const QUERY_KEY = {
     MINE: "message.query.mine",
     FOUND: "message.query.found",
   },
+  notices: {
+    LIST: "notices.query.list",
+  },
 };
 
 export default QUERY_KEY;
