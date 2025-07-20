@@ -8,11 +8,19 @@ import {
   TrashIcon,
 } from "@/components/icons";
 import { useAddressQuery } from "@/services/map/location.query";
+import { useDeleteMessageMutation } from "@/services/message/mutation";
 import { HistoryType } from "@/types";
 import { extractCleanAddress, formatToKST } from "@/utils";
 
 export default function MineContainer(message: HistoryType) {
   const { data: currentLocation } = useAddressQuery(message.lat, message.lng);
+  const { mutate: deleteMessage } = useDeleteMessageMutation();
+
+  const handleDelete = () => {
+    if (window.confirm("정말로 이 메시지를 삭제하시겠습니까?")) {
+      deleteMessage(message.id);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-2 rounded-xl border p-5">
@@ -29,12 +37,12 @@ export default function MineContainer(message: HistoryType) {
             {message.is_time_capsule ? "타임캡슐" : "메시지"}
           </p>
         </div>
-        <TrashIcon />
+        <TrashIcon onClick={handleDelete} />
       </div>
       <div className="flex items-center gap-[5px]">
         <CalendarIcon />
         <p className="text-footnote text-gray-4">
-          {formatToKST(message.created_at, "YYYY.MM.DD. A h시 mm분")}
+          {formatToKST(message.created_at, "YYYY.MM.DD A h시 mm분")}
         </p>
       </div>
       <div className="flex items-center gap-[5px]">

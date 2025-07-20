@@ -30,7 +30,7 @@ export default function CustomInput({
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <label className="text-b2 text-black">{label}</label>
+      {label && <label className="text-b2 text-black">{label}</label>}
       <input
         type={type}
         placeholder={placeholder}

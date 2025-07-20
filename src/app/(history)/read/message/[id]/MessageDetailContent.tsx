@@ -47,7 +47,7 @@ export default function MessageDetailContent({
           <div className="flex items-center gap-[5px]">
             <CalendarIcon />
             <p className="text-footnote text-gray-4">
-              {formatToKST(message.created_at, "YYYY.MM.DD. A h시 mm분")}
+              {formatToKST(message.created_at, "YYYY.MM.DD A h시 mm분")}
             </p>
           </div>
           {address && (
@@ -59,19 +59,21 @@ export default function MessageDetailContent({
             </div>
           )}
         </div>
-      </div>
-      <div className="mt-4 flex w-full items-center justify-around border-t border-gray-200 py-2">
-        <ReactionButton
-          message_id={message.id}
-          reactions={message.reactions || []}
-        />
-        <div className="flex items-center gap-x-1">
-          <ChatIcon width={20} height={20} />
-          <span>{message.comments?.length || 0}</span>
+        <div className="h-[2px] w-full bg-gray-1" />
+        <div className="flex w-full items-center justify-around">
+          <ReactionButton
+            message_id={message.id}
+            reactions={message.reactions || []}
+          />
+          <div className="flex items-center gap-1">
+            <ChatIcon size={20} color="#B0B0B0" />
+            <span>{message.comments?.length || 0}</span>
+          </div>
         </div>
-      </div>
-      <div className="h-1/3 w-full border-t border-gray-200">
-        <Comments message_id={message.id} comments={message.comments || []} />
+        <div className="h-[2px] w-full bg-gray-1" />
+        <div className="h-1/3 w-full">
+          <Comments message_id={message.id} comments={message.comments || []} />
+        </div>
       </div>
     </div>
   );

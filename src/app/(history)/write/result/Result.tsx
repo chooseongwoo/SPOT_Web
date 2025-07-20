@@ -36,7 +36,7 @@ export default function Result() {
           <div className="flex flex-col items-center gap-3">
             <p className="text-headline text-black">{message.content}</p>
             <p className="text-b2 text-gray-4">
-              {formatToKST(message.created_at, "YYYY.MM.DD. A h시 mm분")}
+              {formatToKST(message.created_at, "YYYY.MM.DD A h시 mm분")}
             </p>
           </div>
         </div>

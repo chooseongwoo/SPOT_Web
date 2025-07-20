@@ -1,20 +1,19 @@
-import { IconProps } from "@/types/icon.type";
+import { IconType } from "@/types";
 
-interface HeartIconProps extends IconProps {
+interface HeartIconProps extends IconType {
   filled?: boolean;
 }
 
 const HeartIcon = ({
-  width = 24,
-  height = 24,
+  size = 24,
   color = "currentColor",
   filled = false,
 }: HeartIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill={filled ? color : "none"}
       stroke={color}

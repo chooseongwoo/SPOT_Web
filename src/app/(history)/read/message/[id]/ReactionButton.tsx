@@ -39,9 +39,9 @@ const ReactionButton = ({ message_id, reactions }: ReactionButtonProps) => {
   return (
     <button onClick={handleReaction} className="flex items-center gap-x-1">
       <HeartIcon
-        width={20}
-        height={20}
-        color={liked ? "#FF0000" : "currentColor"}
+        size={20}
+        color={liked ? "#FF0000" : "#B0B0B0"}
+        filled={liked}
       />
       <span>{reactions.length}</span>
     </button>

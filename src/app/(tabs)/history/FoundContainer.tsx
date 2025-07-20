@@ -34,7 +34,7 @@ export default function FoundContainer(message: HistoryType) {
       <div className="flex items-center gap-[5px]">
         <CalendarIcon />
         <p className="text-footnote text-gray-4">
-          {formatToKST(message.created_at, "YYYY.MM.DD. A h시 mm분")}
+          {formatToKST(message.created_at, "YYYY.MM.DD A h시 mm분")}
         </p>
       </div>
       <div className="flex items-center gap-[5px]">

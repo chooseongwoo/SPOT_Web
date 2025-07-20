@@ -1,11 +1,11 @@
-import { IconProps } from "@/types/icon.type";
+import { IconType } from "@/types";
 
-const ChatIcon = ({ width = 24, height = 24, color = "currentColor" }: IconProps) => {
+const ChatIcon = ({ size = 24, color = "currentColor" }: IconType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill="none"
       stroke={color}

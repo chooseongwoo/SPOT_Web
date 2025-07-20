@@ -264,3 +264,19 @@ export const addComment = async ({
   if (error) throw new Error(error.message);
   return data;
 };
+
+export const deleteMessage = async (id: string) => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user.id;
+  if (!userId) throw new Error("세션 없음");
+
+  const { error } = await supabase
+    .from("messages")
+    .delete()
+    .eq("id", id)
+    .eq("user_id", userId);
+
+  if (error) throw new Error(error.message);
+};

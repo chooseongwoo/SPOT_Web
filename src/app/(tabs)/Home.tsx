@@ -48,7 +48,7 @@ export default function Home() {
         <p className="text-t3 text-black">
           {extractCleanAddress(currentLocation?.address_components)}
         </p>
-        <div className="rounded-xl bg-white p-[10px] shadow-custom-gray">
+        <div className="rounded-xl bg-white p-[10px] shadow-custom-gray cursor-pointer" onClick={() => router.push("/notice")}>
           <AlarmIcon isRead={false} />
         </div>
       </div>

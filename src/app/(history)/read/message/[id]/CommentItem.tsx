@@ -16,11 +16,13 @@ const CommentItem = ({ comment }: CommentItemProps) => {
         alt="profile"
         width={28}
         height={28}
-        className="rounded-full mt-1"
+        className="mt-1 rounded-full"
       />
       <div className="flex flex-col">
         <div className="flex items-center gap-x-2">
-          <span className="font-semibold text-sm">{comment.users.nickname}</span>
+          <span className="text-sm font-semibold">
+            {comment.users.nickname}
+          </span>
           <span className="text-xs text-gray-400">
             {formatTimeAgo(comment.created_at)}
           </span>

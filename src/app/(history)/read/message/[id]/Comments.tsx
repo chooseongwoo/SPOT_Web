@@ -11,13 +11,13 @@ interface CommentsProps {
 
 const Comments = ({ message_id, comments }: CommentsProps) => {
   return (
-    <div className="w-full flex flex-col">
-      <div className="grow overflow-y-auto p-2">
+    <div className="flex w-full flex-col">
+      <CommentInput message_id={message_id} />
+      <div className="grow overflow-y-auto pt-2">
         {comments.map((comment) => (
           <CommentItem key={comment.id} comment={comment} />
         ))}
       </div>
-      <CommentInput message_id={message_id} />
     </div>
   );
 };

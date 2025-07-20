@@ -1,7 +1,15 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addComment, addReaction, removeReaction, readMessage, createMessage, createCapsule } from "./api";
+import {
+  addComment,
+  addReaction,
+  removeReaction,
+  readMessage,
+  createMessage,
+  createCapsule,
+  deleteMessage,
+} from "./api";
 import QUERY_KEY from "@/constants/queryKey";
 
 export const useAddReactionMutation = (message_id: string) => {
@@ -46,7 +54,9 @@ export const useReadMessageMutation = () => {
   return useMutation({
     mutationFn: (id: string) => readMessage(id),
     onSuccess: (_, id) => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.message.DETAIL, id] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.message.DETAIL, id],
+      });
     },
   });
 };
@@ -69,6 +79,17 @@ export const useCreateCapsuleMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.message.NEARBY] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.message.MINE] });
+    },
+  });
+};
+
+export const useDeleteMessageMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteMessage(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.message.MINE] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.message.NEARBY] });
     },
   });
 };
