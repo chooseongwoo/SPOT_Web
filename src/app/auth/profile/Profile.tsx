@@ -13,7 +13,7 @@ export default function Profile() {
   const DefaultProfile = "/images/DefaultProfileImage.png";
   const [selectedImage, setSelectedImage] = useState<string>(DefaultProfile);
   const [nickname, setNickname] = useState<string>("");
-  const uploadImage = useUploadImage();
+  const { uploadImage } = useUploadImage();
   const { mutate: updateUserMutate } = useUpdateUserMutation();
   return (
     <div className="flex min-h-screen flex-col bg-white">

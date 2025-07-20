@@ -12,7 +12,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 export default function Profile() {
-  const uploadImage = useUploadImage();
+  const { uploadImage } = useUploadImage();
   const DefaultProfile = "/images/DefaultProfileImage.png";
   const [selectedImage, setSelectedImage] = useState<string>(DefaultProfile);
   const { data: userInfo } = useUserInfoQuery();
