@@ -1,6 +1,5 @@
 import { supabase } from "@/lib/supabaseClient";
 import HistoryType from "@/types/history.type";
-import { formatDateKSTForDB } from "@/utils";
 
 const RANGE = 0.00045;
 
@@ -47,8 +46,11 @@ export const getMessage = async (id: string): Promise<HistoryType> => {
 
   const { data, error } = await supabase
     .from("messages")
-    .select("*, users(nickname, profile_image_url)")
+    .select(
+      "*, users(nickname, profile_image_url), reactions(user_id), comments(*, users(nickname, profile_image_url))"
+    )
     .eq("id", id)
+    .order("created_at", { foreignTable: "comments", ascending: true })
     .single();
 
   if (error) throw new Error(error.message);
@@ -63,8 +65,7 @@ export const getMessage = async (id: string): Promise<HistoryType> => {
     : { data: null };
 
   return {
-    ...(data as Omit<HistoryType, "nickname" | "read">),
-    nickname: (data as any).users.nickname,
+    ...(data as any),
     read: !!view,
   } as HistoryType;
 };
@@ -95,7 +96,7 @@ export const createMessage = async ({
         lat,
         lng,
         is_anonymous,
-        created_at: formatDateKSTForDB(new Date()),
+        created_at: new Date(),
       },
     ])
     .select()
@@ -123,7 +124,7 @@ export const createCapsule = async ({
   const userId = session?.user.id;
   if (!userId) throw new Error("세션 없음");
 
-  const openAt = formatDateKSTForDB(new Date(open_at));
+  const openAt = new Date(open_at);
 
   const { data, error } = await supabase
     .from("messages")
@@ -136,7 +137,7 @@ export const createCapsule = async ({
         is_anonymous,
         is_time_capsule: true,
         open_at: openAt,
-        created_at: formatDateKSTForDB(new Date()),
+        created_at: new Date(),
       },
     ])
     .select()
@@ -160,9 +161,13 @@ export const readMessage = async (id: string) => {
     .maybeSingle();
 
   if (!existing) {
-    await supabase
-      .from("message_views")
-      .insert([{ user_id: userId, message_id: id }]);
+    await supabase.from("message_views").insert([
+      {
+        user_id: userId,
+        message_id: id,
+        viewed_at: new Date(),
+      },
+    ]);
   }
 };
 
@@ -194,11 +199,9 @@ export const getFoundMessages = async (): Promise<HistoryType[]> => {
   const userId = session?.user.id;
   if (!userId) throw new Error("세션 없음");
 
-  const { data, error } = await supabase
-    .from("message_views")
-    .select("message:messages(*, users(nickname, profile_image_url))")
-    .eq("user_id", userId)
-    .order("viewed_at", { ascending: false });
+  const { data, error } = await supabase.rpc("get_unique_message_views", {
+    p_user_id: userId,
+  });
 
   if (error) throw new Error(error.message);
   return (data || []).map((v: any) => ({
@@ -206,4 +209,58 @@ export const getFoundMessages = async (): Promise<HistoryType[]> => {
     nickname: v.message.users.nickname,
     read: true,
   }));
+};
+
+export const addReaction = async (message_id: string) => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const user_id = session?.user.id;
+  if (!user_id) throw new Error("User not authenticated");
+
+  const { data, error } = await supabase
+    .from("reactions")
+    .insert([{ user_id, message_id }]);
+
+  if (error) throw new Error(error.message);
+  return data;
+};
+
+export const removeReaction = async (message_id: string) => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const user_id = session?.user.id;
+  if (!user_id) throw new Error("User not authenticated");
+
+  const { error } = await supabase
+    .from("reactions")
+    .delete()
+    .eq("user_id", user_id)
+    .eq("message_id", message_id);
+
+  if (error) throw new Error(error.message);
+};
+
+export const addComment = async ({
+  message_id,
+  content,
+}: {
+  message_id: string;
+  content: string;
+}) => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const user_id = session?.user.id;
+  if (!user_id) throw new Error("User not authenticated");
+
+  const { data, error } = await supabase
+    .from("comments")
+    .insert([{ user_id, message_id, content }])
+    .select("*, users(nickname, profile_image_url)")
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
 };

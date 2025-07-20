@@ -14,6 +14,18 @@ interface HistoryType {
     nickname: string;
     profile_image_url: string;
   };
+  reactions: {
+    user_id: string;
+  }[];
+  comments: {
+    id: number;
+    content: string;
+    created_at: string;
+    users: {
+      nickname: string;
+      profile_image_url: string;
+    };
+  }[];
 }
 
 export default HistoryType;

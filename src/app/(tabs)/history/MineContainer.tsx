@@ -9,7 +9,7 @@ import {
 } from "@/components/icons";
 import { useAddressQuery } from "@/services/map/location.query";
 import { HistoryType } from "@/types";
-import { extractCleanAddress } from "@/utils";
+import { extractCleanAddress, formatToKST } from "@/utils";
 
 export default function MineContainer(message: HistoryType) {
   const { data: currentLocation } = useAddressQuery(message.lat, message.lng);
@@ -34,7 +34,7 @@ export default function MineContainer(message: HistoryType) {
       <div className="flex items-center gap-[5px]">
         <CalendarIcon />
         <p className="text-footnote text-gray-4">
-          {new Date(message.created_at).toLocaleString("ko-KR")}
+          {formatToKST(message.created_at, "YYYY.MM.DD. A h시 mm분")}
         </p>
       </div>
       <div className="flex items-center gap-[5px]">

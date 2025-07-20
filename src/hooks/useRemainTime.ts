@@ -1,12 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const useRemainTime = (open_at: string | null) => {
-  const openAt = useMemo(() => (open_at ? new Date(open_at) : null), [open_at]);
+  const openAt = useMemo(
+    () => (open_at ? dayjs(open_at).tz("Asia/Seoul") : null),
+    [open_at]
+  );
 
   const [remainTime, setRemainTime] = useState<number | null>(() => {
     if (!openAt) return null;
-    const now = new Date();
-    const diff = openAt.getTime() - now.getTime();
+    const now = dayjs().tz("Asia/Seoul");
+    const diff = openAt.diff(now);
     return diff > 0 ? diff : null;
   });
 
@@ -16,8 +25,9 @@ const useRemainTime = (open_at: string | null) => {
     if (!openAt || remainTime === null) return;
 
     const interval = setInterval(() => {
-      const now = new Date();
-      const diff = openAt.getTime() - now.getTime();
+      const now = dayjs().tz("Asia/Seoul");
+      const diff = openAt.diff(now);
+
       if (diff <= 0) {
         clearInterval(interval);
         setRemainTime(null);

@@ -20,6 +20,9 @@ export default function HistoryItem({ history, onClick }: HistoryItemProps) {
   const type = history.is_time_capsule ? "capsule" : "message";
   const { data: address } = useAddressQuery(history.lat, history.lng);
 
+  console.log(history.created_at);
+  console.log(formatTimeAgo(history.created_at));
+
   return (
     <div className="flex w-full items-center justify-between" onClick={onClick}>
       <div className="flex w-full gap-[10px]">

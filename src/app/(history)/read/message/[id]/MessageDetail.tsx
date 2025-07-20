@@ -1,65 +1,25 @@
 "use client";
 
-import { Header } from "@/components";
-import { CalendarIcon, OutlinedLocationIcon } from "@/components/icons";
-import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useMessageQuery } from "@/services/message/query";
 import { useReadMessageMutation } from "@/services/message/mutation";
-import { useAddressQuery } from "@/services/map/location.query";
+import MessageDetailContent from "./MessageDetailContent";
 
 export default function MessageDetail() {
   const params = useParams<{ id: string }>();
-  const { data: message } = useMessageQuery(params.id);
+  const { data: message, isLoading, error } = useMessageQuery(params.id);
   const { mutate: readMessage } = useReadMessageMutation();
-  const { data: address } = useAddressQuery(
-    message?.lat ?? 0,
-    message?.lng ?? 0
-  );
+
   useEffect(() => {
     if (message) {
       readMessage(message.id);
     }
   }, [message, readMessage]);
 
-  if (!message) return null;
+  if (isLoading) return <div>로딩중...</div>;
+  if (error) return <div>에러</div>;
+  if (!message) return <div>데이터 없음</div>;
 
-  return (
-    <div className="flex flex-col">
-      <Header title="메시지" />
-      <div className="flex flex-col gap-3 px-6 pt-[10px]">
-        <p className="whitespace-pre-wrap text-b2 text-black">
-          {message.content}
-        </p>
-        <div className="h-[2px] w-full bg-gray-1" />
-        <div className="flex items-center gap-[10px]">
-          <Image
-            alt="프로필 이미지"
-            src={message.users.profile_image_url}
-            width={46}
-            height={46}
-            className="rounded-full border border-gray-2"
-          />
-          <p className="text-b2 text-black">{message.users.nickname}</p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-[5px]">
-            <CalendarIcon />
-            <p className="text-footnote text-gray-4">
-              {new Date(message.created_at).toLocaleString("ko-KR")}
-            </p>
-          </div>
-          {address && (
-            <div className="flex items-center gap-[5px]">
-              <OutlinedLocationIcon />
-              <p className="text-footnote text-gray-4">
-                {address.formatted_address}
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+  return <MessageDetailContent message={message} />;
 }

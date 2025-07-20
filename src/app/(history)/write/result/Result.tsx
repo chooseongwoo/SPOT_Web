@@ -9,6 +9,7 @@ import {
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMessageQuery } from "@/services/message/query";
 import { useAddressQuery } from "@/services/map/location.query";
+import { formatToKST } from "@/utils";
 
 export default function Result() {
   const params = useSearchParams();
@@ -35,7 +36,7 @@ export default function Result() {
           <div className="flex flex-col items-center gap-3">
             <p className="text-headline text-black">{message.content}</p>
             <p className="text-b2 text-gray-4">
-              {new Date(message.created_at).toLocaleString("ko-KR")}
+              {formatToKST(message.created_at, "YYYY.MM.DD. A h시 mm분")}
             </p>
           </div>
         </div>

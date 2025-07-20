@@ -23,3 +23,5 @@ export { default as ArrowWardIcon } from "./ArrowWardIcon";
 export { default as ClickIcon } from "./ClickIcon";
 export { default as Capsule3DIcon } from "./Capsule3D/Capsule3DIcon";
 export { default as ShadowIcon } from "./ShadowIcon";
+export { default as HeartIcon } from "./HeartIcon";
+export { default as ChatIcon } from "./ChatIcon";
