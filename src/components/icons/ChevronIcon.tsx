@@ -1,12 +1,13 @@
 import { IconType } from "@/types";
 import clsx from "clsx";
+import { SVGProps } from "react";
 
 export default function ChevronIcon({
-  handleClick,
   direction = "left",
   size = 24,
   color = "#222",
-}: IconType) {
+  ...props
+}: IconType & SVGProps<SVGSVGElement>) {
   const rotationClass = clsx({
     "rotate-0": direction === "left",
     "rotate-180": direction === "right",
@@ -22,7 +23,7 @@ export default function ChevronIcon({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={rotationClass + " transition-transform"}
-      onClick={handleClick}
+      {...props}
     >
       <path
         fillRule="evenodd"
