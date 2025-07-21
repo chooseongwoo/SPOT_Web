@@ -99,7 +99,7 @@ export const createMessage = async ({
         lng,
         is_anonymous,
         created_at: new Date(),
-        image_url: image_url || '',
+        image_url: image_url || "",
       },
     ])
     .select()
@@ -202,14 +202,28 @@ export const getFoundMessages = async (): Promise<HistoryType[]> => {
   const userId = session?.user.id;
   if (!userId) throw new Error("세션 없음");
 
-  const { data, error } = await supabase.rpc("get_unique_message_views", {
-    p_user_id: userId,
-  });
+  const { data, error } = await supabase
+    .from("message_views")
+    .select(
+      "*, messages(*, users(nickname, profile_image_url), reactions(user_id), comments(*, users(nickname, profile_image_url)))"
+    )
+    .eq("user_id", userId)
+    .order("viewed_at", { ascending: false });
 
   if (error) throw new Error(error.message);
-  return (data || []).map((v: any) => ({
-    ...(v.message as Omit<HistoryType, "nickname" | "read">),
-    nickname: v.message.users.nickname,
+
+  const uniqueMessages = Array.from(
+    new Map(
+      data?.map((item: any) => [item.messages.id, item.messages])
+    ).values()
+  );
+
+  return (uniqueMessages || []).map((m: any) => ({
+    ...(m as Omit<HistoryType, "nickname" | "profile_image_url" | "read">),
+    nickname: m.users.nickname,
+    profile_image_url: m.users.profile_image_url,
+    reactions: m.reactions,
+    comments: m.comments,
     read: true,
   }));
 };

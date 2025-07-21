@@ -10,7 +10,7 @@ import BackButton from "@/app/(history)/write/BackButton";
 import { formatInputDate, formatInputTime } from "@/utils";
 
 export default function Capsule() {
-  const [isAnonymous, setIsAnonymous] = useState(true);
+  const [isAnonymous, setIsAnonymous] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [values, setValues] = useState<{
     date: string;

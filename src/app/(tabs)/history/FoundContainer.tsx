@@ -47,7 +47,7 @@ export default function FoundContainer(message: HistoryType) {
       <div className="flex items-center gap-[10px]">
         <Image
           alt="프로필 이미지"
-          src={message.users.profile_image_url}
+          src={message.users.profile_image_url || ""}
           className="aspect-square rounded-full object-cover"
           width={24}
           height={24}
@@ -56,6 +56,17 @@ export default function FoundContainer(message: HistoryType) {
           {message.is_anonymous ? "익명" : message.users.nickname}
         </p>
       </div>
+      {message.image_url && (
+        <Image
+          src={message.image_url}
+          alt="메시지 이미지"
+          width={800}
+          height={200}
+          sizes="100vw"
+          className="w-full rounded-lg object-cover"
+          priority
+        />
+      )}
     </div>
   );
 }
