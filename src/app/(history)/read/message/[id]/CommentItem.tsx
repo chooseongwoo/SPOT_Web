@@ -16,7 +16,7 @@ const CommentItem = ({ comment }: CommentItemProps) => {
         alt="profile"
         width={28}
         height={28}
-        className="mt-1 rounded-full"
+        className="mt-1 aspect-square rounded-full object-cover"
       />
       <div className="flex flex-col">
         <div className="flex items-center gap-x-2">

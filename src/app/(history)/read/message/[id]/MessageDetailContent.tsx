@@ -50,7 +50,7 @@ export default function MessageDetailContent({
             src={message.users.profile_image_url}
             width={46}
             height={46}
-            className="rounded-full border border-gray-2"
+            className="aspect-square rounded-full border border-gray-2 object-cover"
           />
           <p className="text-b2 text-black">{message.users.nickname}</p>
         </div>
